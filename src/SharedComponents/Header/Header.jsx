@@ -9,7 +9,7 @@ const Header = () => {
             {/* this is common part for all users */}
 
             <div className="navbar-start">
-                <div className="flex gap-2 lg:text-xl md:text-xl xl:text-xl 2xl:text-2xl sm:text-lg font-bold">
+                <div className="flex justify-center items-center gap-2 lg:text-xl md:text-xl xl:text-xl 2xl:text-2xl sm:text-lg font-bold">
                     <img src={logo} alt="" className="w-10 h-10 " />
                     <h2><span className="text-[#21B573]">Wisdom</span><span className="text-[#0645B1]">Wave</span></h2>
                 </div>
