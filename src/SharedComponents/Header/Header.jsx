@@ -1,6 +1,6 @@
 import { IoMdArrowDropdown } from "react-icons/io";
-import { IoMenu,IoSearch  } from "react-icons/io5";
-
+import { IoMenu, IoSearch } from "react-icons/io5";
+import logo from '../../assets/Photos/logo_wave.png'
 
 const Header = () => {
     return (
@@ -9,13 +9,14 @@ const Header = () => {
             {/* this is common part for all users */}
 
             <div className="navbar-start">
-                <div className="lg:text-2xl md:text-2xl xl:text-2xl 2xl:text-4xl sm:text-xl font-bold">
+                <div className="flex justify-center items-center gap-2 lg:text-xl md:text-xl xl:text-xl 2xl:text-2xl sm:text-lg font-bold">
+                    <img src={logo} alt="" className="w-10 h-10 " />
                     <h2><span className="text-[#21B573]">Wisdom</span><span className="text-[#0645B1]">Wave</span></h2>
                 </div>
             </div>
 
             <div className="navbar-center lg:flex gap-3">
-                <div className="lg:flex md:hidden hidden gap-3">
+                <div className="lg:flex justify-center items-center md:hidden hidden gap-3">
                     <h5 className=" text-lg">Course</h5>
                     <div>
                         <IoMdArrowDropdown></IoMdArrowDropdown>
@@ -29,42 +30,55 @@ const Header = () => {
                 </div>
             </div>
             <div className="navbar-end">
-                <div className="lg:hidden flex md:flex">
-                    <IoSearch ></IoSearch>
-                </div>
-                <div className="lg:hidden md:flex flex gap-3">
+                <div className="lg:hidden flex md:flex justify-center items-center gap-3">
+                    <div>
+                        <IoSearch ></IoSearch>
+                    </div>
                     <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="btn btn-ghost lg:hidden">
-                            <IoMenu></IoMenu>
+                        <label tabIndex={1} className="hover:cursor-pointer">
+                            Join
                         </label>
 
                         {/* this part will be defferent for different types of user */}
 
-                        <div tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 right-12 shadow bg-base-100 rounded-box w-52 text-base">
-                            <div><a>Blog</a></div>
-                            <div className="w-24">
-                                <select defaultValue="Join" className=" select-text">
-                                    <option value="">Join</option>
-                                    <option value="Student">Join as Student</option>
-                                    <option value="Instructor">Join as Instructor</option>
-                                    <option value="Tutor">Join as Tutor</option>
-                                </select>
+                        <div tabIndex={1} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-48 text-base">
+                            <div><a>Join as Student</a></div>
+                            <div><a>Join as Instructor</a></div>
+                            <div><a>Join as Tutor</a></div>
+                        </div>
+                    </div>
+
+                    <div className="lg:hidden md:flex flex gap-3">
+                        <div className="dropdown dropdown-end">
+                            <label tabIndex={0} className="">
+                                <IoMenu></IoMenu>
+                            </label>
+
+                            {/* this part will be defferent for different types of user */}
+
+                            <div tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 right-12 shadow bg-base-100 rounded-box w-52 text-base">
+                                <div><a>Blog</a></div>
+                                <div><a>Login</a></div>
                             </div>
-                            <div><a>Login</a></div>
                         </div>
                     </div>
                 </div>
                 <div className="lg:flex hidden md:hidden navbar-end gap-6 text-lg">
-                    <div><a>Blog</a></div>
-                    <div>
-                        <select>
-                            <option value="" className="text-center">Join</option>
-                            <option value="Student">Join as Student</option>
-                            <option value="Instructor">Join as Instructor</option>
-                            <option value="Tutor">Join as Tutor</option>
-                        </select>
+                    <div className="hover:cursor-pointer"><a>Blog</a></div>
+                    <div className="dropdown dropdown-end">
+                        <label tabIndex={1} className="hover:cursor-pointer">
+                            Join
+                        </label>
+
+                        {/* this part will be defferent for different types of user */}
+
+                        <div tabIndex={1} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-48 text-base">
+                            <div><a>Join as Student</a></div>
+                            <div><a>Join as Instructor</a></div>
+                            <div><a>Join as Tutor</a></div>
+                        </div>
                     </div>
-                    <div><a>Login</a></div>
+                    <div className="hover:cursor-pointer"><a>Login</a></div>
                 </div>
 
             </div>

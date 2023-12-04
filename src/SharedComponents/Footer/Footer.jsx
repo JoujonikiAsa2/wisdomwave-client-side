@@ -1,3 +1,5 @@
+import logo from '../../assets/Photos/logo_wave.png'
+
 const Footer = () => {
     return (
         <div>
@@ -5,7 +7,7 @@ const Footer = () => {
                 <footer className="flex lg:flex-row md:flex-row flex-col text-base-content lg:justify-between md:justify-between justify-center gap-4 lg:px-28 py-6">
                     <aside className='flex flex-col gap-3 lg:text-left text-center'>
                         <div className='flex lg:justify-start justify-center gap-3'>
-                            <img src="" alt="" className='w-10 h-10' />
+                            <img src={logo} alt="" className='w-10 h-10' />
                             <h2 className='text-xl font-bold'><span className='text-[#21B573]'>Wisdom</span> <span className='text-[#0645B1]'>Wave</span></h2>
                         </div>
                         <p className='max-w-[350px]'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis, aut obcaecati nam voluptatum nesciunt exercitationem.</p>
