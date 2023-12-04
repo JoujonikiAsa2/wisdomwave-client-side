@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
-import Header from "../Pages/Shared/Header/Header";
-import Footer from "../Pages/Shared/Footer/Footer";
+import Footer from "../SharedComponents/Footer/Footer";
+import Header from "../SharedComponents/Header/Header";
 
 const Root = () => {
+
     return (
         <div className=" max-w-screen-2xl mx-auto">
             <Header></Header>
