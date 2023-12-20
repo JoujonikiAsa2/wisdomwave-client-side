@@ -37,7 +37,14 @@ const Header = () => {
                     </div>
                     <div className="dropdown dropdown-end">
                         <label tabIndex={1} className="hover:cursor-pointer">
-                            Join
+                            <nav>
+                                <NavLink to="/login" style={({ isActive }) => {
+                                    return {
+                                        fontWeight: isActive ? "bold" : "",
+                                        color: isActive ? "red" : "white",
+                                    };
+                                }}>Join</NavLink>
+                            </nav>
                         </label>
 
                         {/* this part will be defferent for different types of user */}
@@ -58,8 +65,22 @@ const Header = () => {
                             {/* this part will be defferent for different types of user */}
 
                             <div tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 right-12 shadow bg-base-100 rounded-box w-48 text-base text-black">
-                                <div><a>Blog</a></div>
-                                <div><a>Login</a></div>
+                                <nav>
+                                    <NavLink to="/login" style={({ isActive }) => {
+                                        return {
+                                            fontWeight: isActive ? "bold" : "",
+                                            color: isActive ? "red" : "white",
+                                        };
+                                    }}>Blog</NavLink>
+                                </nav>
+                                <nav>
+                                    <NavLink to="/login" style={({ isActive }) => {
+                                        return {
+                                            fontWeight: isActive ? "bold" : "",
+                                            color: isActive ? "red" : "white",
+                                        };
+                                    }}>Login</NavLink>
+                                </nav>
                             </div>
                         </div>
                     </div>
@@ -68,7 +89,14 @@ const Header = () => {
                     <div className="hover:cursor-pointer"><a>Blog</a></div>
                     <div className="dropdown dropdown-end">
                         <label tabIndex={1} className="hover:cursor-pointer">
-                            Join
+                            <nav>
+                                <NavLink to="/login" style={({ isActive }) => {
+                                    return {
+                                        fontWeight: isActive ? "bold" : "",
+                                        color: isActive ? "red" : "white",
+                                    };
+                                }}>Join</NavLink>
+                            </nav>
                         </label>
 
                         {/* this part will be defferent for different types of user */}
@@ -79,13 +107,14 @@ const Header = () => {
                             <div><a><button className="btn btn-sm capitalize mt-3">Join as Student</button></a></div>
                         </div>
                     </div>
-                    <NavLink to="/login" style={({ isActive, isPending, isTransitioning }) => {
-                        return {
-                            fontWeight: isActive ? "bold" : "",
-                            color: isActive ? "red" : "white",
-                            background: isActive ? "" : "orange"
-                        };
-                    }} className="btn btn-sm">Login</NavLink>
+                    <nav>
+                        <NavLink to="/login" style={({ isActive }) => {
+                            return {
+                                fontWeight: isActive ? "bold" : "",
+                                color: isActive ? "red" : "white",
+                            };
+                        }}>Login</NavLink>
+                    </nav>
                 </div>
 
             </div>
