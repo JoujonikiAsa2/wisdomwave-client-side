@@ -1,0 +1,155 @@
+[
+    {
+        "courseDetails": {
+            "thumbnail": "URL_to_thumbnail_image",
+            "title": "Complete Web Development Bootcamp",
+            "instructor": "Joe Sen",
+            "rating": 5.0,
+            "limitOfStudents": 1000,
+            "credit": "Certificate of Completion",
+            "enrollFee": "$199.99",
+            "whatYouWillLearn": [
+                "Front-End Web Development",
+                "HTML 5",
+                "CSS 3",
+                "Flexbox",
+                "Grid",
+                "Bootstrap 5",
+                "Javascript ES6",
+                "DOM Manipulation",
+                "jQuery",
+                "Bash Command Line",
+                "Git, GitHub and Version Control",
+                "Backend Web Development",
+                "Node.js",
+                "NPM",
+                "Express.js",
+                "EJS",
+                "REST APIs",
+                "Databases",
+                "SQL",
+                "MongoDB",
+                "Mongoose",
+                "Authentication",
+                "Firebase",
+                "React.js",
+                "React Hooks",
+                "Web Design",
+                "Deployment with GitHub Pages, Heroku and MongoDB Atlas",
+                "Web3 Development on the Internet Computer",
+                "Blockchain technology",
+                "Token contract development",
+                "NFT minting, buying and selling logic"
+            ],
+            "courseDescription": "Welcome to the Complete Web Development Bootcamp, the only course you need to learn to code and become a full-stack web developer. The course includes over 65 hours of HD video tutorials and builds your programming knowledge while making real-world websites and web apps.",
+            "outcome": "By the end of this course, you will be fluently programming and be ready to make any website you can dream of. You'll also build a portfolio of over 32+ websites that you can show off to any potential employer.",
+            "projects": [
+                "Build 16 web development projects for your portfolio, ready to apply for junior developer jobs."
+            ],
+            "technologies": [
+                "Learn the latest technologies, including Javascript, React, Node, and even Web3 development."
+            ],
+            "skillsAcquired": [
+                "After the course, you will be able to build ANY website you want.",
+                "Build fully-fledged websites and web apps for your startup or business.",
+                "Work as a freelance web developer.",
+                "Master frontend development with React.",
+                "Master backend development with Node.",
+                "Learn professional developer best practices."
+            ],
+            "courseContent": "Detailed course content here...",
+            "requirements": [
+                "No programming experience needed - I'll teach you everything you need to know.",
+                "A computer with access to the internet.",
+                "No paid software required.",
+                "I'll walk you through, step-by-step how to get all the software installed and set up."
+            ],
+            "enrollmentDates": {
+                "enrollStart": "2023-01-01",
+                "enrollEnd": "2023-12-31"
+            }
+        }
+    },
+    {
+        "courseDetails": {
+            "thumbnail": "URL_to_thumbnail_image_2",
+            "title": "Python Programming for Beginners",
+            "instructor": "Jishan",
+            "rating": 4.5,
+            "limitOfStudents": 1200,
+            "credit": "Certificate of Completion",
+            "enrollFee": "$129.99",
+            "whatYouWillLearn": [
+                "Python Basics",
+                "Data Structures",
+                "Object-Oriented Programming",
+                "Web Scraping",
+                "API Integration"
+            ],
+            "courseDescription": "Embark on a journey to learn Python programming from scratch and build practical applications.",
+            "outcome": "Upon completion, you'll have the skills to develop Python applications for various purposes.",
+            "projects": [
+                "Create a personal portfolio website using Flask."
+            ],
+            "technologies": [
+                "Python",
+                "Flask"
+            ],
+            "skillsAcquired": [
+                "Understand the fundamentals of Python programming.",
+                "Develop web applications with Flask.",
+                "Implement web scraping and API integration."
+            ],
+            "courseContent": "Detailed course content here...",
+            "requirements": [
+                "No prior programming experience required.",
+                "Access to a computer with an internet connection."
+            ],
+            "enrollmentDates": {
+                "enrollStart": "2023-03-01",
+                "enrollEnd": "2023-10-31"
+            }
+        }
+    },
+    {
+        "courseDetails": {
+            "thumbnail": "URL_to_thumbnail_image_1",
+            "title": "Front-End Development Masterclass",
+            "instructor": "Meha",
+            "rating": 4.8,
+            "limitOfStudents": 800,
+            "credit": "Certificate of Achievement",
+            "enrollFee": "$149.99",
+            "whatYouWillLearn": [
+                "HTML 5",
+                "CSS 3",
+                "JavaScript ES6",
+                "React.js",
+                "Responsive Design",
+                "Web Accessibility"
+            ],
+            "courseDescription": "Join our Front-End Development Masterclass to become proficient in building modern and responsive user interfaces.",
+            "outcome": "Upon completion, you'll be equipped to create visually stunning and user-friendly websites.",
+            "projects": [
+                "Develop a portfolio of 10 interactive web projects."
+            ],
+            "technologies": [
+                "Latest Front-End Technologies"
+            ],
+            "skillsAcquired": [
+                "Master the art of responsive web design.",
+                "Create dynamic and interactive user interfaces with React.js.",
+                "Understand best practices for web accessibility."
+            ],
+            "courseContent": "Detailed course content here...",
+            "requirements": [
+                "Basic understanding of HTML and CSS.",
+                "A computer with internet access."
+            ],
+            "enrollmentDates": {
+                "enrollStart": "2023-02-01",
+                "enrollEnd": "2023-11-30"
+            }
+        }
+    }
+]

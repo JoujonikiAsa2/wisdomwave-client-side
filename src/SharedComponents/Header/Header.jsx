@@ -1,10 +1,11 @@
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMenu, IoSearch } from "react-icons/io5";
 import logo from '../../assets/Photos/logo_wave.png'
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
     return (
-        <div className="navbar bg-white  lora font-semibold md:px-[5vw] lg:px-[5vw]">
+        <div className="navbar bg-transparent  lora font-semibold md:px-[5vw] lg:px-[5vw] fixed z-50 ">
 
             {/* this is common part for all users */}
 
@@ -17,7 +18,7 @@ const Header = () => {
 
             <div className="navbar-center lg:flex gap-3">
                 <div className="lg:flex justify-center items-center md:hidden hidden gap-3">
-                    <h5 className=" text-lg">Course</h5>
+                    <h5 className=" text-base text-white">Course</h5>
                     <div>
                         <IoMdArrowDropdown></IoMdArrowDropdown>
                     </div>
@@ -29,7 +30,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-            <div className="navbar-end">
+            <div className="navbar-end text-white">
                 <div className="lg:hidden flex md:flex justify-center items-center gap-3">
                     <div>
                         <IoSearch ></IoSearch>
@@ -41,10 +42,10 @@ const Header = () => {
 
                         {/* this part will be defferent for different types of user */}
 
-                        <div tabIndex={1} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-48 text-base">
-                            <div><a>Join as Student</a></div>
-                            <div><a>Join as Instructor</a></div>
-                            <div><a>Join as Tutor</a></div>
+                        <div tabIndex={1} className="menu menu-sm dropdown-content mt-3 z-[1] bg-base-100 p-2 shadow rounded-box w-48 text-base text-black">
+                            <div><a><button className="btn btn-sm capitalize">Join as Student</button></a></div>
+                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Student</button></a></div>
+                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Student</button></a></div>
                         </div>
                     </div>
 
@@ -56,14 +57,14 @@ const Header = () => {
 
                             {/* this part will be defferent for different types of user */}
 
-                            <div tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 right-12 shadow bg-base-100 rounded-box w-52 text-base">
+                            <div tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 right-12 shadow bg-base-100 rounded-box w-48 text-base text-black">
                                 <div><a>Blog</a></div>
                                 <div><a>Login</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="lg:flex hidden md:hidden navbar-end gap-6 text-lg">
+                <div className="lg:flex hidden md:hidden navbar-end gap-6 text-base">
                     <div className="hover:cursor-pointer"><a>Blog</a></div>
                     <div className="dropdown dropdown-end">
                         <label tabIndex={1} className="hover:cursor-pointer">
@@ -72,13 +73,19 @@ const Header = () => {
 
                         {/* this part will be defferent for different types of user */}
 
-                        <div tabIndex={1} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-48 text-base">
-                            <div><a>Join as Student</a></div>
-                            <div><a>Join as Instructor</a></div>
-                            <div><a>Join as Tutor</a></div>
+                        <div tabIndex={1} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-48 text-base text-black flex justify-center items-center">
+                            <div><a><button className="btn btn-sm capitalize">Join as Student</button></a></div>
+                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Student</button></a></div>
+                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Student</button></a></div>
                         </div>
                     </div>
-                    <div className="hover:cursor-pointer"><a>Login</a></div>
+                    <NavLink to="/login" style={({ isActive, isPending, isTransitioning }) => {
+                        return {
+                            fontWeight: isActive ? "bold" : "",
+                            color: isActive ? "red" : "white",
+                            background: isActive ? "" : "orange"
+                        };
+                    }} className="btn btn-sm">Login</NavLink>
                 </div>
 
             </div>

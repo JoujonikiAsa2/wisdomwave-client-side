@@ -1,0 +1,11 @@
+.nav-link{
+    text-decoration: none;
+      color: #000; /* Set the color you want for the link */
+      padding: 0.5rem;
+    }
+    
+    .sidebar a.active {
+        text-decoration: underline;
+        color: #c21414; /* Set the color you want for the link */
+    }
+    
