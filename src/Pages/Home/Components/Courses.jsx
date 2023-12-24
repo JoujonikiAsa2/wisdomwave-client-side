@@ -49,19 +49,17 @@ const Courses = () => {
     return (
         <div>
             <SectionTitle title="Courses" subtitle="Find your favorite course here"></SectionTitle>
-            <div className='mb-12'>
-                <Swiper {...swiperParams}
-                    modules={[Pagination]}
-                    className="mySwiper" >
-                    {
-                        courses.map(course => <SwiperSlide className='my-8'>
-                            <Course key={course._id} course={course}>
+            <Swiper {...swiperParams}
+                modules={[Pagination]}
+                className="mySwiper" >
+                {
+                    courses.map(course => <SwiperSlide className='my-8'>
+                        <Course key={course._id} course={course}>
 
-                            </Course>
-                        </SwiperSlide>)
-                    }
-                </Swiper>
-            </div>
+                        </Course>
+                    </SwiperSlide>)
+                }
+            </Swiper>
 
         </div>
     );

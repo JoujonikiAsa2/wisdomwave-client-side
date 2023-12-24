@@ -14,9 +14,12 @@ const Course = ({ course }) => {
             <div className='p-4'>
                 <h5 className="text-base font-bold py-2">{title}</h5>
 
-                <div className='flex justify-between items-center'>
+                <div className='flex justify-between text-left'>
                     <div>
                         <p className="text-sm font-bold capitalize">Instructor: <span className='font-normal'>{instructor}</span></p>
+                        <div>
+                            <button className='btn btn-xs capitalize bg-blue-500'>Buy Now</button>
+                        </div>
                     </div>
                     <div>
                         <p className="text-sm flex gap-3"><Rating style={{ maxWidth: 70 }} readOnly value={rating}></Rating>({rating})</p>
