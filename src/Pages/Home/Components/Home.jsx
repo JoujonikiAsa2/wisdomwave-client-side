@@ -1,10 +1,12 @@
 import Banner from "./Banner";
-import Courses from './Courses'
+import Courses from "./Courses";
 const Home = () => {
     return (
         <div>
             <Banner></Banner>
-            <Courses></Courses>
+            <div className="mx-[5vw]">
+                <Courses></Courses>
+            </div>
         </div>
     );
 };
