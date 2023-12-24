@@ -27,7 +27,7 @@ const Courses = () => {
     const swiperParams = {
         spaceBetween: 20,
         pagination: {
-            clickable: true,
+            type: 'fraction',
         },
         breakpoints: {
             320: {
@@ -53,9 +53,8 @@ const Courses = () => {
                 modules={[Pagination]}
                 className="mySwiper" >
                 {
-                    courses.map(course => <SwiperSlide className='my-8'>
+                    courses.map(course => <SwiperSlide className='mt-8 mb-16'>
                         <Course key={course._id} course={course}>
-
                         </Course>
                     </SwiperSlide>)
                 }

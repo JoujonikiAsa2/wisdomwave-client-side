@@ -16,11 +16,9 @@ import './styles.css';
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
-export default function App() {
-    const image = {
-        maxWidth: "100%",
-        height: "auto",
-    }
+// Student Homepage Banner
+const Banner = () => {
+
     return (
         <>
             <Swiper
@@ -44,3 +42,5 @@ export default function App() {
         </>
     );
 }
+
+export default Banner

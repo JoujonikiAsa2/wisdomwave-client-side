@@ -4,7 +4,7 @@ import '@smastrom/react-rating/style.css'
 
 const Course = ({ course }) => {
     const { title, thumbnail, instructor, rating, limitOfStudents, enrollFee } = course.courseDetails
-    console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
+    // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
     return (
         <div className="w-[90vw] lg:w-80 md:w-80 2xl:w-96 card shadow-xl hover:shadow-2xl hover:cursor-pointer hover:translate-y-2 hover:scale-110 relative">
             <img src={thumbnail} alt="" className="w-full h-full rounded-t-lg " />

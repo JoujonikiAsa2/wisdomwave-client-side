@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Footer from "../SharedComponents/Footer/Footer";
 import Header from "../SharedComponents/Header/Header";
 
+// Home layout for Student
 const Root = () => {
 
     return (
