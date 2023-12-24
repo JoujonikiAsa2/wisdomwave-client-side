@@ -4,6 +4,7 @@ import {
 import Root from "../Layout/Root"
 import StudentHome from "../Pages/StudentHome/Components/StudentHome"
 import Login from "../Pages/Login/Login"
+import StudentSignUp from "../Pages/StudentSignUp/StudentSignUp"
 
 export const router = createBrowserRouter([
     {
@@ -20,5 +21,9 @@ export const router = createBrowserRouter([
     {
         path:"/login",
         element: <Login></Login>
+    },
+    {
+        path:"/studentSignUp",
+        element: <StudentSignUp></StudentSignUp>
     }
 ])

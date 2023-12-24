@@ -1,7 +1,7 @@
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMenu, IoSearch } from "react-icons/io5";
 import logo from '../../assets/Photos/logo_wave.png'
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
     return (
@@ -66,7 +66,7 @@ const Header = () => {
 
                             <div tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 right-12 shadow bg-base-100 rounded-box w-48 text-base text-black">
                                 <nav>
-                                    <NavLink to="/login" style={({ isActive }) => {
+                                    <NavLink to="/" style={({ isActive }) => {
                                         return {
                                             fontWeight: isActive ? "bold" : "",
                                             color: isActive ? "red" : "black",
@@ -90,7 +90,7 @@ const Header = () => {
                     <div className="dropdown dropdown-end">
                         <label tabIndex={1} className="hover:cursor-pointer">
                             <nav>
-                                <NavLink to="/login" style={({ isActive }) => {
+                                <NavLink to="/" style={({ isActive }) => {
                                     return {
                                         fontWeight: isActive ? "bold" : "",
                                         color: isActive ? "red" : "black",
@@ -102,7 +102,7 @@ const Header = () => {
                         {/* this part will be defferent for different types of user */}
 
                         <div tabIndex={1} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-48 text-base text-black flex justify-center items-center">
-                            <div><a><button className="btn btn-sm capitalize">Join as Student</button></a></div>
+                            <div><Link to='/studentSignUp'><button className="btn btn-sm capitalize">Join as Student</button></Link></div>
                             <div><a><button className="btn btn-sm capitalize mt-3">Join as Student</button></a></div>
                             <div><a><button className="btn btn-sm capitalize mt-3">Join as Student</button></a></div>
                         </div>
