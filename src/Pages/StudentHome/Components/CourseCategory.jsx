@@ -35,6 +35,9 @@ const CourseCategory = () => {
             1024: {
                 slidesPerView: 4,
             },
+            1600: {
+                slidesPerView: 5,
+            }
         },
     };
 
@@ -56,7 +59,7 @@ const CourseCategory = () => {
                 {
                     categories.map((category,index) => <SwiperSlide className='my-6'>
                         <div key={index} className="card shadow-xl w-60 h-20 p-4 rounded hover:Shadow-2xl border-y-2 border-b-slate-400 mb-4">
-                            <h2 className="text-base font-bold">Category {category}</h2>
+                            <h2 className="text-base font-bold">{category}</h2>
                         </div>
                     </SwiperSlide>)
                 }

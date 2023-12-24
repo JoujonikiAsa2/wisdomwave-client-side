@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 const Header = () => {
     return (
-        <div className="navbar bg-white shadow-xl  lora font-semibold md:px-[5vw] lg:px-[5vw] fixed z-50 ">
+        <div className="navbar bg-white shadow-xl  lora font-semibold md:px-[5vw] lg:px-[5vw] max-w-[96rem] fixed z-50 ">
 
             {/* this is common part for all users */}
 
@@ -85,7 +85,7 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
-                <div className="lg:flex hidden md:hidden navbar-end gap-6 text-base">
+                <div className="lg:flex hidden md:hidden gap-6 text-base">
                     <div className="hover:cursor-pointer"><a>Blog</a></div>
                     <div className="dropdown dropdown-end">
                         <label tabIndex={1} className="hover:cursor-pointer">
