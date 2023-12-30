@@ -16,7 +16,7 @@ import './styles.css';
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
-// Student Homepage Banner
+// Landing page Banner
 const Banner = () => {
 
     return (

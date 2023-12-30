@@ -11,17 +11,20 @@ import {
   QueryClient,
   QueryClientProvider
 } from '@tanstack/react-query'
+import AuthProvider from './AuthProvider/AuthProvider'
 
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <div className='lato'>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router}>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router}>
 
-        </RouterProvider>
-      </QueryClientProvider>
+          </RouterProvider>
+        </QueryClientProvider>
+      </AuthProvider>
     </div>
   </React.StrictMode>,
 )

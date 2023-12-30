@@ -2,7 +2,10 @@ import { Rating } from '@smastrom/react-rating'
 
 import '@smastrom/react-rating/style.css'
 
+//Course card design
+
 const Course = ({ course }) => {
+
     const { title, thumbnail, instructor, rating, limitOfStudents, enrollFee } = course.courseDetails
     // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
     return (

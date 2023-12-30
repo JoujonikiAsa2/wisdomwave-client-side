@@ -10,6 +10,7 @@ import './styles.css'
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
+// All course categoories will appear
 const CourseCategory = () => {
 
     const axiosPublic = useAxiosPublic()

@@ -1,9 +1,9 @@
-import Banner from "./Banner";
-import CourseCategory from "./CourseCategory";
-import Courses from "./Courses";
-import WhyChooseUs from "./WhyChooseUs";
+import Banner from "./Components/Banner";
+import CourseCategory from "./Components/CourseCategory";
+import Courses from "./Components/Courses";
+import WhyChooseUs from "./Components/WhyChooseUs";
 
-// Student
+// This is a landing page for all users and also student homepage
 const LandingPage = () => {
     return (
         <div>

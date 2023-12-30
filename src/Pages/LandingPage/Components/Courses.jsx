@@ -12,6 +12,7 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import './styles.css'
 
+// All courses will appear
 const Courses = () => {
 
     const axiosPublic = useAxiosPublic()

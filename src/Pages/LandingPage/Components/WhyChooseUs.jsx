@@ -5,6 +5,7 @@ import icon2 from '../../../assets/Photos/LandingPage/conversation2.png'
 import icon3 from '../../../assets/Photos/LandingPage/conversation1.png'
 import icon4 from '../../../assets/Photos/LandingPage/conversation.png'
 
+// WHy choose us section
 const WhyChooseUs = () => {
     return (
         <div>
