@@ -7,7 +7,9 @@ import WhyChooseUs from "./Components/WhyChooseUs";
 const LandingPage = () => {
     return (
         <div>
+            <div className="mt-16">
             <Banner></Banner>
+            </div>
             <div className="mx-[5vw] space-y-12">
                 <Courses></Courses>
                 <CourseCategory></CourseCategory>

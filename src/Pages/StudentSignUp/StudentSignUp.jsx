@@ -23,7 +23,7 @@ const StudentSignUp = () => {
     const location = useLocation()
 
     // get this from useAuth custom hook
-    const { studentSignUp } = useAuth()
+    const { studentSignUp, userSignOut, updateUserInfo } = useAuth()
 
     // react hook form built in function desctructuring
     const {
@@ -44,6 +44,9 @@ const StudentSignUp = () => {
 
                 // console the input field data
                 console.log(data.user)
+                updateUserInfo(data.name, data.phone)
+                    .then(() => { console.log("updated") })
+                    .catch(error => console.log(error))
                 reset()
 
                 // if the user created successfully then display the sweet alert
@@ -60,9 +63,13 @@ const StudentSignUp = () => {
                 });
                 Toast.fire({
                     icon: "success",
-                    title: "Signed in successfully",
+                    title: "Signed Up successfully",
                     willClose: () => {
-
+                        userSignOut()
+                            .then(() => {
+                                console.log("Go to login page")
+                            })
+                            .catch(error => console.log(error))
                         // Redirect to the login page after the timer expires
                         console.log('SweetAlert closed.');
                         navigate('/login');
@@ -76,7 +83,7 @@ const StudentSignUp = () => {
             })
     }
 
-    return ( 
+    return (
         <>
             {/* Icons and links to back on homepage */}
             <div className='flex p-8'>
@@ -211,12 +218,16 @@ const StudentSignUp = () => {
                                         type='text'
                                         name="email"
                                         placeholder="Email"
-                                        {...register("email", { required: true })}
+                                        {...register("email",
+                                            {
+                                                required: true,
+                                                pattern: /\S+@\S+\.\S+/
+                                            })}
                                         className='input input-bordered border-blue-700 w-[80vw] md:w-96 lg:w-[23rem]'
                                     />
                                     {/* error if field will be empty */}
                                     <div>
-                                        {errors.email && <span className='text-xs text-red-500'>This field is required</span>}
+                                        {errors.email?.type == "pattern" && <span className='text-xs text-red-500'>Please use email format</span>}
                                     </div>
                                 </div>
                             </div>

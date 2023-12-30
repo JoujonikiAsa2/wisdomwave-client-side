@@ -20,6 +20,13 @@ const AuthProvider = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
+    const updateUserInfo = (name, phone) =>{
+        return updateProfile(user, {
+            displayName: name, 
+            phoneNumber:phone,
+        })
+    }
+
     useEffect(() => {
         const subsciber = onAuthStateChanged(auth, currentUser => {
             console.log(currentUser)
@@ -40,6 +47,7 @@ const AuthProvider = ({ children }) => {
         isLoading,
         login,
         studentSignUp,
+        updateUserInfo,
         userSignOut
     }
     return (
