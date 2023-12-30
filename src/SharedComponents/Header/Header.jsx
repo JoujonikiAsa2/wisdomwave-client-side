@@ -1,6 +1,6 @@
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMenu, IoSearch } from "react-icons/io5";
-import logo from '../../assets/Photos/logo_wave.png'
+import logo from '../../assets/Photos/LandingPage/logo_wave.png'
 import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
@@ -38,21 +38,16 @@ const Header = () => {
                     <div className="dropdown dropdown-end">
                         <label tabIndex={1} className="hover:cursor-pointer">
                             <nav>
-                                <NavLink to="/login" style={({ isActive }) => {
-                                    return {
-                                        fontWeight: isActive ? "bold" : "",
-                                        color: isActive ? "red" : "black",
-                                    };
-                                }}>Join</NavLink>
+                                <a>Join</a>
                             </nav>
                         </label>
 
                         {/* this part will be defferent for different types of user */}
 
                         <div tabIndex={1} className="menu menu-sm dropdown-content mt-3 z-[1] bg-base-100 p-2 shadow rounded-box w-48 text-base text-black">
-                            <div><a><button className="btn btn-sm capitalize">Join as Student</button></a></div>
-                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Student</button></a></div>
-                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Student</button></a></div>
+                            <div><Link to="/studentSignUp"><button className="btn btn-sm capitalize">Join as Student</button></Link></div>
+                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Instructor</button></a></div>
+                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Tutor</button></a></div>
                         </div>
                     </div>
 
@@ -66,7 +61,7 @@ const Header = () => {
 
                             <div tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 right-12 shadow bg-base-100 rounded-box w-48 text-base text-black">
                                 <nav>
-                                    <NavLink to="/" style={({ isActive }) => {
+                                    <NavLink to="/blog" style={({ isActive }) => {
                                         return {
                                             fontWeight: isActive ? "bold" : "",
                                             color: isActive ? "red" : "black",
@@ -85,26 +80,32 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
-                <div className="lg:flex hidden md:hidden gap-6 text-base">
-                    <div className="hover:cursor-pointer"><a>Blog</a></div>
+                <div className="lg:flex hidden md:hidden justify-center items-center gap-6 text-base">
+                    <div className="hover:cursor-pointer"><NavLink to="/blog" style={({ isActive }) => {
+                        return {
+                            fontWeight: isActive ? "bold" : "",
+                            color: isActive ? "red" : "black",
+                        };
+                    }}>Blog</NavLink></div>
                     <div className="dropdown dropdown-end">
                         <label tabIndex={1} className="hover:cursor-pointer">
                             <nav>
-                                <NavLink to="/" style={({ isActive }) => {
-                                    return {
-                                        fontWeight: isActive ? "bold" : "",
-                                        color: isActive ? "red" : "black",
-                                    };
-                                }}>Join</NavLink>
+                                <a>Join</a>
                             </nav>
                         </label>
 
                         {/* this part will be defferent for different types of user */}
 
-                        <div tabIndex={1} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-48 text-base text-black flex justify-center items-center">
-                            <div><Link to='/studentSignUp'><button className="btn btn-sm capitalize">Join as Student</button></Link></div>
-                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Student</button></a></div>
-                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Student</button></a></div>
+                        <div tabIndex={1} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-48 text-base text-black flex justify-start items-center">
+                            <div>
+                                <Link to="/studentSignUp">
+                                    <button className="btn btn-sm capitalize">
+                                        Join as Student
+                                    </button>
+                                </Link>
+                            </div>
+                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Instructor</button></a></div>
+                            <div><a><button className="btn btn-sm capitalize mt-3">Join as Tutor</button></a></div>
                         </div>
                     </div>
                     <nav>

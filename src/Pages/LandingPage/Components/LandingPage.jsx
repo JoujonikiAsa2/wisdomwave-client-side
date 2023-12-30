@@ -4,7 +4,7 @@ import Courses from "./Courses";
 import WhyChooseUs from "./WhyChooseUs";
 
 // Student
-const StudentHome = () => {
+const LandingPage = () => {
     return (
         <div>
             <Banner></Banner>
@@ -17,4 +17,4 @@ const StudentHome = () => {
     );
 };
 
-export default StudentHome;
+export default LandingPage;

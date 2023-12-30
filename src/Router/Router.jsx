@@ -2,7 +2,7 @@ import {
     createBrowserRouter,
 } from "react-router-dom"
 import Root from "../Layout/Root"
-import StudentHome from "../Pages/StudentHome/Components/StudentHome"
+import LandingPage from "../Pages/LandingPage/Components/LandingPage"
 import Login from "../Pages/Login/Login"
 import StudentSignUp from "../Pages/StudentSignUp/StudentSignUp"
 
@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
             {
                 path: "/",
                 // student home route
-                element: <StudentHome></StudentHome>
+                element: <LandingPage></LandingPage>
             }
         ]
     },

@@ -1,9 +1,9 @@
 import React from 'react';
 import SectionTitle from '../../../SharedComponents/SectionTitle/SectionTitle';
-import icon1 from '../../../assets/Photos/StudentHome/knowledge.png'
-import icon2 from '../../../assets/Photos/StudentHome/conversation2.png'
-import icon3 from '../../../assets/Photos/StudentHome/conversation1.png'
-import icon4 from '../../../assets/Photos/StudentHome/conversation.png'
+import icon1 from '../../../assets/Photos/LandingPage/knowledge.png'
+import icon2 from '../../../assets/Photos/LandingPage/conversation2.png'
+import icon3 from '../../../assets/Photos/LandingPage/conversation1.png'
+import icon4 from '../../../assets/Photos/LandingPage/conversation.png'
 
 const WhyChooseUs = () => {
     return (

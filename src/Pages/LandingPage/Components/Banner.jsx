@@ -1,6 +1,6 @@
-import slider1 from '../../../assets/Photos/slider-2.jpg'
-import slider2 from '../../../assets/Photos/slide-2.jpg'
-import slider3 from '../../../assets/Photos/slide-3.jpg'
+import slider1 from '../../../assets/Photos/LandingPage/slide-3.jpg'
+import slider2 from '../../../assets/Photos/LandingPage/slide-2.jpg'
+import slider3 from '../../../assets/Photos/LandingPage/slider-2.jpg'
 
 import React, { useRef, useState } from 'react';
 // Import Swiper React components
