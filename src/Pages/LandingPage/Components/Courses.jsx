@@ -54,7 +54,7 @@ const Courses = () => {
                 modules={[Pagination]}
                 className="mySwiper" >
                 {
-                    courses.map(course => <SwiperSlide className='mt-8 mb-16'>
+                    courses !== undefined && courses.map(course => <SwiperSlide className='mt-8 mb-16'>
                         <Course key={course._id} course={course}>
                         </Course>
                     </SwiperSlide>)

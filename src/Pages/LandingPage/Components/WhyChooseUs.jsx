@@ -8,7 +8,7 @@ import icon4 from '../../../assets/Photos/LandingPage/conversation.png'
 // WHy choose us section
 const WhyChooseUs = () => {
     return (
-        <div>
+        <div className='pb-12'>
             <SectionTitle title="Why choose Us"></SectionTitle>
             <div className='flex flex-col lg:flex-row md:flex-row justify-between items-center gap-6'>
                 <div className=' space-y-6'>

@@ -1,6 +1,7 @@
 import { Rating } from '@smastrom/react-rating'
 
 import '@smastrom/react-rating/style.css'
+import { Link } from 'react-router-dom';
 
 //Course card design
 
@@ -20,7 +21,9 @@ const Course = ({ course }) => {
                     <div>
                         <p className="text-sm font-bold capitalize">Instructor: <span className='font-normal'>{instructor}</span></p>
                         <div>
-                            <button className='btn btn-xs capitalize bg-blue-500'>Buy Now</button>
+                            <Link to={`/courseDetails/${course._id}`}>
+                                <button className='btn btn-xs capitalize bg-blue-500'>Buy Now</button>
+                            </Link>
                         </div>
                     </div>
                     <div>

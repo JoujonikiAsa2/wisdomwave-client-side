@@ -2,8 +2,8 @@ import logo from '../../assets/Photos/LandingPage/logo_wave.png'
 
 const Footer = () => {
     return (
-        <div>
-            <div className='mt-12 bg-slate-200'>
+        <div className=''>
+            <div className=' bg-slate-200'>
                 <footer className="flex lg:flex-row md:flex-row flex-col text-base-content lg:justify-between md:justify-between justify-center gap-4 lg:px-28 py-6">
                     <aside className='flex flex-col justify-center items-center gap-3 lg:text-left text-center'>
                         <div className='flex flex-col justify-center items-center gap-3'>

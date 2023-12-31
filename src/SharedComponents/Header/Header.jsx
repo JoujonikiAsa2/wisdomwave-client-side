@@ -63,7 +63,7 @@ const Header = () => {
                         })
                         .catch(error => console.log(error))
                 }
-            }>Log Out
+            } className="hover:cursor-pointer">Log Out
             </nav>
         </>
     </>
