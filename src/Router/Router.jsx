@@ -10,6 +10,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute"
 import Blogs from "../Pages/Blogs/Blogs"
 import CreateBlogs from "../Pages/Blogs/CreateBlogs"
 import Blog from "../Pages/Blogs/Blog"
+import AvailableCourses from "../Pages/Student/Components/AvailableCourses"
 
 export const router = createBrowserRouter([
     {
@@ -37,6 +38,11 @@ export const router = createBrowserRouter([
             {
                 path: '/createBlog',
                 element: <PrivateRoute><CreateBlogs /></PrivateRoute>
+            }
+            ,
+            {
+                path: '/allCourse',
+                element: <PrivateRoute><AvailableCourses /></PrivateRoute>
             }
         ]
     },

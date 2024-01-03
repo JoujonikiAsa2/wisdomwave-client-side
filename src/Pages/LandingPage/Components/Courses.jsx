@@ -1,6 +1,3 @@
-
-import { useQuery } from '@tanstack/react-query';
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import Course from './Course';
 import SectionTitle from '../../../SharedComponents/SectionTitle/SectionTitle';
 // Import Swiper React components
@@ -11,19 +8,21 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import './styles.css'
+import useCourses from '../../../hooks/useCourses';
+import Loader from '../../../SharedComponents/Loader/Loader';
 
 // All courses will appear
 const Courses = () => {
 
-    const axiosPublic = useAxiosPublic()
+    const {courses, isLoading,isError} = useCourses()
 
-    const { data: courses = [] } = useQuery({
-        queryKey: ['courses'],
-        queryFn: async () => {
-            const res = await axiosPublic.get('/api/courses')
-            return res.data.data
-        }
-    })
+    if (isLoading) {
+        return <Loader></Loader>;
+    }
+
+    if (isError) {
+        return <div className="my-20 text-center min-h-[80vh] flex justify-center items-center">Error loading blogs</div>;
+    }
 
     const swiperParams = {
         spaceBetween: 20,

@@ -104,7 +104,7 @@ const Header = () => {
         </nav>
         {
             user && <nav className="">
-                <NavLink to="/myCourse" style={({ isActive }) => {
+                <NavLink to="/allCourse" style={({ isActive }) => {
                     return {
                         fontWeight: isActive ? "bold" : "",
                         color: isActive ? "red" : "black",
