@@ -38,14 +38,19 @@ const StudentSignUp = () => {
     // Help to execute all function after submit the form
     const onSubmit = (data) => {
         console.log(data)
+        const name = data.fname + " " + data.lname
+        const phone = parseInt(data.phone)
+        console.log(phone, name)
 
         studentSignUp(data.email, data.password)
-            .then(data => {
-
+            .then(result => {
                 // console the input field data
-                console.log(data.user)
-                updateUserInfo(data.name, data.phone)
-                    .then(() => { console.log("updated") })
+                console.log(result.user)
+                updateUserInfo(name, phone)
+                    .then((res) => {
+                        console.log("updated")
+                        console.log(res.data)
+                    })
                     .catch(error => console.log(error))
                 reset()
 

@@ -8,7 +8,9 @@ const Root = () => {
     return (
         <div className=" max-w-screen-2xl mx-auto">
             <Header></Header>
-            <Outlet></Outlet>
+            <div className="w-full min-h-screen">
+                <Outlet></Outlet>
+            </div>
             <Footer></Footer>
         </div>
     );

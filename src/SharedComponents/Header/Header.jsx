@@ -22,6 +22,7 @@ const Header = () => {
                 return {
                     fontWeight: isActive ? "bold" : "",
                     color: isActive ? "red" : "black",
+                    borderBottom: isActive ? "2px solid red" : ""
                 };
             }}>Student</NavLink>
         </nav>
@@ -30,6 +31,7 @@ const Header = () => {
                 return {
                     fontWeight: isActive ? "bold" : "",
                     color: isActive ? "red" : "black",
+                    borderBottom: isActive ? "2px solid red" : ""
                 };
             }}>Instructor</NavLink>
         </nav>
@@ -38,6 +40,7 @@ const Header = () => {
                 return {
                     fontWeight: isActive ? "bold" : "",
                     color: isActive ? "red" : "black",
+                    borderBottom: isActive ? "2px solid red" : ""
                 };
             }}>Tutor</NavLink>
         </nav>
@@ -52,8 +55,18 @@ const Header = () => {
                     return {
                         fontWeight: isActive ? "bold" : "",
                         color: isActive ? "red" : "black",
+                        borderBottom: isActive ? "2px solid red" : ""
                     };
                 }}>Profile</NavLink>
+            </nav>
+            <nav>
+                <NavLink to="/createBlog" style={({ isActive }) => {
+                    return {
+                        fontWeight: isActive ? "bold" : "",
+                        color: isActive ? "red" : "black",
+                        borderBottom: isActive ? "2px solid red" : ""
+                    };
+                }}>Create Blog</NavLink>
             </nav>
             <nav onClick={
                 () => {
@@ -71,40 +84,44 @@ const Header = () => {
     // student NavLink 
 
     const sNavLinks = <>
-        <nav>
+        <nav className="">
             <NavLink to="/" style={({ isActive }) => {
                 return {
                     fontWeight: isActive ? "bold" : "",
                     color: isActive ? "red" : "black",
+                    borderBottom: isActive ? "2px solid red" : ""
                 };
             }}>Home</NavLink>
         </nav>
-        <nav>
-            <NavLink to="/blog" style={({ isActive }) => {
+        <nav className="">
+            <NavLink to="/blogs" style={({ isActive }) => {
                 return {
                     fontWeight: isActive ? "bold" : "",
                     color: isActive ? "red" : "black",
+                    borderBottom: isActive ? "2px solid red" : ""
                 };
-            }}>Blog</NavLink>
+            }}>Blogs</NavLink>
         </nav>
         {
-            user && <nav>
+            user && <nav className="">
                 <NavLink to="/myCourse" style={({ isActive }) => {
                     return {
                         fontWeight: isActive ? "bold" : "",
                         color: isActive ? "red" : "black",
+                        borderBottom: isActive ? "2px solid red" : ""
                     };
-                }}>My Courses</NavLink>
+                }}>Courses</NavLink>
             </nav>
         }
         {
-            user && <nav>
+            user && <nav className="">
                 <NavLink to="/findTutors" style={({ isActive }) => {
                     return {
                         fontWeight: isActive ? "bold" : "",
                         color: isActive ? "red" : "black",
+                        borderBottom: isActive ? "2px solid red" : ""
                     };
-                }}>Find/Become a Tutor</NavLink>
+                }}>Find Tutors</NavLink>
             </nav>
         }
         {
@@ -113,6 +130,7 @@ const Header = () => {
                     return {
                         fontWeight: isActive ? "bold" : "",
                         color: isActive ? "red" : "black",
+                        borderBottom: isActive ? "2px solid red" : ""
                     };
                 }}>Notifications</NavLink>
             </nav>
@@ -127,6 +145,7 @@ const Header = () => {
                     return {
                         fontWeight: isActive ? "bold" : "",
                         color: isActive ? "red" : "black",
+                        borderBottom: isActive ? "2px solid red" : ""
                     };
                 }}>Login</NavLink>
             </nav>
@@ -231,7 +250,7 @@ const Header = () => {
                     </div>
 
                     {/* Navbar end for the large device */}
-                    <div className="lg:flex hidden md:hidden justify-center items-center gap-6 text-base">
+                    <div className="lg:flex hidden md:hidden justify-center items-center gap-2 text-base">
 
                         {/* Navlinks for large device */}
                         {sNavLinks}

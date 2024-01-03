@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const Course = ({ course }) => {
 
-    const { title, thumbnail, instructor, rating, limitOfStudents, enrollFee } = course.courseDetails
+    const { title, thumbnail, instructor, rating, totalStudents, enrollFee } = course.courseDetails
     // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
     return (
         <div className="w-[90vw] lg:w-80 md:w-80 2xl:w-96 card shadow-xl hover:shadow-2xl hover:cursor-pointer hover:translate-y-2 hover:scale-110 relative">
@@ -17,9 +17,10 @@ const Course = ({ course }) => {
             </div>
             <div className='p-4'>
                 <h5 className="text-base font-bold py-2">{title}</h5>
-                <div className='flex justify-between text-left'>
+                <p className="text-sm font-bold capitalize">Instructor: <span className='font-normal'>{instructor}</span></p>
+
+                <div className='flex justify-between text-left p-4'>
                     <div>
-                        <p className="text-sm font-bold capitalize">Instructor: <span className='font-normal'>{instructor}</span></p>
                         <div>
                             <Link to={`/courseDetails/${course._id}`}>
                                 <button className='btn btn-xs capitalize bg-blue-500'>Buy Now</button>
@@ -28,7 +29,7 @@ const Course = ({ course }) => {
                     </div>
                     <div>
                         <p className="text-sm flex gap-3"><Rating style={{ maxWidth: 70 }} readOnly value={rating}></Rating>({rating})</p>
-                        <p className="text-sm font-bold">Total Student: <span className='font-normal'>{limitOfStudents}</span></p>
+                        <p className="text-sm font-bold">Total Student: <span className='font-normal'>{totalStudents}</span></p>
                     </div>
                 </div>
             </div>

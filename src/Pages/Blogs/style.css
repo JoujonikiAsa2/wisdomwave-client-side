@@ -1,0 +1,46 @@
+.blogDiv img{
+    width: 80vw;
+    height: 200px;
+    object-fit: fill;
+    viewport-fit:auto;
+}
+
+.blogDiv h1{
+    font-size: 2.125rem;
+}
+.blogDiv h2{
+    font-size: 1.875rem;
+}
+.blogDiv h3{
+    font-size: 1.5rem;
+}
+.blogDiv h4{
+    font-size: 1.25rem;
+}
+.blogDiv h5{
+    font-size: 1.125rem;
+}
+.blogDiv h6{
+    font-size:  1rem;
+}
+.blogDiv p{
+    font-size: 16px;
+    text-wrap:wrap;
+}
+
+.blogDiv a{
+    text-decoration: underline;
+    color: skyblue
+}
+.blogDiv ol{
+    list-style:decimal;
+    margin-left: 2rem;
+}
+.blogDiv ul{
+    list-style:disc;
+    margin-left: 2rem;
+}
+.blogDiv a{
+    text-decoration: underline;
+    color: skyblue
+}
