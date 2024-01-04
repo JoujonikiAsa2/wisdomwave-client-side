@@ -1,18 +1,23 @@
 import { IoMdArrowDropdown } from "react-icons/io";
-import { IoMenu, IoSearch } from "react-icons/io5";
+import { IoMenu, IoNotificationsCircle, IoSearch } from "react-icons/io5";
 import logo from '../../assets/Photos/LandingPage/logo_wave.png'
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaFonticons, FaSearch } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 
 const Header = () => {
 
     const { user, userSignOut } = useAuth()
     const [show, setShow] = useState(false)
+    const [clicked, setClicked] = useState(false)
 
     const handleShow = () => {
         setShow(!show)
+    }
+
+    const handleClicked = () => {
+        setClicked(!clicked)
     }
 
     // Join navlinks
@@ -49,8 +54,8 @@ const Header = () => {
     // profile links
     const profileLinks = <>
         <>
-            <h4 className="text-lg text-blue-500 font-bold">{user?.displayName}</h4>
-            <nav>
+            <h4 className="text-lg text-blue-700 font-bold capitalize">{user?.displayName}</h4>
+            {/* <nav>
                 <NavLink to="/profile" style={({ isActive }) => {
                     return {
                         fontWeight: isActive ? "bold" : "",
@@ -58,7 +63,7 @@ const Header = () => {
                         borderBottom: isActive ? "2px solid red" : ""
                     };
                 }}>Profile</NavLink>
-            </nav>
+            </nav> */}
             <nav>
                 <NavLink to="/createBlog" style={({ isActive }) => {
                     return {
@@ -104,16 +109,16 @@ const Header = () => {
         </nav>
         {
             user && <nav className="">
-                <NavLink to="/allCourse" style={({ isActive }) => {
+                <NavLink to="/myCourse" style={({ isActive }) => {
                     return {
                         fontWeight: isActive ? "bold" : "",
                         color: isActive ? "red" : "black",
                         borderBottom: isActive ? "2px solid red" : ""
                     };
-                }}>Courses</NavLink>
+                }}>My Courses</NavLink>
             </nav>
         }
-        {
+        {/* {
             user && <nav className="">
                 <NavLink to="/findTutors" style={({ isActive }) => {
                     return {
@@ -123,18 +128,8 @@ const Header = () => {
                     };
                 }}>Find Tutors</NavLink>
             </nav>
-        }
-        {
-            user && <nav>
-                <NavLink to="/notifications" style={({ isActive }) => {
-                    return {
-                        fontWeight: isActive ? "bold" : "",
-                        color: isActive ? "red" : "black",
-                        borderBottom: isActive ? "2px solid red" : ""
-                    };
-                }}>Notifications</NavLink>
-            </nav>
-        }
+        } */}
+
     </>
 
     // login navbar
@@ -156,7 +151,7 @@ const Header = () => {
     const join = <>
         {
             !user && <div className="dropdown dropdown-end">
-                <label tabIndex={1} className="hover:cursor-pointer">
+                <label tabIndex={1} className="hover:cursor-pointer" onClick={handleClicked}>
                     <nav>
                         <a>Join</a>
                     </nav>
@@ -164,7 +159,7 @@ const Header = () => {
 
                 {/* this part will be defferent for different types of user */}
 
-                <div tabIndex={1} className="menu menu-sm dropdown-content mt-6 z-[1] bg-base-100 p-2 shadow rounded-box w-48 text-base text-black gap-2">
+                <div tabIndex={1} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-6 z-[1] bg-base-100 p-2 shadow rounded-box w-48 text-base text-black gap-2"}`}>
                     {joinTypes}
                 </div>
             </div>
@@ -180,10 +175,12 @@ const Header = () => {
                 <div className="navbar-start gap-4">
 
                     {/* Logo and name of the website */}
-                    <div className="flex justify-center items-center gap-2 lg:text-xl md:text-xl xl:text-xl 2xl:text-2xl sm:text-lg font-bold">
-                        <img src={logo} alt="" className="w-6 h-6 lg:w-10 lg:h-10 md:w-10 md:h-10 " />
-                        <h2><span className="text-[#000000]">Wisdom</span><span className="text-[#0645B1]">Wave</span></h2>
-                    </div>
+                    <Link to="/">
+                        <div className="flex justify-center items-center gap-2 lg:text-xl md:text-xl xl:text-xl 2xl:text-2xl sm:text-lg font-bold">
+                            <img src={logo} alt="" className="w-6 h-6 lg:w-10 lg:h-10 md:w-10 md:h-10 " />
+                            <h2><span className="text-[#000000]">Wisdom</span><span className="text-[#0645B1]">Wave</span></h2>
+                        </div>
+                    </Link>
 
                     {/* Middle search bar for large device*/}
                     <div className="lg:flex hidden md:hidden">
@@ -208,18 +205,34 @@ const Header = () => {
                         {join}
 
                         <div className="lg:hidden md:flex flex gap-3 justify-center items-center">
+                            {
+                                user &&
+                                <nav className="dropdown dropdown-end">
+                                    <div tabIndex={0} onClick={handleClicked} className="hover:cursor-pointer">
+                                        <div><IoNotificationsCircle className="text-2xl text-blue-600"></IoNotificationsCircle></div>
+                                        <span className="absolute badge bottom-4 text-red-400">2</span>
+                                    </div>
+                                    <div tabIndex={0} className={`${clicked == false ? "hidden" : "mt-6 z-[1] card card-compact dropdown-content w-72 bg-base-100 shadow"}`}>
+                                        <div className="card-body">
+                                            <p>You added a new course.</p>
+                                            <p>You have a assignment to submit.</p>
+                                        </div>
+                                    </div>
+                                </nav>
+                            }
 
                             {/* Dropdown menu for small device */}
-                            <div className="dropdown dropdown-end">
-                                <label tabIndex={0} className="">
+                            <div className="dropdown dropdown-end" >
+                                <label tabIndex={0} className="" onClick={handleClicked}>
                                     <IoMenu></IoMenu>
                                 </label>
 
                                 {/* this part will be defferent for different types of user */}
 
-                                <div tabIndex={0} className="menu menu-sm dropdown-content mt-8 z-[1] p-2 right-12 shadow bg-base-100 rounded-box w-48 text-base text-black">
+                                <div tabIndex={0} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-8 z-[1] p-2 right-12 shadow bg-base-100 rounded-box w-48 text-base text-black"}`}>
                                     {/* Blog for small and medium device */}
                                     {sNavLinks}
+
 
                                     {/* Login for small and medium device */}
                                     {login}
@@ -230,7 +243,7 @@ const Header = () => {
                                 user &&
                                 <nav>
                                     <div className="dropdown dropdown-end">
-                                        <label tabIndex={1} className="hover:cursor-pointer">
+                                        <label tabIndex={1} className="hover:cursor-pointer" onClick={handleClicked}>
                                             <div className="avatar">
                                                 <div className="w-6 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                                     <img src={user?.photoURL} />
@@ -240,7 +253,7 @@ const Header = () => {
 
                                         {/* this part will be defferent for different types of user */}
 
-                                        <div tabIndex={1} className="menu menu-sm dropdown-content mt-6 z-[1] bg-base-100 p-2 shadow rounded-box w-48 text-base text-black gap-2">
+                                        <div tabIndex={1} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-6 z-[1] bg-base-100 p-2 shadow rounded-box w-48 text-base text-black gap-2"}`}>
                                             {profileLinks}
                                         </div>
                                     </div>
@@ -254,6 +267,21 @@ const Header = () => {
 
                         {/* Navlinks for large device */}
                         {sNavLinks}
+                        {
+                            user &&
+                            <nav className="dropdown dropdown-end">
+                                <div tabIndex={0} onClick={handleClicked} className="hover:cursor-pointer">
+                                    <div><IoNotificationsCircle className="text-2xl text-blue-600"></IoNotificationsCircle></div>
+                                    <span className="absolute badge bottom-4 text-red-400">2</span>
+                                </div>
+                                <div tabIndex={0} className={`${clicked == false ? "hidden" : "mt-6 z-[1] card card-compact dropdown-content w-72 bg-base-100 shadow"}`}>
+                                    <div className="card-body">
+                                        <p>You added a new course.</p>
+                                        <p>You have a assignment to submit.</p>
+                                    </div>
+                                </div>
+                            </nav>
+                        }
 
                         {/* Join dropdown for large device */}
                         {join}
@@ -262,6 +290,7 @@ const Header = () => {
                         <div>
                             {login}
                         </div>
+
                         {/* user profile for large device*/}
                         {
                             user &&

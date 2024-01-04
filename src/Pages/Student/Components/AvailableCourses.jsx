@@ -7,6 +7,7 @@ import Loader from '../../../SharedComponents/Loader/Loader';
 
 const AvailableCourses = () => {
     const { courses, isLoading, isError } = useCourses()
+    let enrolled = true
 
     if (isLoading) {
         return <Loader></Loader>; //if loading
@@ -21,7 +22,7 @@ const AvailableCourses = () => {
             {/* all courses i have enrolled */}
             <div className='flex flex-row justify-center items-center gap-12 flex-wrap mx-[5vw] mt-32'>
                 {
-                    courses.map(course => <Course key={course._id} course={course}></Course>)
+                    courses.slice(0,1).map(course => <Course key={course._id} course={course} enrolled={enrolled}></Course>)
                 }
             </div>
 
@@ -34,8 +35,6 @@ const AvailableCourses = () => {
                 <div className='flex flex-row justify-center items-center gap-2 py-10'>
 
                     <button className='btn border-blue-600 border-2'>1</button>
-                    <button className='btn border-blue-600 border-2'>2</button>
-                    <button className='btn border-blue-600 border-2'>3</button>
                 </div>
                 {/* next button */}
                 <div>

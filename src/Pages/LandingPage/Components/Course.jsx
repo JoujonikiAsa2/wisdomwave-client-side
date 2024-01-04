@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 //Course card design
 
-const Course = ({ course }) => {
+const Course = ({ course,enrolled }) => {
 
     const { title, thumbnail, instructor, rating, totalStudents, enrollFee } = course.courseDetails
     // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
@@ -23,7 +23,7 @@ const Course = ({ course }) => {
                     <div>
                         <div>
                             <Link to={`/courseDetails/${course._id}`}>
-                                <button className='btn btn-xs capitalize bg-blue-500'>Buy Now</button>
+                                <button className='btn btn-xs capitalize bg-blue-500'>{`${!enrolled ? "Buy Now" : "View Course"}`}</button>
                             </Link>
                         </div>
                     </div>

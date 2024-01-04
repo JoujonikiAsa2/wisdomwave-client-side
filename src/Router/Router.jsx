@@ -11,6 +11,7 @@ import Blogs from "../Pages/Blogs/Blogs"
 import CreateBlogs from "../Pages/Blogs/CreateBlogs"
 import Blog from "../Pages/Blogs/Blog"
 import AvailableCourses from "../Pages/Student/Components/AvailableCourses"
+import Payment from "../Pages/Payment/Payment"
 
 export const router = createBrowserRouter([
     {
@@ -41,8 +42,12 @@ export const router = createBrowserRouter([
             }
             ,
             {
-                path: '/allCourse',
+                path: '/myCourse',
                 element: <PrivateRoute><AvailableCourses /></PrivateRoute>
+            },
+            {
+                path: '/payment',
+                element: <PrivateRoute><Payment/></PrivateRoute>
             }
         ]
     },
