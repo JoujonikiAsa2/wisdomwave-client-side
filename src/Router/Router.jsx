@@ -12,6 +12,7 @@ import CreateBlogs from "../Pages/Blogs/CreateBlogs"
 import Blog from "../Pages/Blogs/Blog"
 import AvailableCourses from "../Pages/Student/Components/AvailableCourses"
 import Payment from "../Pages/Payment/Payment"
+import SearchPage from "../SharedComponents/Header/searchPage"
 
 export const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
             {
                 path: '/blogs',
                 element: <Blogs />
+            },
+            {
+                path: '/searchPage',
+                element: <SearchPage />
             },
             {
                 path: '/blogs/:id',
