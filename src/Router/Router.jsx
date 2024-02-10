@@ -12,7 +12,7 @@ import CreateBlogs from "../Pages/Blogs/CreateBlogs"
 import Blog from "../Pages/Blogs/Blog"
 import AvailableCourses from "../Pages/Student/Components/AvailableCourses"
 import Payment from "../Pages/Payment/Payment"
-import SearchPage from "../SharedComponents/Header/searchPage"
+import SearchPage from "../SharedComponents/Header/SearchPage"
 
 export const router = createBrowserRouter([
     {

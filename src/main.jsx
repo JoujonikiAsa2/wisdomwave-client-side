@@ -20,9 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <div className='lato'>
       <AuthProvider>
         <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router}>
-
-          </RouterProvider>
+          <RouterProvider router={router}/>
         </QueryClientProvider>
       </AuthProvider>
     </div>

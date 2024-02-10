@@ -78,7 +78,7 @@ const CreateBlogs = () => {
 
             { 'color': [] }, { 'background': [] },     //text color changer tools
             { 'align': [] }],                           //aligment tool
-            ['link', 'image','clean']                    //cleaner
+            ['link','clean']                    //cleaner
         ]
     };
 
@@ -91,35 +91,16 @@ const CreateBlogs = () => {
                     <div>
                         {/* bogger name */}
                         <label htmlFor="bloggerName">
-                            <p className=' text-base font-bold'>Blogger Name<span className='text-red-500'>*</span></p>
+                            <p className=' text-base font-bold'>Your Name<span className='text-red-500'>*</span></p>
                             <input type="text" name='bloggerName' className='input input-bordered w-full' required />
                         </label>
 
-                    </div>
-                    {/* social media links */}
-                    <div>
-                        <label htmlFor="facebook">
-                            <p className=' text-base font-bold'>Facebook Profile Link*</p>
-                            <input type="text" name='facebook' className='input input-bordered w-full' required />
-                        </label>
-                    </div>
-                    <div>
-                        <label htmlFor="linkedin">
-                            <p className=' text-base font-bold'>LinkedIn Profile Link*</p>
-                            <input type="text" name='linkedin' className='input input-bordered w-full' required />
-                        </label>
-                    </div>
-                    <div>
-                        <label htmlFor="github">
-                            <p className=' text-base font-bold'>GitHub Profile Link*</p>
-                            <input type="text" name='github' className='input input-bordered w-full' required />
-                        </label>
                     </div>
 
                     {/* blog category */}
                     <div>
                         <label htmlFor="blogCategory">
-                            <p className=' text-base font-bold'>Blog Category<span className='text-red-500'>*</span></p>
+                            <p className=' text-base font-bold'>Discussion Category<span className='text-red-500'>*</span></p>
                             <select name='blogCategory' className='input input-bordered w-full ' required>
                                 <option value=""></option>
                                 <option value="web development">Web Development</option>
@@ -139,7 +120,7 @@ const CreateBlogs = () => {
                     {/* Blog Title */}
                     <div>
                         <label htmlFor="blogTitle" >
-                            <p className=' text-base font-bold'>Blog Title<span className='text-red-500'>*</span></p>
+                            <p className=' text-base font-bold'>Discussion Topic<span className='text-red-500'>*</span></p>
                             <input type="text" name='blogTitle' className='input input-bordered w-full' required />
                         </label>
                     </div>
@@ -147,7 +128,7 @@ const CreateBlogs = () => {
                     {/* Blog content */}
                     <div className='w-full'>
                         <label htmlFor="">
-                            <p className=' text-base font-bold'>Blog Content<span className='text-red-500'>*</span></p>
+                            <p className=' text-base font-bold'>Discussion Content<span className='text-red-500'>*</span></p>
                             <ReactQuill
                                 theme='snow'
                                 value={text}
@@ -156,14 +137,6 @@ const CreateBlogs = () => {
                                 className='w-full bg-white rounded'
                                 required
                             />
-                        </label>
-                    </div>
-
-                    {/* document reading time */}
-                    <div className='w-full'>
-                        <label htmlFor="readingTime">
-                            <p className=' text-base font-bold'>Document Reading Time<span className='text-red-500'>*</span></p>
-                            <input type="number" name='readingTime' placeholder='Document Reading Time' className='input input-bordered w-full' required />
                         </label>
                     </div>
 

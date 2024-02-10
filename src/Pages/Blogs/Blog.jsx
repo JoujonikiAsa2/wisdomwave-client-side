@@ -42,34 +42,19 @@ const Blog = () => {
     }
     return (
         // blog details
-        <div className="flex flex-col justify-center items-center my-20 min-h-screen mx-[15vw]">
+        <div className="flex flex-col justify-center items-center my-20 min-h-screen mx-[5vw] border-2 p-2">
             <div className="flex-1 space-y-4">
-                <h2 className="text-3xl font-bold">{blog?.blogTitle}</h2>
+                <h2 className="text-xl font-bold">{blog?.blogTitle}</h2>
                 <div className="w-96 rounded-full py-4 space-y-2">
                     <div className="flex flex-row gap-2 justify-start items-center">
                         {/* blogger image */}
                         <img src={image} alt="" className="w-12 h-12 rounded-full" />
                         <div className="space-y-2">
                             {/* blogger name */}
-                            <h4 className="text-lg font-bold text-blue-700">{blog?.bloggerName}</h4>
-                            {/* social media icons */}
-                            <div className="flex gap-2 justify-start items-center">
-                                {
-                                    blog?.facebookLink != null ? <Link to={`${blog?.facebookLink}`} target="_blank"> <FaFacebook className="text-lg lg:text-xl md:text-xl text-blue-600" ></FaFacebook></Link> : ""
-                                }
-                                {
-                                    blog?.linkedinLink != null ? <Link to={`${blog?.linkedinLink}`} target="_blank"><FaLinkedin className="text-lg lg:text-xl md:text-xl text-blue-600"></FaLinkedin></Link> : ""
-                                }
-                                {
-                                    blog?.githubLink != null ? <Link to={`${blog?.githubLink}`} target="_blank"><FaGithub className="text-lg lg:text-xl md:text-xl"></FaGithub></Link> : ""
-                                }
-                            </div>
-                            {/* reading time */}
-                            <p>Read {blog?.documnetReadingTime} min</p>
+                            <h4 className="text-base font-bold text-blue-700">{blog?.bloggerName}</h4>
+
                         </div>
                     </div>
-
-
                 </div>
                 {/* Blog contents */}
                 <div className="blogDiv space-y-4"

@@ -3,7 +3,8 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import BlogCards from "./BlogCards";
 import Loader from "../../SharedComponents/Loader/Loader";
 import { FcNext, FcPrevious } from "react-icons/fc";
-
+import BannerSlider from "../LandingPage/Components/BannerSlider";
+import slider2 from '../LandingPage/Components/discussion.json'
 const Blogs = () => {
     const axiosPublic = useAxiosPublic();
 
@@ -31,7 +32,8 @@ const Blogs = () => {
     console.log("Blogs", blogs);
 
     return (
-        <div className="my-32">
+        <div className="">
+            <BannerSlider slider={slider2} sliderText="Welcome to WishdomWave Take the touch of the wave of learning"></BannerSlider>
             {/* All blogs */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center justify-items-center gap-4 mx-[5vw]">
                 {blogs.map((blog) => (

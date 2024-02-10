@@ -1,6 +1,5 @@
-import slider1 from '../../../assets/Photos/LandingPage/slide-3.jpg'
-import slider2 from '../../../assets/Photos/LandingPage/slide-2.jpg'
-import slider3 from '../../../assets/Photos/LandingPage/slider-2.jpg'
+import slider1 from './educational-animation.json'
+import slider2 from './discussion.json'
 
 import React, { useRef, useState } from 'react';
 // Import Swiper React components
@@ -14,7 +13,8 @@ import 'swiper/css/navigation';
 import './styles.css';
 
 // import required modules
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import {Pagination, Navigation } from 'swiper/modules';
+import BannerSlider from './BannerSlider';
 
 // Landing page Banner
 const Banner = () => {
@@ -22,22 +22,25 @@ const Banner = () => {
     return (
         <>
             <Swiper
-                spaceBetween={30}
+                spaceBetween={300}
                 centeredSlides={true}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
+                // autoplay={{
+                //     delay: 2500,
+                //     disableOnInteraction: false,
+                // }}
                 pagination={{
                     clickable: true,
                 }}
                 navigation={true}
-                modules={[Autoplay, Pagination, Navigation]}
-                className="mySwiper"
+                modules={[Pagination, Navigation]}
+                className="mySwiper lg:h-[450px]"
             >
-                <SwiperSlide><img src={slider1} alt="Slide-1" className='' /></SwiperSlide>
-                <SwiperSlide><img src={slider2} alt="Slide-2" className='' /></SwiperSlide>
-                <SwiperSlide><img src={slider3} alt="Slide-3" className='' /></SwiperSlide>
+                <SwiperSlide>
+                    <BannerSlider slider={slider1} sliderText="Welcome to WishdomWave Take the touch of the wave of learning"></BannerSlider>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <BannerSlider slider={slider2} sliderText="You can disscuss your Problems with other"></BannerSlider>
+                </SwiperSlide>
             </Swiper>
         </>
     );

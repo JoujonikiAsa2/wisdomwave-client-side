@@ -25,35 +25,35 @@ const Courses = () => {
     }
 
     const swiperParams = {
-        spaceBetween: 20,
+        spaceBetween: 15,
         pagination: {
             type: 'fraction',
         },
         breakpoints: {
             320: {
-                slidesPerView: 1,
-            },
-            480: {
-                slidesPerView: 1,
-            },
-            768: {
                 slidesPerView: 2,
             },
-            1024: {
+            480: {
+                slidesPerView: 2,
+            },
+            768: {
                 slidesPerView: 3,
+            },
+            1024: {
+                slidesPerView: 4,
             },
         },
     };
 
     console.log(courses)
     return (
-        <div>
+        <div className=''>
             <SectionTitle title="Courses" subtitle="Find your favorite course here"></SectionTitle>
             <Swiper {...swiperParams}
                 modules={[Pagination]}
                 className="mySwiper" >
                 {
-                    courses !== undefined && courses.map(course => <SwiperSlide className='mt-8 mb-16'>
+                    courses !== undefined && courses.map(course => <SwiperSlide className='mt-8 mb-16 rounded-lg'>
                         <Course key={course._id} course={course}>
                         </Course>
                     </SwiperSlide>)

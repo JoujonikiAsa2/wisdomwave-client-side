@@ -15,7 +15,7 @@ const CourseCategory = () => {
 
     const axiosPublic = useAxiosPublic()
     const swiperParams = {
-        spaceBetween: 20,
+        spaceBetween: 10,
         autoplay: {
             delay: 2500,
             disableOnInteraction: false,
@@ -25,7 +25,7 @@ const CourseCategory = () => {
         },
         breakpoints: {
             320: {
-                slidesPerView: 1,
+                slidesPerView: 2,
             },
             480: {
                 slidesPerView: 2,
@@ -59,8 +59,8 @@ const CourseCategory = () => {
                 className="mySwiper" >
                 {
                     categories.map((category,index) => <SwiperSlide className='my-6'>
-                        <div key={index} className="card shadow-xl w-60 h-20 p-4 rounded hover:Shadow-2xl border-y-2 border-b-slate-400 mb-4">
-                            <h2 className="text-base font-bold">{category}</h2>
+                        <div key={index} className="card border-[1px] w-60 h-16 p-2 rounded hover:Shadow-2xl mb-4 flex justify-center items-center bg-gradient-to-r from-[#29ADB2] to-[#0766AD]">
+                            <h2 className="text-sm text-white font-bold">{category}</h2>
                         </div>
                     </SwiperSlide>)
                 }
