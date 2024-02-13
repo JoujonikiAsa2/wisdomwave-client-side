@@ -14,6 +14,7 @@ import AvailableCourses from "../Pages/Student/Components/AvailableCourses"
 import Payment from "../Pages/Payment/Payment"
 import SearchPage from "../SharedComponents/Header/SearchPage"
 import PageNotFound from "../Pages/404_page/PageNotFound"
+import { AllCourses } from "../Pages/LandingPage/Components/AllCourses"
 
 export const router = createBrowserRouter([
     {
@@ -55,6 +56,11 @@ export const router = createBrowserRouter([
             {
                 path: '/payment',
                 element: <PrivateRoute><Payment/></PrivateRoute>
+            },
+            {
+                path: '/allCourses',
+                element: <AllCourses></AllCourses>
+
             }
         ]
     },

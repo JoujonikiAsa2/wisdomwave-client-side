@@ -6,8 +6,8 @@ const PageNotFound = () => {
     return (
         <div>
             <div className='w-full h-screen flex flex-col gap-3 justify-center items-center'>
-                <div className='flex justify-center items-center w-[200px]
-             h-[200px] bg-red-400'>
+                <div className='flex flex-col justify-center items-center w-[200px]
+             h-[200px] bg-red-400 rounded-md'>
                     <TypeAnimation
                     sequence={[
                         '404', 2000, 'ERROR', 2000
@@ -19,9 +19,8 @@ const PageNotFound = () => {
                      cursor={false}
                     >
                     </TypeAnimation>
-                </div>
-                <h4 className='text-lg'>Plase go back to the Home Page</h4>
-                <Link to='/'><button className="btn btn-sm bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] text-white border-2 border-none">Home</button></Link>
+                </div><h2 className='text-2xl'>No Page Found</h2>
+                <Link to='/'><button className="btn btn-sm bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] text-white border-2 border-none capitalize">Back Home</button></Link>
             </div>
         </div>
     );

@@ -10,11 +10,11 @@ const Course = ({ course, enrolled }) => {
     const { title, thumbnail, instructor, rating, totalStudents, enrollFee } = course.courseDetails
     // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
     return (
-        <div className="w-[90vw] lg:w-[20.6rem] md:w-[43vw] 2xl:w-96 h-[20.5rem] lg:h-[18rem] md:h-[18rem] hover:shadow hover:cursor-pointer relative card pb-2 border">
+        <div className="lg:w-[14.6rem] md:lg:w-[14.6rem] w-[90%] h-[20.5rem] lg:h-[18rem] md:h-[18rem] hover:shadow hover:cursor-pointer relative card pb-2 border">
             <div className='flex justify-center items-center'>
                 <img src={thumbnail} alt="" className="w-full h-32  rounded-t-lg" />
             </div>
-            <div className='w-16 h-7 text-[#F3F3F3] bg-[#29ADB2] p-1 text-sm text-center rounded-lg absolute bottom-48 top-2 left-2 font-bold'>
+            <div className={`${enrollFee ? "hidden" : 'w-16 h-7 text-[#F3F3F3] bg-[#29ADB2] p-1 text-sm text-center rounded-lg absolute bottom-48 top-2 left-2 font-bold'}`}>
                 <p>{enrollFee}Tk</p>
             </div>
             <div className='text-start px-2 space-y-6 h-full'>

@@ -16,7 +16,7 @@ const Header = () => {
         const handleScroll = () => {
           const scrollY = window.scrollY;
     
-          setIsScrolled(scrollY >= 100);
+          setIsScrolled(scrollY >= 120);
         };
     
         window.addEventListener("scroll", handleScroll);
@@ -187,9 +187,9 @@ const Header = () => {
 
     return (
         <div className={`${
-            isScrolled ? "bg-gray-50 transition duration-1000" : "bg-cardBG"
+            isScrolled && "bg-gray-50 transition duration-1000"
           }`}>
-            <div className={`navbar lora font-semibold md:px-[5vw] lg:px-[5vw] max-w-[96rem] fixed z-50 text-white ${isScrolled && "bg-slate-400"}`}>
+            <div className={`navbar lora font-semibold md:px-[5vw] lg:px-[5vw] max-w-[96rem] fixed z-50 text-white ${isScrolled && "bg-base-200"}`}>
 
                 {/* this is common part for all users */}
 
