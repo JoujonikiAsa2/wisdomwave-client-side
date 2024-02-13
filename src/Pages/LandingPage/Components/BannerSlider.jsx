@@ -4,17 +4,13 @@ import './styles.css';
 
 const BannerSlider = ({slider, sliderText}) => {
 
-    const lottieStyle = {
-        width: '100%',
-        height: '50%'
-    }
     return (
-        <div className='flex flex-col lg:flex-row md:flex-row justify-center items-center gap-2 relative h-[450px] bg-[#C5E898]  w-full'>
-            <div className='text-2xl text-[#0766AD] font-bold z-50 lora p-10'>
+        <div className='flex flex-col-reverse lg:flex-row md:flex-row justify-center items-center bg-[#C5E898]  w-full p-20'>
+            <div className='text-2xl text-[#0766AD] font-bold lora lg:w-1/2'>
                 <h2 className='text-wrap text-center'>{sliderText}</h2>
             </div>
-            <div className='w-full p-10'>
-                <Lottie animationData={slider} style={lottieStyle}></Lottie>
+            <div className='lg:w-1/2 flex justify-center items-center'>
+                <Lottie animationData={slider} className=' lg:max-w-[500px] lg:h-[350px] h-full'></Lottie>
             </div>
         </div>
     );

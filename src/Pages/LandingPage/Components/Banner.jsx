@@ -33,7 +33,7 @@ const Banner = () => {
                 }}
                 navigation={true}
                 modules={[Pagination, Navigation]}
-                className="mySwiper lg:h-[450px]"
+                className="mySwiper"
             >
                 <SwiperSlide>
                     <BannerSlider slider={slider1} sliderText="Welcome to WishdomWave Take the touch of the wave of learning"></BannerSlider>

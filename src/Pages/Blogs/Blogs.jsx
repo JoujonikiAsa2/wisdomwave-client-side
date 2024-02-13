@@ -33,7 +33,7 @@ const Blogs = () => {
 
     return (
         <div className="">
-            <BannerSlider slider={slider2} sliderText="Welcome to WishdomWave Take the touch of the wave of learning"></BannerSlider>
+            <BannerSlider slider={slider2} sliderText="Share your problems with others and get Help"></BannerSlider>
             {/* All blogs */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center justify-items-center gap-4 mx-[5vw]">
                 {blogs.map((blog) => (

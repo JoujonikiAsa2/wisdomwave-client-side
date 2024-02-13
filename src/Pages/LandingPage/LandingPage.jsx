@@ -7,11 +7,12 @@ import slider1 from '../LandingPage/Components/educational-animation.json'
 
 // This is a landing page for all users and also student homepage
 const LandingPage = () => {
+
     return (
         <div className="">
-            <div className="mt-16">
+            <div className="">
             {/* <Banner></Banner> */}
-            <BannerSlider slider={slider1} sliderText="Welcome to WishdomWave Take the touch of the wave of learning" size={size}></BannerSlider>
+            <BannerSlider slider={slider1} sliderText="Welcome to WishdomWave Take the touch of the wave of learning"></BannerSlider>
             </div>
             <div className="mx-[5vw] space-y-12">
                 <Courses></Courses>
