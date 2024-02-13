@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Profile from "./Profile";
 import Notifications from "./Notifications";
+import toast, { Toaster } from "react-hot-toast";
 
 const Header = () => {
 
@@ -14,17 +15,17 @@ const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     useEffect(() => {
         const handleScroll = () => {
-          const scrollY = window.scrollY;
-    
-          setIsScrolled(scrollY >= 120);
+            const scrollY = window.scrollY;
+
+            setIsScrolled(scrollY >= 120);
         };
-    
+
         window.addEventListener("scroll", handleScroll);
-    
+
         return () => {
-          window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("scroll", handleScroll);
         };
-      }, []);
+    }, []);
 
     const handleShow = () => {
         setShow(!show)
@@ -108,7 +109,9 @@ const Header = () => {
                 () => {
                     userSignOut()
                         .then(() => {
-                            console.log("Go to login page")
+                            toast.success('Successfully Logged Out!',{
+                                duration: 1000,
+                            })
                         })
                         .catch(error => console.log(error))
                 }
@@ -186,9 +189,12 @@ const Header = () => {
     </>
 
     return (
-        <div className={`${
-            isScrolled && "bg-gray-50 transition duration-1000"
-          }`}>
+        <div className={`${isScrolled && "bg-gray-50 transition duration-1000"
+            }`}>
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
             <div className={`navbar lora font-semibold md:px-[5vw] lg:px-[5vw] max-w-[96rem] fixed z-50 text-white ${isScrolled && "bg-base-200"}`}>
 
                 {/* this is common part for all users */}

@@ -6,14 +6,20 @@ import { FaArrowCircleLeft, FaFacebook } from "react-icons/fa";
 import Lottie from 'lottie-react';
 import signUpAnimation from './signUp.json'
 import useAuth from '../../hooks/useAuth';
-import Swal from 'sweetalert2';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdCalendarToday, MdContactPhone, MdDriveFileRenameOutline, MdEmail, MdImage, MdPassword } from "react-icons/md";
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
+import toast, { Toaster } from 'react-hot-toast';
+'../../hooks/useAxiosPublic';
+const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_API}`
 
 
 const StudentSignUp = () => {
 
+    const axiosPublic = useAxiosPublic()
     // date picker
     const [startDate, setStartDate] = useState();
 
@@ -23,7 +29,7 @@ const StudentSignUp = () => {
     const location = useLocation()
 
     // get this from useAuth custom hook
-    const { studentSignUp, userSignOut, updateUserInfo } = useAuth()
+    const { studentSignUp, googleLogin, userSignOut, updateUserInfo } = useAuth()
 
     // react hook form built in function desctructuring
     const {
@@ -36,55 +42,75 @@ const StudentSignUp = () => {
     } = useForm()
 
     // Help to execute all function after submit the form
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data)
         const name = data.fname + " " + data.lname
         const phone = parseInt(data.phone)
-        console.log(phone, name)
+        const imageFile = { image: data.profile[0] }
+        const res = await axiosPublic.post(image_hosting_api, imageFile, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        })
+
+        console.log(phone, name, res.data.data.display_url)
+        const image = res.data.data.display_url
 
         studentSignUp(data.email, data.password)
             .then(result => {
                 // console the input field data
                 console.log(result.user)
-                updateUserInfo(name, phone)
+                updateUserInfo(name, phone, image)
                     .then((res) => {
                         console.log("updated")
                         console.log(res.data)
                     })
                     .catch(error => console.log(error))
                 reset()
-
                 // if the user created successfully then display the sweet alert
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 1000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    icon: "success",
-                    title: "Signed Up successfully",
-                    willClose: () => {
-                        userSignOut()
-                            .then(() => {
-                                console.log("Go to login page")
-                            })
-                            .catch(error => console.log(error))
-                        // Redirect to the login page after the timer expires
-                        console.log('SweetAlert closed.');
-                        navigate('/login');
-                    }
-                });
+                toast.success('Successfully Signed Up!', {
+                    duration: 1000
+                })
+                setTimeout(() => {
+                    userSignOut()
+                        .then(() => {
+                            console.log("Go to login page")
+                        })
+                        .catch(error => console.log(error))
+                    navigate(location.state || '/login')
+                }, 2000)
             })
             .catch(error => {
 
                 // console if any error
-                console.log(error)
+                toast.error(error)
+            })
+    }
+
+    const handleGoogleLogin = () => {
+        googleLogin()
+            .then(res => {
+                {
+                    if (res.user) {
+                        toast.success('Successfully Logged In!', {
+                            duration: 1000,
+                        })
+                        reset()
+                        setTimeout(() => {
+                            userSignOut()
+                                .then(() => {
+                                    console.log("Go to login page")
+                                })
+                                .catch(error => console.log(error))
+                            navigate(location.state || '/login')
+                        }, 1200)
+                    }
+                }
+            })
+            .catch(error => {
+
+                // console if any error
+                toast.error('Failed to Log In!')
             })
     }
 
@@ -94,6 +120,10 @@ const StudentSignUp = () => {
             <div className='flex p-8'>
                 <Link to='/'><FaArrowCircleLeft className='text-2xl'></FaArrowCircleLeft></Link>
             </div>
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
             <div className='flex flex-col justify-center items-center md:min-h-screen lg:min-h-screen min-h-[900px] max-w-[96rem] mx-auto mt-4'>
                 <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[600px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl lg:hover:border-t-2 md:hover:shadow-2xl pt-12'>
                     <div className='flex-1 flex-col justify-end'>
@@ -104,10 +134,10 @@ const StudentSignUp = () => {
                         {/* vertical line */}
                         <div className='divider divider-neutral divider-vertical md:divider-horizontal lg:divider-horizontal h-0 md:h-96 lg:h-96'></div>
                     </div>
-                    <div className='flex-1 flex flex-col justify-start'>
+                    <div className='flex-1 flex flex-col justify-start  h-[600px]'>
 
                         {/* react hook form */}
-                        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4 h-[600px]'>
+                        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
                             <div className='flex gap-[1.5rem] md:gap-2 lg:gap-6 justify-between lg:justify-center md:justify-end items-center mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
                                 <label htmlFor="">
                                     <MdDriveFileRenameOutline className='text-blue-700'></MdDriveFileRenameOutline >
@@ -271,23 +301,23 @@ const StudentSignUp = () => {
                                     type="submit"
                                     className='btn bg-blue-500 hover:btn-outline input input-bordered border-blue-700 w-[80vw] md:w-96 lg:w-[23rem] capitalize text-white' />
                             </div>
-
+                        </form>
+                        <div className='flex flex-col justify-center items-center space-y-2'>
                             {/* horizontal line */}
                             <div className="">
                                 <div className="divider divider-neutral py-2 w-[80vw] md:w-96 lg:w-[23rem]">OR</div>
                             </div>
 
                             {/* social media login icon */}
-                            <div className='flex justify-start gap-4'>
-                                <FcGoogle className=' text-3xl md:text-3xl lg:text-4xl font-bold'></FcGoogle >
-                                <FaFacebook className='text-blue-700 text-3xl md:text-3xl lg:text-4xl font-bold'></FaFacebook>
+                            <div className='flex justify-start items-center gap-2'>
+                                <FcGoogle className=' text-3xl md:text-3xl lg:text-3xl font-bold hover:cursor-pointer' onClick={handleGoogleLogin}></FcGoogle >
                             </div>
 
                             {/* toggle to the login page */}
                             <div>
-                                <p className='text-base'>Already have an account? <Link to="/login"><span className=' text-red-400 underline'>Login here</span></Link></p>
+                                <p className='text-base'>Already have an account? <Link to="/login"><span className=' text-[#0766AD] active:underline'>Login here</span></Link></p>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
