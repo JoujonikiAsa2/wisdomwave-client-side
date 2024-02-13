@@ -1,7 +1,7 @@
 import { IoMenu, IoNotificationsCircle, IoSearch } from "react-icons/io5";
 import logo from '../../assets/Photos/LandingPage/logo_wave.png'
 import { Link, NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Profile from "./Profile";
 import Notifications from "./Notifications";
@@ -11,6 +11,20 @@ const Header = () => {
     const { user, userSignOut } = useAuth()
     const [show, setShow] = useState(false)
     const [clicked, setClicked] = useState(false)
+    const [isScrolled, setIsScrolled] = useState(false);
+    useEffect(() => {
+        const handleScroll = () => {
+          const scrollY = window.scrollY;
+    
+          setIsScrolled(scrollY >= 100);
+        };
+    
+        window.addEventListener("scroll", handleScroll);
+    
+        return () => {
+          window.removeEventListener("scroll", handleScroll);
+        };
+      }, []);
 
     const handleShow = () => {
         setShow(!show)
@@ -172,8 +186,10 @@ const Header = () => {
     </>
 
     return (
-        <div className="flex flex-col">
-            <div className="navbar bg-white shadow-xl  lora font-semibold md:px-[5vw] lg:px-[5vw] max-w-[96rem] fixed z-50 ">
+        <div className={`${
+            isScrolled ? "bg-gray-50 transition duration-1000" : "bg-cardBG"
+          }`}>
+            <div className={`navbar lora font-semibold md:px-[5vw] lg:px-[5vw] max-w-[96rem] fixed z-50 text-white ${isScrolled && "bg-slate-400"}`}>
 
                 {/* this is common part for all users */}
 
@@ -190,8 +206,8 @@ const Header = () => {
                     {/* Middle search bar for large device*/}
                     <div className="lg:flex hidden md:hidden">
                         <div className="join">
-                            <input className="input input-bordered join-item input-sm bg-[#F3F3F3]" placeholder="Search Course" />
-                            <button className="btn join-item btn-sm capitalize bg-[#0766AD] text-white">Search</button>
+                            <input className="input input-bordered join-item input-sm bg-[#F3F3F3] focus:outline-none placeholder:text-[#cac9c9] focus:placeholder:text-[#949292]" placeholder="Search Course" />
+                            <button className="btn join-item btn-sm capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white">Search</button>
                         </div>
                     </div>
                 </div>

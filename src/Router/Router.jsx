@@ -13,11 +13,13 @@ import Blog from "../Pages/Blogs/Blog"
 import AvailableCourses from "../Pages/Student/Components/AvailableCourses"
 import Payment from "../Pages/Payment/Payment"
 import SearchPage from "../SharedComponents/Header/SearchPage"
+import PageNotFound from "../Pages/404_page/PageNotFound"
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Root />,
+        errorElement: <PageNotFound/>,
         children: [
             {
                 path: "/",

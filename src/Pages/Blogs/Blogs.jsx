@@ -6,6 +6,8 @@ import { FcNext, FcPrevious } from "react-icons/fc";
 import BannerSlider from "../LandingPage/Components/BannerSlider";
 import slider2 from '../LandingPage/Components/discussion.json'
 const Blogs = () => {
+    const bg = "bg-[#C5E898]"
+    const textColor = "text-[#0766AD]"
     const axiosPublic = useAxiosPublic();
 
     const { data: blogs = [], isLoading, isError } = useQuery({
@@ -33,7 +35,7 @@ const Blogs = () => {
 
     return (
         <div className="">
-            <BannerSlider slider={slider2} sliderText="Share your problems with others and get Help"></BannerSlider>
+            <BannerSlider slider={slider2} bg={bg} textColor={textColor} sliderText="Share your problems with others and get Help"></BannerSlider>
             {/* All blogs */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center justify-items-center gap-4 mx-[5vw]">
                 {blogs.map((blog) => (

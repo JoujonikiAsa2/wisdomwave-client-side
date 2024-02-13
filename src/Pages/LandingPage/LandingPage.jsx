@@ -8,13 +8,16 @@ import slider1 from '../LandingPage/Components/educational-animation.json'
 // This is a landing page for all users and also student homepage
 const LandingPage = () => {
 
+    const bg = "bg-[#C5E898]"
+    const textColor = "text-[#0766AD]"
+
     return (
         <div className="">
             <div className="">
             {/* <Banner></Banner> */}
-            <BannerSlider slider={slider1} sliderText="Welcome to WishdomWave Take the touch of the wave of learning"></BannerSlider>
+            <BannerSlider slider={slider1} bg={bg} textColor={textColor} sliderText="Welcome to WishdomWave Take the touch of the wave of learning"></BannerSlider>
             </div>
-            <div className="mx-[5vw] space-y-12">
+            <div className="mx-[5vw] space-y-12 pt-12">
                 <Courses></Courses>
                 <CourseCategory></CourseCategory>
                 <WhyChooseUs></WhyChooseUs>
