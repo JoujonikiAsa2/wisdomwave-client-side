@@ -46,7 +46,7 @@ const StudentSignUp = () => {
     const onSubmit = async (data) => {
         // console.log(data)
         const name = data.fname + " " + data.lname
-        const phone = parseInt(data.phone)
+        const phoneNumber = parseInt(data.phone)
         const imageFile = { image: data.profile[0] }
         const res = await axiosPublic.post(image_hosting_api, imageFile, {
             headers: {
@@ -56,6 +56,7 @@ const StudentSignUp = () => {
 
         // console.log(phone, name, res.data.data.display_url)
         const image = res.data.data.display_url
+        console.log(phoneNumber)
 
         studentSignUp(data.email, data.password)
             .then(result => {
@@ -63,7 +64,7 @@ const StudentSignUp = () => {
                 // console.log(result.user)
 
                 // updating user information
-                updateUserInfo(name, phone, image)
+                updateUserInfo(name, phoneNumber, image)
                     .then((response) => {
                         console.log("updated")
                         // console.log(response.data)
@@ -134,27 +135,27 @@ const StudentSignUp = () => {
     return (
         <>
             {/* Icons and links to back on homepage */}
-            <div className='flex p-8'>
+            <div className='flex p-4'>
                 <Link to='/'><FaArrowCircleLeft className='text-2xl'></FaArrowCircleLeft></Link>
             </div>
             <Toaster
                 position="top-center"
                 reverseOrder={false}
             />
-            <div className='flex flex-col justify-center items-center md:min-h-screen lg:min-h-screen min-h-[900px] max-w-[96rem] mx-auto mt-4'>
-                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[600px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl lg:hover:border-t-2 md:hover:shadow-2xl pt-12'>
+            <div className='flex flex-col justify-center items-center h-[80vh] max-w-[96rem] mx-auto mt-4'>
+                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl lg:hover:border-t-2 md:hover:shadow-2xl'>
                     <div className='flex-1 flex-col justify-end'>
                         {/* side animation */}
-                        <Lottie animationData={signUpAnimation} className="max-w-[400px] h-[400px] md:h-[500px] lg:h-[800px]"></Lottie>
+                        <Lottie animationData={signUpAnimation} className="max-w-[400px] h-[300px]"></Lottie>
                     </div>
                     <div className='flex justify-center items-center'>
                         {/* vertical line */}
                         <div className='divider divider-neutral divider-vertical md:divider-horizontal lg:divider-horizontal h-0 md:h-96 lg:h-96'></div>
                     </div>
-                    <div className='flex-1 flex flex-col justify-start  h-[600px]'>
+                    <div className='flex-1 flex flex-col justify-start  h-[400px]'>
 
                         {/* react hook form */}
-                        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+                        <form onSubmit={handleSubmit(onSubmit)} className='space-y-2 w-full h-full'>
 
                             {/* User Name */}
                             <div className='flex gap-[1.5rem] md:gap-2 lg:gap-4 justify-between lg:justify-center md:justify-end items-center mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
@@ -166,7 +167,7 @@ const StudentSignUp = () => {
                                             name="fname"
                                             placeholder="First Name"
                                             {...register("fname", { required: true })}
-                                            className='input input-bordered border-blue-700 w-full focus:outline-none'
+                                            className='input input-bordered border-blue-700 w-full  h-9 focus:outline-none'
                                         />
                                         <div>
                                             {errors.fname && <span className='text-xs text-red-500'>This field is required</span>}
@@ -179,7 +180,7 @@ const StudentSignUp = () => {
                                             name="lname"
                                             placeholder="Last Name"
                                             {...register("lname", { required: true })}
-                                            className='input input-bordered border-blue-700 w-full focus:outline-none'
+                                            className='input input-bordered border-blue-700 w-full h-9 focus:outline-none'
                                         />
                                         <div>
                                             {errors.lname && <span className='text-xs text-red-500'>This field is required</span>}
@@ -197,7 +198,7 @@ const StudentSignUp = () => {
                                         type='file'
                                         name="profile"
                                         {...register("profile", { required: true })}
-                                        className='input input-bordered border-blue-700 w-full focus:outline-none p-2'
+                                        className='input input-bordered border-blue-700 w-full h-9 focus:outline-none pt-[0.4rem] text-xs'
                                     />
                                     <div>
                                         {errors.profile && <span className='text-xs text-red-500'>This field is required</span>}
@@ -222,10 +223,10 @@ const StudentSignUp = () => {
                                                         field.onChange(date);
                                                     }}
                                                     placeholderText="Date of birth"
-                                                    className="input input-bordered border-blue-700 w-[53vw] lg:w-[116%] md:w-full focus:outline-none"
+                                                    className="input input-bordered border-blue-700 w-[53vw] lg:w-[116%] h-9 md:w-full focus:outline-none"
                                                 />
                                                 <div>
-                                                    {errors.dob && <span className='text-xs text-red-500'>This field is required</span>}
+                                                    {errors.dob && <span className='text-xs text-red-500 '>This field is required</span>}
                                                 </div>
                                             </>
                                         )}
@@ -238,7 +239,7 @@ const StudentSignUp = () => {
                                         name="phone"
                                         placeholder="Phone"
                                         {...register("phone", { required: true })}
-                                        className='input input-bordered border-blue-700 w-full focus:outline-none'
+                                        className='input input-bordered border-blue-700 w-full h-9 focus:outline-none'
                                     />
 
                                     {/* error if field will be empty */}
@@ -252,9 +253,9 @@ const StudentSignUp = () => {
 
                             {/* email address */}
                             <div className='flex mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <div className='w-full'>
+                                <div className='w-full '>
                                     <input
-                                        type='text'
+                                        type='email'
                                         name="email"
                                         placeholder="Email"
                                         {...register("email",
@@ -262,7 +263,7 @@ const StudentSignUp = () => {
                                                 required: true,
                                                 pattern: /\S+@\S+\.\S+/
                                             })}
-                                        className='input input-bordered border-blue-700 w-full focus:outline-none'
+                                        className='input input-bordered border-blue-700 w-full h-9 focus:outline-none'
                                     />
                                     {/* error if field will be empty */}
                                     <div>
@@ -286,7 +287,7 @@ const StudentSignUp = () => {
                                                 maxLength: 20,
                                                 pattern: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,20}/
                                             })}
-                                        className='input input-bordered border-blue-700 w-full focus:outline-none' />
+                                        className='input input-bordered border-blue-700 w-full h-9 focus:outline-none' />
                                     <div>
                                         {errors.password?.type === "required" && <span className='text-xs text-red-600'>Password is required</span>}
                                         {errors.password?.type === "minLength" && <span className='text-xs text-red-600'>Password should be 6 character or longer</span>}
@@ -294,7 +295,7 @@ const StudentSignUp = () => {
                                         {errors.password?.type === "pattern" && <span className='text-xs text-red-600'>Must contain 1 upercase,1 lowercase, 1 number and 1 special character.</span>}
 
                                     </div>
-                                    <div className='absolute top-4 right-2'>
+                                    <div className='absolute top-2 right-2'>
                                         <IoMdEyeOff className={`text-xl ${passwordType == 'text' && 'hidden'}`} onClick={() => { setPasswordType('text') }} />
                                         <IoMdEye className={`text-xl ${passwordType == 'password' && 'hidden'}`} onClick={() => { setPasswordType('password') }} />
                                     </div>
@@ -302,14 +303,12 @@ const StudentSignUp = () => {
                             </div>
 
                             {/* Terms and Conditions */}
-                            <div>
-                                <div>
-                                    <label htmlFor="">
-                                        <input type="checkbox" name="terms" id="" 
-                                            {...register("terms", { required: true })}
-                                        /> &nbsp; Accept the Therms and Conditions
-                                    </label>
-                                </div>
+                            <div className='py-2'>
+                                <label htmlFor="">
+                                    <input type="checkbox" name="terms" id=""
+                                        {...register("terms", { required: true })}
+                                    /> &nbsp; Accept the Therms and Conditions
+                                </label>
                                 <div>
                                     {errors.terms && <span className='text-xs text-red-500'>Checked this field to sign up</span>}
                                 </div>
@@ -319,7 +318,7 @@ const StudentSignUp = () => {
                                 <div className='w-full'>
                                     <input
                                         type="submit"
-                                        className='btn bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize' />
+                                        className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize' />
                                 </div>
                             </div>
                         </form>

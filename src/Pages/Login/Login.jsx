@@ -87,10 +87,11 @@ const Login = () => {
                 toast.error('Failed to Log In!')
             })
     }
+
     return (
         <>
             {/* redirect to the home page */}
-            <div className='flex px-8 pt-8'>
+            <div className='flex p-4'>
                 <Link to='/'><FaArrowCircleLeft className='text-2xl'></FaArrowCircleLeft></Link>
             </div>
             <Toaster
@@ -98,12 +99,12 @@ const Login = () => {
                 reverseOrder={false}
 
             />
-            <div className='flex justify-center items-center md:min-h-screen lg:min-h-screen min-h-[900px] max-w-[96rem] mx-auto'>
+            <div className='flex justify-center items-center h-[85vh] max-w-[96rem] mx-auto'>
                 <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl'>
 
                     {/* Loign animation */}
                     <div className='flex-1 flex justify-end'>
-                        <Lottie animationData={loginAnimation} className="max-w-[500px] h-[500px]"></Lottie>
+                        <Lottie animationData={loginAnimation} className="max-w-[500px] h-[400px]"></Lottie>
                     </div>
                     <div className='flex justify-center items-center'>
                         <div className='divider divider-neutral divider-vertical md:divider-horizontal lg:divider-horizontal h-0 md:h-96 lg:h-96'></div>
@@ -116,11 +117,11 @@ const Login = () => {
 
                                     {/* Email */}
                                     <input
-                                        type='text'
+                                        type='email'
                                         name="email"
                                         placeholder="Email"
                                         {...register("email", { required: true })}
-                                        className='input input-bordered border-black w-[80vw] md:w-96 lg:w-96'
+                                        className='input input-bordered border-[#0766AD] focus:outline-none w-[80vw] h-9 md:w-96 lg:w-96'
                                     />
                                     <div>
                                         {errors.email && <span className='text-xs text-red-500'>This field is required</span>}
@@ -134,9 +135,9 @@ const Login = () => {
                                         name="password"
                                         placeholder='Password'
                                         {...register("password", { required: true })}
-                                        className='input input-bordered border-black w-[80vw] md:w-96 lg:w-96'
+                                        className='input input-bordered border-[#0766AD] focus:outline-none w-[80vw] h-9 md:w-96 lg:w-96'
                                     />
-                                    <div className='absolute top-4 right-2'>
+                                    <div className='absolute top-2 right-2'>
                                         <IoMdEyeOff className={`text-xl ${passwordType == 'text' && 'hidden'}`} onClick={() => { setPasswordType('text') }} />
                                         <IoMdEye className={`text-xl ${passwordType == 'password' && 'hidden'}`} onClick={() => { setPasswordType('password') }} />
                                     </div>
@@ -146,17 +147,17 @@ const Login = () => {
                                 </div>
 
                                 {/* Submit button */}
-                                <div>
+                                <div className=''>
                                     <input
                                         type="submit"
-                                        className='btn bg-blue-500 hover:btn-outline input input-bordered border-black w-[80vw] md:w-96 lg:w-96 capitalize text-white' />
+                                        className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize' />
                                 </div>
                             </form>
                         </div>
                         <div className='flex flex-col justify-start items-start'>
 
                             <div className='text-end pt-3'>
-                                <Link className='hover:underline text-[#0766AD]'>Forget Password</Link>
+                                <Link to='/forgetPassword' className='hover:underline text-[#0766AD]' >Forget Password</Link>
                             </div>
                             <div className='flex justify-start flex-col'>
                                 {/* Divider */}
@@ -181,11 +182,11 @@ const Login = () => {
 
                                             {/* this part will be defferent for different types of user */}
 
-                                            <div tabIndex={1} className="dropdown-content mt-2 ml-3 z-[1] w-32 p-2 shadow text-black bg-[#F3F3F3]">
+                                            <div tabIndex={1} className="dropdown-content ml-4 z-[1] text-black bg-none">
                                                 <div className='flex flex-col gap-2'>
-                                                    <Link to="/studentSignUp"><button className="capitalize hover:underline">Student</button></Link>
-                                                    <Link to="/studentSignUp"><button className="capitalize hover:underline">Instructor</button></Link>
-                                                    <Link to="/studentSignUp"><button className=" capitalize hover:underline">Tutor</button></Link>
+                                                    <Link to="/studentSignUp"><button className="capitalize hover:underline text-[#0766AD]">Student</button></Link>
+                                                    <Link to="/studentSignUp"><button className="capitalize hover:underline text-[#0766AD]">Instructor</button></Link>
+                                                    <Link to="/studentSignUp"><button className=" capitalize hover:underline text-[#0766AD]">Tutor</button></Link>
                                                 </div>
                                             </div>
                                         </div>

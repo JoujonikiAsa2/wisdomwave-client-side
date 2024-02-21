@@ -15,6 +15,7 @@ import { AllCourses } from "../Pages/LandingPage/Components/AllCourses"
 import Discussions from "../Pages/Discussions/Discussions"
 import DiscussionDetails from "../Pages/Discussions/DiscussionDetails"
 import CreateDiscussion from "../Pages/Discussions/CreateDiscussion"
+import ForgetPassword from "../Components/ForgetPassword/ForgetPassword"
 
 export const router = createBrowserRouter([
     {
@@ -68,6 +69,10 @@ export const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login />
+    },
+    {
+        path: "/forgetPassword",
+        element: <ForgetPassword />
     },
     {
         path: "/studentSignUp",
