@@ -1,11 +1,12 @@
 import { IoMenu, IoNotificationsCircle, IoSearch } from "react-icons/io5";
 import logo from '../../assets/Photos/LandingPage/logo_wave.png'
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Profile from "./Profile";
 import Notifications from "./Notifications";
 import toast, { Toaster } from "react-hot-toast";
+import Cart from "./Cart";
 
 const Header = () => {
 
@@ -13,6 +14,9 @@ const Header = () => {
     const [show, setShow] = useState(false)
     const [clicked, setClicked] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false);
+    const navigate = useNavigate()
+
+    // Handle the navbar color
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
@@ -27,15 +31,17 @@ const Header = () => {
         };
     }, []);
 
+    // Helps to show the search bar on click( Small device )
     const handleShow = () => {
         setShow(!show)
     }
 
+    // set the clicked variable true, if any element is clicked
     const handleClicked = () => {
         setClicked(!clicked)
     }
 
-    // Join navlinks
+    // Join dropdown's navlinks
     const joinTypes = <>
         <nav>
             <NavLink to="/studentSignUp" style={({ isActive }) => {
@@ -66,61 +72,64 @@ const Header = () => {
         </nav>
     </>
 
-    // profile links
+    // profile links for logged in user
     const profileLinks = <>
-        <>
-            <nav>
-                <NavLink to="/createBlog" style={({ isActive }) => {
-                    return {
-                        fontWeight: isActive ? "bold" : "",
-                        color: isActive ? "#0766AD" : "",
-                        borderBottom: isActive ? "2px solid #0766AD" : ""
-                    };
-                }} className="dark:text-black">Create Discussion</NavLink>
-            </nav>
-            <nav>
-                <NavLink to="/mytuitions" style={({ isActive }) => {
-                    return {
-                        fontWeight: isActive ? "bold" : "",
-                        color: isActive ? "#0766AD" : "",
-                        borderBottom: isActive ? "2px solid #0766AD" : ""
-                    };
-                }} className="dark:text-black">My Tuitions</NavLink>
-            </nav>
-            <nav>
-                <NavLink to="/notices" style={({ isActive }) => {
-                    return {
-                        fontWeight: isActive ? "bold" : "",
-                        color: isActive ? "#0766AD" : "",
-                        borderBottom: isActive ? "2px solid #0766AD" : ""
-                    };
-                }} className="dark:text-black">Notices</NavLink>
-            </nav>
-            <nav>
-                <NavLink to="/assignments" style={({ isActive }) => {
-                    return {
-                        fontWeight: isActive ? "bold" : "",
-                        color: isActive ? "#0766AD" : "",
-                        borderBottom: isActive ? "2px solid #0766AD" : ""
-                    };
-                }} className="dark:text-black">Asignments</NavLink>
-            </nav>
-            <nav onClick={
-                () => {
-                    userSignOut()
-                        .then(() => {
-                            toast.success('Successfully Logged Out!',{
-                                duration: 1000,
+        {
+            user && <>
+                <nav>
+                    <NavLink to="/createDiscussion" style={({ isActive }) => {
+                        return {
+                            fontWeight: isActive ? "bold" : "",
+                            color: isActive ? "#0766AD" : "",
+                            borderBottom: isActive ? "2px solid #0766AD" : ""
+                        };
+                    }} className="dark:text-black">Create Discussion</NavLink>
+                </nav>
+                <nav>
+                    <NavLink to="/mytuitions" style={({ isActive }) => {
+                        return {
+                            fontWeight: isActive ? "bold" : "",
+                            color: isActive ? "#0766AD" : "",
+                            borderBottom: isActive ? "2px solid #0766AD" : ""
+                        };
+                    }} className="dark:text-black">My Tuitions</NavLink>
+                </nav>
+                <nav>
+                    <NavLink to="/notices" style={({ isActive }) => {
+                        return {
+                            fontWeight: isActive ? "bold" : "",
+                            color: isActive ? "#0766AD" : "",
+                            borderBottom: isActive ? "2px solid #0766AD" : ""
+                        };
+                    }} className="dark:text-black">Notices</NavLink>
+                </nav>
+                <nav>
+                    <NavLink to="/assignments" style={({ isActive }) => {
+                        return {
+                            fontWeight: isActive ? "bold" : "",
+                            color: isActive ? "#0766AD" : "",
+                            borderBottom: isActive ? "2px solid #0766AD" : ""
+                        };
+                    }} className="dark:text-black">Asignments</NavLink>
+                </nav>
+                <nav onClick={
+                    () => {
+                        userSignOut()
+                            .then(() => {
+                                toast.success('Successfully Logged Out!', {
+                                    duration: 1000,
+                                })
+                                navigate('/')
                             })
-                        })
-                        .catch(error => console.log(error))
-                }
-            } className="hover:cursor-pointer">Log Out
-            </nav>
-        </>
+                            .catch(error => console.log(error))
+                    }
+                } className="hover:cursor-pointer">Log Out
+                </nav>
+            </>
+        }
     </>
 
-    // student NavLink 
+    // student NavLinks for all user 
 
     const sNavLinks = <>
         <nav className="">
@@ -133,7 +142,7 @@ const Header = () => {
             }} className="dark:text-black">Home</NavLink>
         </nav>
         <nav className="">
-            <NavLink to="/blogs" style={({ isActive }) => {
+            <NavLink to="/discussions" style={({ isActive }) => {
                 return {
                     fontWeight: isActive ? "bold" : "",
                     color: isActive ? "#0766AD" : "",
@@ -181,7 +190,7 @@ const Header = () => {
 
                 {/* this part will be defferent for different types of user */}
 
-                <div tabIndex={1} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-6 z-[1] bg-base-100 p-2 shadow rounded-box w-48 text-base text-black gap-2"}`}>
+                <div tabIndex={1} className={`${clicked == false ? "hidden" : " bg-base-200 menu menu-sm dropdown-content mt-6 z-[1] p-2 shadow rounded-box w-48 text-sm text-black gap-2"}`}>
                     {joinTypes}
                 </div>
             </div>
@@ -189,13 +198,12 @@ const Header = () => {
     </>
 
     return (
-        <div className={`${isScrolled && "bg-gray-50 transition duration-1000"
-            }`}>
+        <div >
             <Toaster
                 position="top-center"
                 reverseOrder={false}
             />
-            <div className={`navbar lora font-semibold md:px-[5vw] lg:px-[5vw] max-w-[96rem] fixed z-50 text-white ${isScrolled && "bg-base-200"}`}>
+            <div className={`navbar lora font-semibold md:px-[5vw] lg:px-[5vw] max-w-[96rem] h-20 fixed z-50 text-white ${isScrolled ? "bg-white shadow-md" : 'bg-[#C5E898]'}`}>
 
                 {/* this is common part for all users */}
 
@@ -222,15 +230,30 @@ const Header = () => {
 
                         {/* Search bar for small device */}
                         <Link to='/searchPage'>
-                            <IoSearch className="lg:hidden flex md:felx text-2xl" onClick={handleShow}></IoSearch>
+                            <IoSearch className="lg:hidden flex md:flex text-2xl" onClick={handleShow}></IoSearch>
                         </Link>
                         {/* Join for small and medium device */}
                         {join}
 
+                        {/* login for small and medium device */}
+                        {
+                            !user && <nav>
+                                <NavLink to="/login" style={({ isActive }) => {
+                                    return {
+                                        fontWeight: isActive ? "bold" : "",
+                                        color: isActive ? "#0766AD" : "",
+                                        borderBottom: isActive ? "2px solid #0766AD" : ""
+                                    };
+                                }} className="dark:text-black">Login</NavLink>
+                            </nav>
+                        }
                         <div className="lg:hidden md:flex flex gap-3 justify-center items-center">
                             {
                                 user &&
-                                <Notifications handleClicked={handleClicked} clicked={clicked}></Notifications>
+                                <div className="flex justify-center items-center gap-3 ">
+                                    <Cart handleClicked={handleClicked} clicked={clicked}></Cart>
+                                    <Notifications handleClicked={handleClicked} clicked={clicked}></Notifications>
+                                </div>
                             }
 
                             {/* Dropdown menu for small device */}
@@ -240,20 +263,24 @@ const Header = () => {
                                 </label>
                                 {/* this part will be defferent for different types of user */}
 
-                                <div tabIndex={1} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-7 z-[1] bg-gray-200 shadow rounded-box w-48 text-base text-black gap-2"}`}>
+                                <div tabIndex={3} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-7 z-[1] bg-gray-200 shadow rounded-box w-48 text-base text-black gap-2"}`}>
                                     <div className='p-2'>
                                         <h4 className=" text-base text-[#0766AD] font-bold capitalize">{user?.displayName}</h4>
-                                        <hr className='my-2 h-1 bg-[#0766AD]' />
+                                        {
+                                            user && <hr className='my-2 h-1 bg-[#0766AD]' />
+                                        }
                                         <div className='space-y-2'>
-                                            <nav>
-                                                <NavLink to="/profile" style={({ isActive }) => {
-                                                    return {
-                                                        fontWeight: isActive ? "bold" : "",
-                                                        color: isActive ? "#0766AD" : "",
-                                                        borderBottom: isActive ? "2px solid #0766AD" : ""
-                                                    };
-                                                }} className="dark:text-black">Your Profile</NavLink>
-                                            </nav>
+                                            {
+                                                user && <nav>
+                                                    <NavLink to="/profile" style={({ isActive }) => {
+                                                        return {
+                                                            fontWeight: isActive ? "bold" : "",
+                                                            color: isActive ? "#0766AD" : "",
+                                                            borderBottom: isActive ? "2px solid #0766AD" : ""
+                                                        };
+                                                    }} className="dark:text-black">Your Profile</NavLink>
+                                                </nav>
+                                            }
                                             {sNavLinks}
                                             {profileLinks}
                                         </div>
@@ -271,18 +298,10 @@ const Header = () => {
                         {sNavLinks}
                         {
                             user &&
-                            <nav className="dropdown dropdown-end">
-                                <div tabIndex={0} onClick={handleClicked} className="hover:cursor-pointer">
-                                    <div><IoNotificationsCircle className="text-3xl text-[#0766AD]"></IoNotificationsCircle></div>
-                                    <span className="absolute badge bottom-4 left-2 bg-white text-[#29ADB2] font-bold">2</span>
-                                </div>
-                                <div tabIndex={0} className={`${clicked == false ? "hidden" : "mt-6 z-[1] card card-compact dropdown-content w-72 bg-base-100 shadow"}`}>
-                                    <div className="card-body">
-                                        <p>You added a new course.</p>
-                                        <p>You have a assignment to submit.</p>
-                                    </div>
-                                </div>
-                            </nav>
+                            <div className="flex justify-center items-center gap-2">
+                                <Cart handleClicked={handleClicked} clicked={clicked}></Cart>
+                                <Notifications handleClicked={handleClicked} clicked={clicked}></Notifications>
+                            </div>
                         }
 
                         {/* Join dropdown for large device */}

@@ -1,0 +1,12 @@
+.firstLetterUppercase::first-letter {
+    /* Transform the text to uppercase */
+    text-transform: uppercase;
+}
+
+.h2-2::first-letter{
+    text-transform: uppercase;
+}
+
+.overflow-control{
+    overflow-wrap: break-word;
+}

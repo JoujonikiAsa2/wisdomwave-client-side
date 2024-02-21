@@ -4,12 +4,15 @@ import 'react-quill/dist/quill.snow.css';
 import './style.css'
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import useAuth from '../../hooks/useAuth';
-import Swal from 'sweetalert2';
+import Container from '../../SharedComponents/Container/Container';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
-const CreateBlogs = () => {
+const CreateDiscussion = () => {
     const axiosPublic = useAxiosPublic()
     const { user } = useAuth()
     const [text, setText] = useState("");
+    const navigate = useNavigate()
 
     // handle content field text changes
     const handleChange = (value) => {
@@ -20,45 +23,35 @@ const CreateBlogs = () => {
     const handlePostSubmission = (e) => {
         e.preventDefault()
         const form = e.target
-        const bloggerName = form.bloggerName.value
-        const facebook = form.facebook.value
-        const github = form.github.value
-        const linkedin = form.linkedin.value
-        const blogCategory = form.blogCategory.value
-        const title = form.blogTitle.value
-        const readingTime = form.readingTime.value
-        const postContent = text
+        const userName = form.discussiongerName.value
+        const discussionCategory = form.discussionCategory.value
+        const discussionTitle = form.discussionTitle.value
+        const content = text
 
 
-        // blog data object to pass database
-        const blogData = {
-            bloggerName: bloggerName,
-            facebookLink: facebook,
-            githubLink: github,
-            linkedinLink: linkedin,
-            blogCategory: blogCategory,
-            blogTitle: title,
-            blogContent: postContent,
-            documnetReadingTime: readingTime
+        // discussion data object to pass database
+        const discussionData = {
+            userProfile: user?.photoURL,
+            userName: userName,
+            email: user.email,
+            date: new Date(),
+            discussionCategory: discussionCategory,
+            discussionTitle: discussionTitle,
+            content: content,
         }
 
-        console.log(blogData)
-        // add the the blogData to the database
-        axiosPublic.post('/api/blogs', blogData)
+        console.log(discussionData)
+        // add the the discussionData to the database
+        axiosPublic.post('/api/discussions', discussionData)
             .then(res => {
                 console.log(res.data)
                 // show a alert if data added successfully
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Your blog added succesfully",
-                    width: "26rem",
-                    showConfirmButton: false,
-                    timer: 3000
-                  });
+                toast.success("Posted successfully")
                 //   remove the form data when successfully added to the database
                 form.reset()
                 setText("")
+                navigate('/discussions')
+                
             })
             .catch((e) => {
                 console.log(e.message)
@@ -78,30 +71,30 @@ const CreateBlogs = () => {
 
             { 'color': [] }, { 'background': [] },     //text color changer tools
             { 'align': [] }],                           //aligment tool
-            ['link','clean']                    //cleaner
+            ['link', 'clean']                    //cleaner
         ]
     };
 
 
     return (
-        // create blog form
-        <div className='mt-20 flex flex-col justify-center items-center mn-h-screen w-full mb-20'>
-            <div className='bg-blue-200 p-4 rounded w-1/2'>
-                <form action="" onSubmit={handlePostSubmission} className='space-y-4'>
+        // create discussion form
+        <Container>
+            <div className='py-32 rounded flex justify-center items-center'>
+                <form action="" onSubmit={handlePostSubmission} className='bg-[#F3F3F3]  px-6 space-y-4 py-6'>
                     <div>
                         {/* bogger name */}
-                        <label htmlFor="bloggerName">
+                        <label htmlFor="discussiongerName">
                             <p className=' text-base font-bold'>Your Name<span className='text-red-500'>*</span></p>
-                            <input type="text" name='bloggerName' className='input input-bordered w-full' required />
+                            <input type="text" name='discussiongerName' defaultValue={user?.displayName} className='input input-bordered w-full' required />
                         </label>
 
                     </div>
 
-                    {/* blog category */}
+                    {/* discussion category */}
                     <div>
-                        <label htmlFor="blogCategory">
+                        <label htmlFor="discussionCategory">
                             <p className=' text-base font-bold'>Discussion Category<span className='text-red-500'>*</span></p>
-                            <select name='blogCategory' className='input input-bordered w-full ' required>
+                            <select name='discussionCategory' className='input input-bordered w-full ' required>
                                 <option value=""></option>
                                 <option value="web development">Web Development</option>
                                 <option value="programming">Programming</option>
@@ -117,15 +110,15 @@ const CreateBlogs = () => {
                             </select>
                         </label>
                     </div>
-                    {/* Blog Title */}
+                    {/* discussion Title */}
                     <div>
-                        <label htmlFor="blogTitle" >
+                        <label htmlFor="discussionTitle" >
                             <p className=' text-base font-bold'>Discussion Topic<span className='text-red-500'>*</span></p>
-                            <input type="text" name='blogTitle' className='input input-bordered w-full' required />
+                            <input type="text" name='discussionTitle' className='input input-bordered w-full' required />
                         </label>
                     </div>
 
-                    {/* Blog content */}
+                    {/* discussion content */}
                     <div className='w-full'>
                         <label htmlFor="">
                             <p className=' text-base font-bold'>Discussion Content<span className='text-red-500'>*</span></p>
@@ -141,14 +134,14 @@ const CreateBlogs = () => {
                     </div>
 
                     {/* submit button */}
-                    <div className='flex justify-start items-center'>
-                        <input type="submit" value="Publish" className='btn text-white capitalize bg-blue-700 my-2' />
+                    <div className='flex w-full justify-center items-center'>
+                        <input type="submit" value="Publish" className='btn text-white w-40 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2' />
                     </div>
                 </form>
             </div>
-        </div>
+        </Container>
     );
 };
 
 
-export default CreateBlogs;
+export default CreateDiscussion;

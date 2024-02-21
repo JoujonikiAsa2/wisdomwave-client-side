@@ -7,7 +7,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const Payment = () => {
     return (
-        <div className=' bg-white rounded flex justify-center items-center mt-32'>
+        <div className=' bg-white rounded flex justify-center items-center pt-32'>
             <div className='w-[80vw]'>
                 {/* Payment element */}
                 <Elements stripe={stripePromise}>

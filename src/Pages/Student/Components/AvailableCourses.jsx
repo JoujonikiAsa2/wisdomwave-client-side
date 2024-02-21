@@ -18,28 +18,12 @@ const AvailableCourses = () => {
     }
     console.log(courses)
     return (
-        <div>
+        <div className='pb-10 bg-[#F3F3F3]  min-h-screen'>
             {/* all courses i have enrolled */}
-            <div className='flex flex-row justify-center items-center gap-12 flex-wrap mx-[5vw] pt-32'>
+            <div className='grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 justify-center items-center gap-2 flex-wrap mx-[5vw] pt-32'>
                 {
-                    courses.slice(0,1).map(course => <Course key={course._id} course={course} enrolled={enrolled}></Course>)
+                    courses.slice(0,5).map(course => <Course key={course._id} course={course} enrolled={enrolled}></Course>)
                 }
-            </div>
-
-            {/* pagination */}
-            <div className='flex flex-row justify-center items-center gap-2 py-10'>
-                {/* previous button */}
-                <div>
-                    <button className='btn dark:bg-transparent border-blue-600 border-2'><FcPrevious></FcPrevious></button>
-                </div>
-                <div className='flex flex-row justify-center items-center gap-2 py-10'>
-
-                    <button className='btn dark:bg-transparent border-blue-600 border-2'>1</button>
-                </div>
-                {/* next button */}
-                <div>
-                    <button className='btn dark:bg-transparent border-blue-600 border-2'><FcNext></FcNext></button>
-                </div>
             </div>
         </div>
     );

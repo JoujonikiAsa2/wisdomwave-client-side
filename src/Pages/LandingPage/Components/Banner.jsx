@@ -13,7 +13,7 @@ import 'swiper/css/navigation';
 import './styles.css';
 
 // import required modules
-import {Pagination, Navigation } from 'swiper/modules';
+import {Pagination, Navigation, Autoplay } from 'swiper/modules';
 import BannerSlider from './BannerSlider';
 
 // Landing page Banner
@@ -32,7 +32,7 @@ const Banner = () => {
                     clickable: true,
                 }}
                 navigation={true}
-                modules={[Pagination, Navigation]}
+                modules={[Pagination, Navigation, Autoplay]}
                 className="mySwiper"
             >
                 <SwiperSlide>

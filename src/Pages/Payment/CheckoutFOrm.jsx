@@ -26,7 +26,7 @@ const CheckoutForm = () => {
             
             <div className=''>
                 <Link to="/myCourse">
-                    <button className='btn btn-primary btn-sm my-4' type="submit">
+                    <button className='btn text-white btn-sm capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]' type="submit">
                         Pay
                     </button>
                 </Link>

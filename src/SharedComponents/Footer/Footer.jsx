@@ -3,14 +3,14 @@ import logo from '../../assets/Photos/LandingPage/logo_wave.png'
 const Footer = () => {
     return (
         <div className=''>
-            <div className=' bg-slate-200 dark:bg-slate-200'>
+            <div className=' bg-[#C5E898] dark:bg-slate-200'>
                 <footer className="flex lg:flex-row md:flex-row flex-col text-base-content lg:justify-between md:justify-between justify-center gap-4 lg:px-28 py-6">
                     <aside className='flex flex-col justify-center items-center gap-3 lg:text-left text-center'>
                         <div className='flex flex-col justify-center items-center gap-3'>
                             <div className='flex gap-2 justify-center items-center'>
                                 <img src={logo} alt="" className='lg:w-10 lg:h-10 w-6 h-6' />
                                 <div>
-                                    <h2 className='text-base font-bold'><span className='text-[#5c802d]'>Wisdom</span> <span className='text-[#0645B1]'>Wave</span></h2>
+                                    <h2 className='text-base font-bold'><span className='text-[#]'>Wisdom</span> <span className='text-[#0645B1]'>Wave</span></h2>
                                 </div>
                             </div>
                             <p className='max-w-[350px] dark:text-black text-center'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis, aut obcaecati nam voluptatum nesciunt exercitationem.</p>

@@ -1,18 +1,20 @@
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
-import { FaArrowCircleLeft, FaFacebook } from "react-icons/fa";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { FaArrowCircleLeft } from "react-icons/fa";
 import Lottie from 'lottie-react';
 import loginAnimation from './login.json'
 import useAuth from '../../hooks/useAuth';
-import './style.css'
 import toast, { Toaster } from 'react-hot-toast';
+import { useState } from 'react';
 
 const Login = () => {
 
     const navigate = useNavigate()
     const location = useLocation()
-    const { login, googleLogin } = useAuth()
+    const { login, googleLogin, userSignOut } = useAuth()
+    const [passwordType, setPasswordType] = useState('password')
     const {
         register,
         handleSubmit,
@@ -30,7 +32,7 @@ const Login = () => {
                 console.log(data.user)
                 // if the user created successfully then display the sweet alert
                 {
-                    if (data.user) {
+                    if (data.user.emailVerified == true) {
                         toast.success('Successfully Logged In!', {
                             duration: 1000,
                         })
@@ -38,6 +40,21 @@ const Login = () => {
                         setTimeout(() => {
                             navigate(location.state || '/')
                         }, 1200)
+                    }
+                    else {
+                        userSignOut()
+                            .then(() => {
+                                toast.error('Verify before login!', {
+                                    duration: 4000,
+                                })
+                            })
+                            .catch(error => {
+                                // Convert the error object to a string
+                                const errorMessage = error.message || 'An error occurred';
+
+                                // Display the error message using toast.error
+                                toast.error(errorMessage);
+                            })
                     }
                 }
 
@@ -91,72 +108,85 @@ const Login = () => {
                     <div className='flex justify-center items-center'>
                         <div className='divider divider-neutral divider-vertical md:divider-horizontal lg:divider-horizontal h-0 md:h-96 lg:h-96'></div>
                     </div>
-                    <div className='flex-1 flex flex-col justify-center items-center'>
-                        {/* Login Form  */}
-                        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-                            <div>
-
-                                {/* Email */}
-                                <input
-                                    type='text'
-                                    name="email"
-                                    placeholder="Email"
-                                    {...register("email", { required: true })}
-                                    className='input input-bordered border-black w-[80vw] md:w-96 lg:w-96'
-                                />
+                    <div className='flex-1 '>
+                        <div className='flex flex-col justify-start items-start'>
+                            {/* Login Form  */}
+                            <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
                                 <div>
-                                    {errors.email && <span className='text-xs text-red-500'>This field is required</span>}
-                                </div>
-                            </div>
 
-                            {/* Password */}
-                            <div>
-                                <input
-                                    type='password'
-                                    name="password"
-                                    placeholder='Password'
-                                    {...register("password", { required: true })}
-                                    className='input input-bordered border-black w-[80vw] md:w-96 lg:w-96' />
+                                    {/* Email */}
+                                    <input
+                                        type='text'
+                                        name="email"
+                                        placeholder="Email"
+                                        {...register("email", { required: true })}
+                                        className='input input-bordered border-black w-[80vw] md:w-96 lg:w-96'
+                                    />
+                                    <div>
+                                        {errors.email && <span className='text-xs text-red-500'>This field is required</span>}
+                                    </div>
+                                </div>
+
+                                {/* Password */}
+                                <div className='relative'>
+                                    <input
+                                        type={passwordType}
+                                        name="password"
+                                        placeholder='Password'
+                                        {...register("password", { required: true })}
+                                        className='input input-bordered border-black w-[80vw] md:w-96 lg:w-96'
+                                    />
+                                    <div className='absolute top-4 right-2'>
+                                        <IoMdEyeOff className={`text-xl ${passwordType == 'text' && 'hidden'}`} onClick={() => { setPasswordType('text') }} />
+                                        <IoMdEye className={`text-xl ${passwordType == 'password' && 'hidden'}`} onClick={() => { setPasswordType('password') }} />
+                                    </div>
+                                    <div>
+                                        {errors.password && <span className='text-xs text-red-500'>This field is required</span>}
+                                    </div>
+                                </div>
+
+                                {/* Submit button */}
                                 <div>
-                                    {errors.password && <span className='text-xs text-red-500'>This field is required</span>}
+                                    <input
+                                        type="submit"
+                                        className='btn bg-blue-500 hover:btn-outline input input-bordered border-black w-[80vw] md:w-96 lg:w-96 capitalize text-white' />
                                 </div>
-                            </div>
+                            </form>
+                        </div>
+                        <div className='flex flex-col justify-start items-start'>
 
-                            {/* Submit button */}
-                            <div>
-                                <input
-                                    type="submit"
-                                    className='btn bg-blue-500 hover:btn-outline input input-bordered border-black w-[80vw] md:w-96 lg:w-96 capitalize text-white' />
+                            <div className='text-end pt-3'>
+                                <Link className='hover:underline text-[#0766AD]'>Forget Password</Link>
                             </div>
-                        </form>
-                        <div className='flex justify-start flex-col'>
-                            {/* Divider */}
-                            <div className="">
-                                <div className="divider divider-neutral w-[80vw] md:w-96 lg:w-96 py-3">OR</div>
-                            </div>
-
-                            {/* Social media icons */}
-                            <div className='flex flex-col gap-4'>
-                                <div className='flex justify-center items-center gap-2'>
-                                    <FcGoogle className=' text-3xl md:text-3xl lg:text-3xl font-bold hover:cursor-pointer' onClick={handleGoogleLogin}></FcGoogle >
+                            <div className='flex justify-start flex-col'>
+                                {/* Divider */}
+                                <div className="">
+                                    <div className="divider divider-neutral w-[80vw] md:w-96 lg:w-96 py-3">OR</div>
                                 </div>
-                                {/* toggle to the signUp page */}
-                                <div className='flex flex-row gap-2 justify-start'>
-                                    <p className='text-base'>New at WisdomWave? <Link to="/studentSignUp"></Link></p>
-                                    <div className="dropdown dropdown-right">
-                                        <label tabIndex={1} className="hover:cursor-pointer">
-                                            <nav>
-                                                <a className='active:underline text-[#0766AD] text-base'>Join</a>
-                                            </nav>
-                                        </label>
 
-                                        {/* this part will be defferent for different types of user */}
+                                {/* Social media icons */}
+                                <div className='flex flex-col gap-4'>
+                                    <div className='flex justify-center items-center gap-2'>
+                                        <FcGoogle className=' text-3xl md:text-3xl lg:text-3xl font-bold hover:cursor-pointer' onClick={handleGoogleLogin}></FcGoogle >
+                                    </div>
+                                    {/* toggle to the signUp page */}
+                                    <div className='flex flex-row gap-2 justify-center'>
+                                        <p className='text-base'>New at WisdomWave? <Link to="/studentSignUp"></Link></p>
+                                        <div className="dropdown dropdown-right">
+                                            <label tabIndex={1} className="hover:cursor-pointer">
+                                                <nav>
+                                                    <a className='active:underline text-[#0766AD] text-base'>Join</a>
+                                                </nav>
+                                            </label>
 
-                                        <div tabIndex={1} className="dropdown-content mt-2 ml-3 z-[1] w-32 p-2 shadow text-black bg-[#F3F3F3]">
-                                            <div className='flex flex-col gap-2'>
-                                                <Link to="/studentSignUp"><button className="capitalize hover:underline">Student</button></Link>
-                                                <Link to="/studentSignUp"><button className="capitalize hover:underline">Instructor</button></Link>
-                                                <Link to="/studentSignUp"><button className=" capitalize hover:underline">Tutor</button></Link>
+                                            {/* this part will be defferent for different types of user */}
+
+                                            <div tabIndex={1} className="dropdown-content mt-2 ml-3 z-[1] w-32 p-2 shadow text-black bg-[#F3F3F3]">
+                                                <div className='flex flex-col gap-2'>
+                                                    <Link to="/studentSignUp"><button className="capitalize hover:underline">Student</button></Link>
+                                                    <Link to="/studentSignUp"><button className="capitalize hover:underline">Instructor</button></Link>
+                                                    <Link to="/studentSignUp"><button className=" capitalize hover:underline">Tutor</button></Link>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

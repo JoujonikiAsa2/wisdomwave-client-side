@@ -64,9 +64,9 @@ const CourseCategory = () => {
                 },
             }}>
                 {
-                    categories.map((category, index) => <div className=''>
-                        <div key={index} className="card border-[1px] lg:w-[14.6rem] md:lg:w-[14.6rem] w-[90%] h-16 p-2 rounded hover:Shadow-2xl mb-4 flex justify-center items-center bg-gradient-to-r from-[#29ADB2] to-[#0766AD]">
-                            <h2 className="text-sm text-white font-bold">{category}</h2>
+                    categories.map((category, index) => <div className='mr-2'>
+                        <div key={index} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer">
+                            <h2 className="text- font-bold">{category}</h2>
                         </div>
                     </div>)
                 }

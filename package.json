@@ -42,6 +42,7 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.12.0",
     "react-id-swiper": "^4.0.0",
+    "react-lines-ellipsis": "^0.15.4",
     "react-multi-carousel": "^2.8.4",
     "react-quill": "^2.0.0",
     "react-rating": "^2.0.5",

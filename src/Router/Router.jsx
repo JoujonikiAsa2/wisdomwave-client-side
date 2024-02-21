@@ -7,14 +7,14 @@ import StudentSignUp from "../Pages/StudentSignUp/StudentSignUp"
 import LandingPage from "../Pages/LandingPage/LandingPage"
 import CourseDetails from "../Pages/Student/Components/CourseDetails"
 import PrivateRoute from "../PrivateRoute/PrivateRoute"
-import Blogs from "../Pages/Blogs/Blogs"
-import CreateBlogs from "../Pages/Blogs/CreateBlogs"
-import Blog from "../Pages/Blogs/Blog"
 import AvailableCourses from "../Pages/Student/Components/AvailableCourses"
 import Payment from "../Pages/Payment/Payment"
 import SearchPage from "../SharedComponents/Header/SearchPage"
 import PageNotFound from "../Pages/404_page/PageNotFound"
 import { AllCourses } from "../Pages/LandingPage/Components/AllCourses"
+import Discussions from "../Pages/Discussions/Discussions"
+import DiscussionDetails from "../Pages/Discussions/DiscussionDetails"
+import CreateDiscussion from "../Pages/Discussions/CreateDiscussion"
 
 export const router = createBrowserRouter([
     {
@@ -30,23 +30,24 @@ export const router = createBrowserRouter([
             {
                 path: "/courseDetails/:id",
                 // student home route
-                element: <PrivateRoute><CourseDetails /></PrivateRoute>
+                element: <CourseDetails />
             },
             {
-                path: '/blogs',
-                element: <Blogs />
+                path: '/discussions',
+                element: <Discussions/>
             },
             {
                 path: '/searchPage',
                 element: <SearchPage />
             },
             {
-                path: '/blogs/:id',
-                element: <PrivateRoute><Blog /></PrivateRoute>
+                path: '/discussions/:id',
+                element: <PrivateRoute><DiscussionDetails/></PrivateRoute>,
+                // loader: () => fetch('http://localhost:5000/api/blogs')
             },
             {
-                path: '/createBlog',
-                element: <PrivateRoute><CreateBlogs /></PrivateRoute>
+                path: '/createDiscussion',
+                element: <PrivateRoute><CreateDiscussion /></PrivateRoute>
             }
             ,
             {

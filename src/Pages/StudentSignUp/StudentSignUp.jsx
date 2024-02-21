@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
-import { FaArrowCircleLeft, FaFacebook } from "react-icons/fa";
+import { FaArrowCircleLeft } from "react-icons/fa";
 import Lottie from 'lottie-react';
 import signUpAnimation from './signUp.json'
 import useAuth from '../../hooks/useAuth';
@@ -10,8 +10,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdCalendarToday, MdContactPhone, MdDriveFileRenameOutline, MdEmail, MdImage, MdPassword } from "react-icons/md";
 import useAxiosPublic from '../../hooks/useAxiosPublic';
-import Swal from 'sweetalert2';
 import toast, { Toaster } from 'react-hot-toast';
+import { sendEmailVerification } from 'firebase/auth';
+import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 '../../hooks/useAxiosPublic';
 const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_API}`
@@ -22,6 +23,7 @@ const StudentSignUp = () => {
     const axiosPublic = useAxiosPublic()
     // date picker
     const [startDate, setStartDate] = useState();
+    const [passwordType, setPasswordType] = useState('password')
 
     //  navigate helps to navigate the login page after succefully sign up
 
@@ -35,7 +37,6 @@ const StudentSignUp = () => {
     const {
         register,
         handleSubmit,
-        watch,
         control,
         formState: { errors },
         reset
@@ -43,7 +44,7 @@ const StudentSignUp = () => {
 
     // Help to execute all function after submit the form
     const onSubmit = async (data) => {
-        console.log(data)
+        // console.log(data)
         const name = data.fname + " " + data.lname
         const phone = parseInt(data.phone)
         const imageFile = { image: data.profile[0] }
@@ -53,38 +54,54 @@ const StudentSignUp = () => {
             }
         })
 
-        console.log(phone, name, res.data.data.display_url)
+        // console.log(phone, name, res.data.data.display_url)
         const image = res.data.data.display_url
 
         studentSignUp(data.email, data.password)
             .then(result => {
-                // console the input field data
-                console.log(result.user)
+
+                // console.log(result.user)
+
+                // updating user information
                 updateUserInfo(name, phone, image)
-                    .then((res) => {
+                    .then((response) => {
                         console.log("updated")
-                        console.log(res.data)
+                        // console.log(response.data)
                     })
                     .catch(error => console.log(error))
-                reset()
-                // if the user created successfully then display the sweet alert
-                toast.success('Successfully Signed Up!', {
-                    duration: 1000
-                })
-                setTimeout(() => {
-                    userSignOut()
-                        .then(() => {
-                            console.log("Go to login page")
-                        })
-                        .catch(error => console.log(error))
-                    navigate(location.state || '/login')
-                }, 2000)
+
+                // Sending a verification link
+                sendEmailVerification(result.user)
+                    .then(() => {
+                        setStartDate("")
+                        reset()
+                        // This is alert message email verification
+                        toast.success('Please check your email to verify', {
+                            duration: 4000
+                        });
+                        setTimeout(() => {
+                            userSignOut()
+                                .then(() => {
+                                    // console.log("Go to login page")
+                                })
+                                .catch(error => console.log(error))
+                        }, 1200)
+
+                    })
+                    .catch(() => {
+                        toast.error('Failed to verify', {
+                            duration: 4000
+                        });
+                    });
             })
             .catch(error => {
+                // Convert the error object to a string
+                const errorMessage = error.message || 'An error occurred';
 
-                // console if any error
-                toast.error(error)
+                // Display the error message using toast.error
+                toast.error(errorMessage);
             })
+
     }
 
     const handleGoogleLogin = () => {
@@ -138,52 +155,49 @@ const StudentSignUp = () => {
 
                         {/* react hook form */}
                         <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-                            <div className='flex gap-[1.5rem] md:gap-2 lg:gap-6 justify-between lg:justify-center md:justify-end items-center mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <label htmlFor="">
-                                    <MdDriveFileRenameOutline className='text-blue-700'></MdDriveFileRenameOutline >
-                                </label>
+
+                            {/* User Name */}
+                            <div className='flex gap-[1.5rem] md:gap-2 lg:gap-4 justify-between lg:justify-center md:justify-end items-center mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
                                 {/* first name */}
-                                <div>
-                                    <div>
+                                <div className='w-full flex gap-3'>
+                                    <div className='w-2/3'>
                                         <input
                                             type='text'
                                             name="fname"
                                             placeholder="First Name"
                                             {...register("fname", { required: true })}
-                                            className='input input-bordered border-blue-700 w-[45vw] md:w-[12.5rem] lg:w-[12.5rem]'
+                                            className='input input-bordered border-blue-700 w-full focus:outline-none'
                                         />
                                         <div>
                                             {errors.fname && <span className='text-xs text-red-500'>This field is required</span>}
                                         </div>
                                     </div>
-
-                                </div>
-
-                                {/* last name */}
-                                <div>
-                                    <input
-                                        type='text'
-                                        name="lname"
-                                        placeholder="Last Name"
-                                        {...register("lname", { required: true })}
-                                        className='input input-bordered border-blue-700 w-[30vw] md:w-[11rem] lg:w-[9rem]'
-                                    />
-                                    <div>
-                                        {errors.lname && <span className='text-xs text-red-500'>This field is required</span>}
+                                    {/* last name */}
+                                    <div className='w-1/3'>
+                                        <input
+                                            type='text'
+                                            name="lname"
+                                            placeholder="Last Name"
+                                            {...register("lname", { required: true })}
+                                            className='input input-bordered border-blue-700 w-full focus:outline-none'
+                                        />
+                                        <div>
+                                            {errors.lname && <span className='text-xs text-red-500'>This field is required</span>}
+                                        </div>
                                     </div>
                                 </div>
+
+
                             </div>
+
                             {/* profile picture */}
-                            <div className='flex gap-4 justify-center items-center mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <label htmlFor="" className='border-2'>
-                                    <MdImage className='text-blue-700'></MdImage >
-                                </label>
-                                <div>
+                            <div className='flex gap-[1.5rem] md:gap-2 lg:gap-4 justify-between lg:justify-center md:justify-end items-center mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
+                                <div className='w-full'>
                                     <input
                                         type='file'
                                         name="profile"
                                         {...register("profile", { required: true })}
-                                        className='input input-bordered border-blue-700 w-[80vw] md:w-96 lg:w-[23rem] p-2'
+                                        className='input input-bordered border-blue-700 w-full focus:outline-none p-2'
                                     />
                                     <div>
                                         {errors.profile && <span className='text-xs text-red-500'>This field is required</span>}
@@ -192,12 +206,9 @@ const StudentSignUp = () => {
 
                             </div>
 
-                            {/* date of birth */}
-                            <div className='flex justify-center items-center gap-4 mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <label htmlFor="" className='border-2'>
-                                    <MdCalendarToday className='text-blue-700'></MdCalendarToday>
-                                </label>
-                                <div>
+                            {/* date of birth and Phone Number */}
+                            <div className='flex gap-3 mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
+                                <div className='w-2/3'>
                                     <Controller
                                         control={control}
                                         name="dob"
@@ -211,7 +222,7 @@ const StudentSignUp = () => {
                                                         field.onChange(date);
                                                     }}
                                                     placeholderText="Date of birth"
-                                                    className="input input-bordered border-blue-700 w-[80vw] md:w-96 lg:w-[23rem]"
+                                                    className="input input-bordered border-blue-700 w-[53vw] lg:w-[116%] md:w-full focus:outline-none"
                                                 />
                                                 <div>
                                                     {errors.dob && <span className='text-xs text-red-500'>This field is required</span>}
@@ -220,20 +231,14 @@ const StudentSignUp = () => {
                                         )}
                                     />
                                 </div>
-                            </div>
-
-                            {/* phone number */}
-                            <div className='flex gap-4 justify-center items-center mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <label htmlFor="" className='border-2'>
-                                    <MdContactPhone className='text-blue-700'></MdContactPhone>
-                                </label>
-                                <div>
+                                {/* phone number */}
+                                <div className=''>
                                     <input
                                         type='text'
                                         name="phone"
                                         placeholder="Phone"
                                         {...register("phone", { required: true })}
-                                        className='input input-bordered border-blue-700 w-[80vw] md:w-96 lg:w-[23rem]'
+                                        className='input input-bordered border-blue-700 w-full focus:outline-none'
                                     />
 
                                     {/* error if field will be empty */}
@@ -243,12 +248,11 @@ const StudentSignUp = () => {
                                 </div>
                             </div>
 
+
+
                             {/* email address */}
-                            <div className='flex gap-4 justify-center items-center mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <label htmlFor="" className='border-2'>
-                                    <MdEmail className='text-blue-700'></MdEmail>
-                                </label>
-                                <div>
+                            <div className='flex mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
+                                <div className='w-full'>
                                     <input
                                         type='text'
                                         name="email"
@@ -258,23 +262,21 @@ const StudentSignUp = () => {
                                                 required: true,
                                                 pattern: /\S+@\S+\.\S+/
                                             })}
-                                        className='input input-bordered border-blue-700 w-[80vw] md:w-96 lg:w-[23rem]'
+                                        className='input input-bordered border-blue-700 w-full focus:outline-none'
                                     />
                                     {/* error if field will be empty */}
                                     <div>
                                         {errors.email?.type == "pattern" && <span className='text-xs text-red-500'>Please use email format</span>}
+                                        {errors.email && <span className='text-xs text-red-500'>This field is required</span>}
                                     </div>
                                 </div>
                             </div>
 
                             {/* password */}
-                            <div className='flex gap-4 justify-center items-center  mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <label htmlFor="" className='border-2'>
-                                    <MdPassword className='text-blue-700'></MdPassword>
-                                </label>
-                                <div>
+                            <div className='flex  mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
+                                <div className='relative w-full'>
                                     <input
-                                        type='password'
+                                        type={passwordType}
                                         name="password"
                                         placeholder='Password'
                                         {...register("password",
@@ -284,7 +286,7 @@ const StudentSignUp = () => {
                                                 maxLength: 20,
                                                 pattern: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,20}/
                                             })}
-                                        className='input input-bordered border-blue-700 w-[80vw] md:w-96 lg:w-[23rem]' />
+                                        className='input input-bordered border-blue-700 w-full focus:outline-none' />
                                     <div>
                                         {errors.password?.type === "required" && <span className='text-xs text-red-600'>Password is required</span>}
                                         {errors.password?.type === "minLength" && <span className='text-xs text-red-600'>Password should be 6 character or longer</span>}
@@ -292,14 +294,33 @@ const StudentSignUp = () => {
                                         {errors.password?.type === "pattern" && <span className='text-xs text-red-600'>Must contain 1 upercase,1 lowercase, 1 number and 1 special character.</span>}
 
                                     </div>
+                                    <div className='absolute top-4 right-2'>
+                                        <IoMdEyeOff className={`text-xl ${passwordType == 'text' && 'hidden'}`} onClick={() => { setPasswordType('text') }} />
+                                        <IoMdEye className={`text-xl ${passwordType == 'password' && 'hidden'}`} onClick={() => { setPasswordType('password') }} />
+                                    </div>
                                 </div>
                             </div>
 
+                            {/* Terms and Conditions */}
+                            <div>
+                                <div>
+                                    <label htmlFor="">
+                                        <input type="checkbox" name="terms" id="" 
+                                            {...register("terms", { required: true })}
+                                        /> &nbsp; Accept the Therms and Conditions
+                                    </label>
+                                </div>
+                                <div>
+                                    {errors.terms && <span className='text-xs text-red-500'>Checked this field to sign up</span>}
+                                </div>
+                            </div>
                             {/* submit button */}
-                            <div className='flex justify-end  mr-[0.5vw] lg:mr-[2.6rem] md:mr-[1.2rem]'>
-                                <input
-                                    type="submit"
-                                    className='btn bg-blue-500 hover:btn-outline input input-bordered border-blue-700 w-[80vw] md:w-96 lg:w-[23rem] capitalize text-white' />
+                            <div className='flex  mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
+                                <div className='w-full'>
+                                    <input
+                                        type="submit"
+                                        className='btn bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize' />
+                                </div>
                             </div>
                         </form>
                         <div className='flex flex-col justify-center items-center space-y-2'>
