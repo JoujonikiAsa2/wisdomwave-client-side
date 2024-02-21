@@ -8,9 +8,8 @@ import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import useDiscussions from "../../hooks/useDiscussions";
 import Loader from "../../SharedComponents/Loader/Loader";
-import LinesEllipsis from "react-lines-ellipsis";
 import EllipsisText from "react-ellipsis-text/lib/components/EllipsisText";
-import { FaComment } from "react-icons/fa";
+import { FaComment, FaReply } from "react-icons/fa";
 
 const DiscussionDetails = () => {
     const { user } = useAuth()
@@ -20,7 +19,8 @@ const DiscussionDetails = () => {
     const [text, setText] = useState("");
     const [divHidden, setDivHidden] = useState()
     const ref = useRef()
-    const [divRef, setDivRef] = useState(ref)
+    const [divRef, setDivRef] = useState()
+    const [clicked, setClicked] = useState(false)
 
     // handle content field text changes
     const handleChange = (value) => {
@@ -45,18 +45,22 @@ const DiscussionDetails = () => {
     }
 
 
-
+    // Handle post reply
     const handleReply = (e) => {
         e.preventDefault()
-        const reply = text
-        console.log(reply)
-        const replyData = {
-            replier: user?.displayName,
+        const comment = text
+        console.log(comment)
+        const commentData = {
+            commenterName: user?.displayName,
+            commenterEmail: user?.email,
             replydate: new Date(),
-            reply: reply,
+            comment: comment,
+            isComment: true,
             profile: user?.photoURL
         }
-        axiosPublic.post(`/api/discussions/${id}`, replyData)
+
+        // send the post reply to the backend
+        axiosPublic.post(`/api/discussions/${id}`, commentData)
             .then(res => {
                 // console.log(res.data)
                 refetch()
@@ -69,9 +73,32 @@ const DiscussionDetails = () => {
             })
     }
 
-    const handleShowReply = () => {
+    // Handle to send reply
+    const handleReplies = (e) => {
+        e.preventDefault()
+        const replyData = {
+            replierName: user?.displayName,
+            replierEmail: user?.email,
+            replydate: new Date(),
+            isReply: true,
+            reply: e.target.reply.value,
+            profile: user?.photoURL
+        }
 
+        // send the post reply to the backend
+        axiosPublic.post(`/api/discussions/${id}`, replyData)
+            .then(res => {
+                // console.log(res.data)
+                refetch()
+                e.target.reset()
+            })
+            .catch((e) => {
+                console.log(e.message)
+            })
+        console.log("Your successfully submited the reply", e.target.replyToReplier.value)
     }
+
+
     return (
         <div className="flex lg:flex-row md:flex-row flex-col-reverse lg:gap-8 px-[2vw] pt-24 min-h-screen">
             <div className="flex flex-col gap-2 p-2 rounded">
@@ -98,6 +125,7 @@ const DiscussionDetails = () => {
                 }
             </div>
             <div className="hidden md:divider md:divider-horizontal lg:divider lg:divider-horizontal pb-10"></div>
+
             {/* discussion details */}
             <div className="flex flex-col  w-full md:w-full min-h-screen lg:pb-10 lg:w-3/4">
                 <div className="w-full rounded-full py-4 space-y-2">
@@ -116,9 +144,10 @@ const DiscussionDetails = () => {
                             dangerouslySetInnerHTML={{ __html: discussion?.content }}
                         />
                         <div className="btn w-16 btn-sm bg-transparent flex gap-1">
-                            <FaComment></FaComment> <span>({discussion.replies.length})</span>
+                            <FaComment></FaComment> <span>({discussion?.comments?.length})</span>
                         </div>
 
+                        {/* Post comment form */}
                         <form action="" className="flex flex-col items-startgap-2" onSubmit={(e) => handleReply(e)}>
                             <div className='lg:w-2/3'>
                                 <label htmlFor="">
@@ -139,20 +168,66 @@ const DiscussionDetails = () => {
                         </form>
                     </div>
                 </div>
-                <div className={`${discussion?.replies.length !== 0 ? "flex flex-col gap-4 justify-start items-start my-10" : "hidden"}`}>
-                    <h4 className="text-lg">Responses: </h4>
+
+                {/* Comments section */}
+                <div className={`${discussion?.comments.length !== 0 ? "border-[1px] border-gray-400  p-4 flex flex-col gap-4 justify-start items-start my-10" : "hidden"}`}>
+                    <h4 className="text-lg">Comments: </h4>
                     {
-                        discussion?.replies.map((reply, index) => <div key={index} className="flex flex-col  gap-4 justify-start items-start w-full h-full">
+                        discussion?.comments.map((comment, index) => <div key={index} className="flex flex-col  gap-4 justify-start items-start w-full h-full">
                             <div className="flex gap-20 items-centertext-sm">
                                 <div className="flex gap-2">
-                                    <img src={reply?.profile} alt="" className="h-6 w-6 rounded-full" />
+                                    <img src={comment?.profile} alt="" className="h-6 w-6 rounded-full" />
                                     <div className="">
-                                        <h4>{reply?.replier}</h4>
+                                        <h4>{comment?.commenterName}</h4>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="w-full border firstLetterUppercase p-2 text-base overflow-ellipsis max-h-72 overflow-y-auto" dangerouslySetInnerHTML={{ __html: reply?.reply }} />
+                            <div className="w-full firstLetterUppercase p-2 text-base overflow-ellipsis max-h-72 overflow-y-auto  border-[1px] border-gray-400 text-gray-500 rounded" dangerouslySetInnerHTML={{ __html: comment?.comment }} />
+
+                            {/* reply button */}
+                            <h2
+                                className="lg:ml-8 hover:cursor-pointer flex items-center gap-1"
+                                onClick={() => {
+                                    setDivRef(ref.current.ref = index)
+                                    setClicked(true)
+                                }} >
+
+                                <FaReply className="text-xs"></FaReply>Reply ({discussion?.replies
+                                    .filter((reply) => reply.replierEmail === comment.commenterEmail).length})
+                            </h2>
+
+                            {/* all replies to a individual user */}
+                            <div className={`lg:ml-10 border-[1px] border-gray-400 w-[90%] p-4 ${discussion?.replies.length !== 0 ? "flex flex-col gap-4" : "hidden"}`}>
+                                {
+                                    discussion?.replies
+                                        .filter((reply) => reply.replierEmail === comment.commenterEmail)
+                                        .map((reply, replyIndex) => (
+                                            <div key={replyIndex} className="flex flex-col gap-2">
+                                                {/* Render individual reply content here */}
+                                                <div className="flex gap-2">
+                                                    <img src={comment?.profile} alt="" className="h-6 w-6 rounded-full" />
+                                                    <div className="">
+                                                        <h4>{reply?.replierName}</h4>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p className="text-gray-500">{reply.reply}</p>
+                                                </div>
+                                            </div>
+                                        ))
+                                }
+                            </div>
+
+                            {/* reply form for reply to the replier */}
+                            <form onSubmit={(e) => handleReplies(e)}>
+                                <div className={`gap-2 ${index == divRef && clicked == true ? "flex" : "hidden"}`} ref={ref}>
+                                    <div id={index} className="lg:ml-10">
+                                        <textarea type="text" name="reply" className="input input-bordered border-[1px] border-gray-400 lg:w-80 w-full focus:outline-none" placeholder="Reply here..." />
+                                    </div>
+                                    <input type="submit" value="Send" className="input input-bordered border-[1px] hover:cursor-pointer border-gray-400 w-20 focus:outline-none bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] text-white" />
+                                </div>
+                            </form>
                         </div>)
                     }
 
