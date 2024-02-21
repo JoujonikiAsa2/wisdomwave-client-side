@@ -1,0 +1,22 @@
+.input-style {
+    border: 1px solid #0766AD;
+    width: 20vw;
+    height: 30px;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.buttonStyle {
+    display: inline-flex;
+    flex-shrink: 0;
+    cursor: pointer;
+    user-select: none;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    border-color: transparent;
+    background: #0766AD;
+    padding: 4px;
+    border-radius: 4px;
+    color: white;
+}

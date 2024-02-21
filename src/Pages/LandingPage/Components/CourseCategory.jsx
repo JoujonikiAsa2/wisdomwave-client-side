@@ -9,7 +9,7 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Carousel from "react-multi-carousel";
 
 // All course categoories will appear
-const CourseCategory = () => {
+const CourseCategory = ({ handleCategorySearch }) => {
 
     const axiosPublic = useAxiosPublic()
 
@@ -21,6 +21,10 @@ const CourseCategory = () => {
         }
     })
     console.log(categories)
+
+    const handleLocalSearch = (category) =>{
+        handleCategorySearch(category)
+    }
 
     return (
         <div>
@@ -65,7 +69,7 @@ const CourseCategory = () => {
             }}>
                 {
                     categories.map((category, index) => <div className='mr-2'>
-                        <div key={index} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer">
+                        <div onClick={() => handleLocalSearch(category)} key={index} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer">
                             <h2 className="text- font-bold">{category}</h2>
                         </div>
                     </div>)

@@ -1,4 +1,3 @@
-import useCourses from '../../../hooks/useCourses';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Course from './Course';
@@ -6,10 +5,8 @@ import SectionTitle from '../../../SharedComponents/SectionTitle/SectionTitle';
 import { useEffect, useState } from 'react';
 import { axiosPublic } from '../../../hooks/useAxiosPublic';
 
-export const AllCourses = () => {
+export const AllCourses = ({ courses, setCourses }) => {
 
-    const { courses } = useCourses()
-    const length = courses.length
     const [total, setTotal] = useState()
 
     useEffect(() => {
@@ -68,7 +65,7 @@ export const AllCourses = () => {
                 }}
                >
                 {
-                    courses !== undefined && courses.map(course => <div className='rounded-lg'>
+                    courses.map(course => <div className='rounded-lg'>
                         <Course key={course._id} course={course}>
                         </Course>
                     </div>)
