@@ -7,6 +7,8 @@ import Profile from "./Profile";
 import Notifications from "./Notifications";
 import toast, { Toaster } from "react-hot-toast";
 import Cart from "./Cart";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const Header = () => {
 
@@ -15,6 +17,15 @@ const Header = () => {
     const [clicked, setClicked] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false);
     const navigate = useNavigate()
+    const axiosPublic = useAxiosPublic()
+    console.log(user?.email)
+    const { data: purchasedCourses = [], refetch } = useQuery({
+        queryKey: "purchasedCourses",
+        queryFn: async () => {
+            const purchasedCourses = await axiosPublic.get(`api/purchasedCourses/${user?.email}`)
+            return purchasedCourses.data.data
+        }
+    })
 
     // Handle the navbar color
     useEffect(() => {
@@ -46,31 +57,29 @@ const Header = () => {
         <nav>
             <NavLink to="/studentSignUp" style={({ isActive }) => {
                 return {
-                    fontWeight: isActive ? "bold" : "",
                     color: isActive ? "#0766AD" : "",
-                    borderBottom: isActive ? "2px solid #0766AD" : ""
+                    borderBottom: isActive ? "1px solid #0766AD" : ""
                 };
             }} className="dark:text-black">Student</NavLink>
         </nav>
         <nav>
             <NavLink to="/instructorSignUp" style={({ isActive }) => {
                 return {
-                    fontWeight: isActive ? "bold" : "",
                     color: isActive ? "#0766AD" : "",
-                    borderBottom: isActive ? "2px solid #0766AD" : ""
+                    borderBottom: isActive ? "1px solid #0766AD" : ""
                 };
             }} className="dark:text-black">Instructor</NavLink>
         </nav>
         <nav>
             <NavLink to="/tutorSignUp" style={({ isActive }) => {
                 return {
-                    fontWeight: isActive ? "bold" : "",
                     color: isActive ? "#0766AD" : "",
-                    borderBottom: isActive ? "2px solid #0766AD" : ""
+                    borderBottom: isActive ? "1px solid #0766AD" : ""
                 };
             }} className="dark:text-black">Tutor</NavLink>
         </nav>
     </>
+
 
     // profile links for logged in user
     const profileLinks = <>
@@ -79,36 +88,36 @@ const Header = () => {
                 <nav>
                     <NavLink to="/createDiscussion" style={({ isActive }) => {
                         return {
-                            fontWeight: isActive ? "bold" : "",
+    
                             color: isActive ? "#0766AD" : "",
-                            borderBottom: isActive ? "2px solid #0766AD" : ""
+                            borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
                     }} className="dark:text-black">Create Discussion</NavLink>
                 </nav>
                 <nav>
                     <NavLink to="/mytuitions" style={({ isActive }) => {
                         return {
-                            fontWeight: isActive ? "bold" : "",
+    
                             color: isActive ? "#0766AD" : "",
-                            borderBottom: isActive ? "2px solid #0766AD" : ""
+                            borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
                     }} className="dark:text-black">My Tuitions</NavLink>
                 </nav>
                 <nav>
                     <NavLink to="/notices" style={({ isActive }) => {
                         return {
-                            fontWeight: isActive ? "bold" : "",
+    
                             color: isActive ? "#0766AD" : "",
-                            borderBottom: isActive ? "2px solid #0766AD" : ""
+                            borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
                     }} className="dark:text-black">Notices</NavLink>
                 </nav>
                 <nav>
                     <NavLink to="/assignments" style={({ isActive }) => {
                         return {
-                            fontWeight: isActive ? "bold" : "",
+    
                             color: isActive ? "#0766AD" : "",
-                            borderBottom: isActive ? "2px solid #0766AD" : ""
+                            borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
                     }} className="dark:text-black">Asignments</NavLink>
                 </nav>
@@ -135,28 +144,26 @@ const Header = () => {
         <nav className="">
             <NavLink to="/" style={({ isActive }) => {
                 return {
-                    fontWeight: isActive ? "bold" : "",
                     color: isActive ? "#0766AD" : "",
-                    borderBottom: isActive ? "2px solid #0766AD" : ""
+                    width: "3px",
+                    borderBottom: isActive ? "1px solid #0766AD" : ""
                 };
             }} className="dark:text-black">Home</NavLink>
         </nav>
         <nav className="">
             <NavLink to="/discussions" style={({ isActive }) => {
                 return {
-                    fontWeight: isActive ? "bold" : "",
                     color: isActive ? "#0766AD" : "",
-                    borderBottom: isActive ? "2px solid #0766AD" : ""
+                    borderBottom: isActive ? "1px solid #0766AD" : ""
                 };
             }} className="dark:text-black">Discussions Forum</NavLink>
         </nav>
         {
-            user && <nav className="">
-                <NavLink to="/myCourse" style={({ isActive }) => {
+            user && purchasedCourses.length>0 && <nav className="">
+                <NavLink to="/myCourses" style={({ isActive }) => {
                     return {
-                        fontWeight: isActive ? "bold" : "",
                         color: isActive ? "#0766AD" : "",
-                        borderBottom: isActive ? "2px solid #0766AD" : ""
+                        borderBottom: isActive ? "1px solid #0766AD" : ""
                     };
                 }} className="dark:text-black">My Courses</NavLink>
             </nav>
@@ -169,9 +176,9 @@ const Header = () => {
             !user && <nav>
                 <NavLink to="/login" style={({ isActive }) => {
                     return {
-                        fontWeight: isActive ? "bold" : "",
+
                         color: isActive ? "#0766AD" : "",
-                        borderBottom: isActive ? "2px solid #0766AD" : ""
+                        borderBottom: isActive ? "1px solid #0766AD" : ""
                     };
                 }} className="dark:text-black">Login</NavLink>
             </nav>
@@ -182,7 +189,7 @@ const Header = () => {
     const join = <>
         {
             !user && <div className="dropdown dropdown-end">
-                <label tabIndex={1} className="hover:cursor-pointer" onClick={handleClicked}>
+                <label tabIndex={4} className="hover:cursor-pointer" onClick={handleClicked}>
                     <nav>
                         <a>Join</a>
                     </nav>
@@ -190,7 +197,7 @@ const Header = () => {
 
                 {/* this part will be defferent for different types of user */}
 
-                <div tabIndex={1} className={`${clicked == false ? "hidden" : " bg-base-200 menu menu-sm dropdown-content mt-6 z-[1] p-2 shadow rounded-box w-48 text-sm text-black gap-2"}`}>
+                <div tabIndex={4} className={`${clicked == false ? "hidden" : " bg-base-200 menu menu-sm dropdown-content mt-6 z-[1] p-2 shadow rounded-box w-48 text-sm text-black gap-2"}`}>
                     {joinTypes}
                 </div>
             </div>
@@ -203,7 +210,7 @@ const Header = () => {
                 position="top-center"
                 reverseOrder={false}
             />
-            <div className={`navbar lora font-semibold md:px-[5vw] lg:px-[5vw] max-w-[96rem] h-20 fixed z-50 text-white ${isScrolled ? "bg-white shadow-md" : 'bg-[#C5E898]'}`}>
+            <div className={`navbar font-semi md:px-[5vw] lg:px-[5vw] max-w-[2300px] h-20 fixed z-50 text-white ${isScrolled ? "bg-white shadow-md" : 'bg-[#FFFFFF] border-b-[1px]'}`}>
 
                 {/* this is common part for all users */}
 
@@ -211,17 +218,17 @@ const Header = () => {
 
                     {/* Logo and name of the website */}
                     <Link to="/">
-                        <div className="flex justify-center items-center gap-2 lg:text-xl md:text-xl xl:text-xl 2xl:text-2xl sm:text-lg font-bold">
+                        <div className="flex justify-center items-center gap-2 lg:text-2xl md:text-2xl xl:text-2xl 2xl:text-2xl text-lg font-">
                             <img src={logo} alt="" className="w-6 h-6 lg:w-10 lg:h-10 md:w-10 md:h-10 " />
-                            <h2><span className="text-[#5c802d]">Wisdom</span><span className="text-[#0766AD]">Wave</span></h2>
+                            <h2><span className="text-[#5c802d] lato">Wisdom</span><span className="text-[#0766AD] lato">Wave</span></h2>
                         </div>
                     </Link>
 
-                    {/* Middle search bar for large device*/}
+                    {/* search bar for large device*/}
                     <div className="lg:flex hidden md:hidden">
                         <div className="join">
                             <input className="input input-bordered join-item input-sm bg-[#F3F3F3] focus:outline-none placeholder:text-[#cac9c9] focus:placeholder:text-[#949292]" placeholder="Search Course" />
-                            <button className="btn join-item btn-sm capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white">Search</button>
+                            <button className=" py-[0.2rem] px-2 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] border-2 border-none text-white text-thin rounded-none rounded-r-lg text-sm">Search</button>
                         </div>
                     </div>
                 </div>
@@ -230,42 +237,32 @@ const Header = () => {
 
                         {/* Search bar for small device */}
                         <Link to='/searchPage'>
-                            <IoSearch className="lg:hidden flex md:flex text-2xl" onClick={handleShow}></IoSearch>
+                            <IoSearch className="lg:hidden flex md:flex text-lg" onClick={handleShow}></IoSearch>
                         </Link>
-                        {/* Join for small and medium device */}
-                        {join}
 
-                        {/* login for small and medium device */}
-                        {
-                            !user && <nav>
-                                <NavLink to="/login" style={({ isActive }) => {
-                                    return {
-                                        fontWeight: isActive ? "bold" : "",
-                                        color: isActive ? "#0766AD" : "",
-                                        borderBottom: isActive ? "2px solid #0766AD" : ""
-                                    };
-                                }} className="dark:text-black">Login</NavLink>
-                            </nav>
-                        }
                         <div className="lg:hidden md:flex flex gap-3 justify-center items-center">
                             {
                                 user &&
                                 <div className="flex justify-center items-center gap-3 ">
-                                    <Cart handleClicked={handleClicked} clicked={clicked}></Cart>
-                                    <Notifications handleClicked={handleClicked} clicked={clicked}></Notifications>
+                                    <Cart  className="text-black" handleClicked={handleClicked} clicked={clicked}></Cart>
+                                    <Notifications handleClicked={handleClicked} clicked={clicked} ></Notifications>
                                 </div>
                             }
 
+
+
+                            {/* Join for small and medium device */}
+                            {join}
                             {/* Dropdown menu for small device */}
                             <div className="dropdown dropdown-end" >
                                 <label tabIndex={3} className="" onClick={handleClicked}>
-                                    <IoMenu className="text-2xl"></IoMenu>
+                                    <IoMenu className="text-xl"></IoMenu>
                                 </label>
                                 {/* this part will be defferent for different types of user */}
 
                                 <div tabIndex={3} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-7 z-[1] bg-gray-200 shadow rounded-box w-48 text-base text-black gap-2"}`}>
                                     <div className='p-2'>
-                                        <h4 className=" text-base text-[#0766AD] font-bold capitalize">{user?.displayName}</h4>
+                                        <h4 className=" text-base text-[#0766AD] font- capitalize">{user?.displayName}</h4>
                                         {
                                             user && <hr className='my-2 h-1 bg-[#0766AD]' />
                                         }
@@ -274,15 +271,33 @@ const Header = () => {
                                                 user && <nav>
                                                     <NavLink to="/profile" style={({ isActive }) => {
                                                         return {
-                                                            fontWeight: isActive ? "bold" : "",
+                                    
                                                             color: isActive ? "#0766AD" : "",
-                                                            borderBottom: isActive ? "2px solid #0766AD" : ""
+                                                            borderBottom: isActive ? "1px solid #0766AD" : ""
                                                         };
                                                     }} className="dark:text-black">Your Profile</NavLink>
                                                 </nav>
                                             }
                                             {sNavLinks}
                                             {profileLinks}
+                                            {
+                                                !user && <>
+                                                    <p>Join</p>
+
+                                                    {/* login for small and medium device */}
+                                                    {
+                                                        !user && <nav>
+                                                            <NavLink to="/login" style={({ isActive }) => {
+                                                                return {
+                                            
+                                                                    color: isActive ? "#0766AD" : "",
+                                                                    borderBottom: isActive ? "1px solid #0766AD" : ""
+                                                                };
+                                                            }} className="dark:text-black">Login</NavLink>
+                                                        </nav>
+                                                    }
+                                                </>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -298,9 +313,9 @@ const Header = () => {
                         {sNavLinks}
                         {
                             user &&
-                            <div className="flex justify-center items-center gap-2">
+                            <div className="flex justify-center items-center gap-4 ">
                                 <Cart handleClicked={handleClicked} clicked={clicked}></Cart>
-                                <Notifications handleClicked={handleClicked} clicked={clicked}></Notifications>
+                                <Notifications handleClicked={handleClicked} clicked={clicked} ></Notifications>
                             </div>
                         }
 

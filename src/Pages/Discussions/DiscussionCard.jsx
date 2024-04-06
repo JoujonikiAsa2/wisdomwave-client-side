@@ -7,7 +7,7 @@ const DiscussionCard = ({ discussion }) => {
     return (
         <Link to={`/discussions/${discussion._id}`}>
             {/* discussion card */}
-            <div className='border-[1px] hover:shadow-xl w-[80vw] md:w-[40vw] lg:w-[25vw] shadow-sm bg-white'>
+            <div className='border-[1px] hover:shadow-xl w-[80vw] md:w-[40vw] lg:w-[20vw] shadow-sm bg-white'>
                 <div className='flex gap-4 justif-center items-center p-4'>
                     {/* user profile image top view */}
                     <div>

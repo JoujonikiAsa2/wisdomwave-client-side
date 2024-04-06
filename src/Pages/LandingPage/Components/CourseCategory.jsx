@@ -1,16 +1,13 @@
 import SectionTitle from "../../../SharedComponents/SectionTitle/SectionTitle";
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import './styles.css'
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+
 
 // All course categoories will appear
 const CourseCategory = ({ handleCategorySearch }) => {
-
+    
     const axiosPublic = useAxiosPublic()
 
     const { refetch, data: categories = [] } = useQuery({
@@ -22,55 +19,55 @@ const CourseCategory = ({ handleCategorySearch }) => {
     })
     console.log(categories)
 
-    const handleLocalSearch = (category) =>{
+    const handleLocalSearch = (category) => {
         handleCategorySearch(category)
     }
 
     return (
         <div>
-            <SectionTitle title="Category" subtitle="Find course by clicking on the following categoryname" total={categories.length}></SectionTitle>
+            <SectionTitle title="Categories" subtitle="Find course by clicking on the following categoryname" total={categories.length}></SectionTitle>
             <Carousel
-            autoPlaySpeed={3000}
-            className=" h-full rounded-lg"
-            draggable={true}
-            infinite={false}
-            responsive={{
-                superLargeDesktopp: {
-                    // the naming can be any, depends on you.
-                    breakpoint: { max: 4000, min: 1400 },
-                    items: 5,
-                },
-                superSmallMobile: {
-                    // the naming can be any, depends on you.
-                    breakpoint: { max: 550, min: 0 },
-                    items: 1,
-                },
-                desktop: {
-                    breakpoint: {
-                        max: 1400,
-                        min: 1024
+                autoPlaySpeed={0}
+                className=" h-full rounded-lg"
+                draggable={true}
+                infinite={false}
+                responsive={{
+                    superLargeDesktopp: {
+                        // the naming can be any, depends on you.
+                        breakpoint: { max: 4000, min: 1400 },
+                        items: 5,
                     },
-                    items: 4,
-                },
-                mobile: {
-                    breakpoint: {
-                        max: 800,
-                        min: 560
+                    superSmallMobile: {
+                        // the naming can be any, depends on you.
+                        breakpoint: { max: 550, min: 0 },
+                        items: 1,
                     },
-                    items: 2,
-                },
-                tablet: {
-                    breakpoint: {
-                        max: 1024,
-                        min: 800
+                    desktop: {
+                        breakpoint: {
+                            max: 1400,
+                            min: 1024
+                        },
+                        items: 4,
                     },
-                    items: 3,
-                },
-            }}>
+                    mobile: {
+                        breakpoint: {
+                            max: 800,
+                            min: 560
+                        },
+                        items: 2,
+                    },
+                    tablet: {
+                        breakpoint: {
+                            max: 1024,
+                            min: 800
+                        },
+                        items: 3,
+                    },
+                }}>
                 {
-                    categories.map((category, index) => <div className='mr-2'>
-                        <div onClick={() => handleLocalSearch(category)} key={index} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer">
-                            <h2 className="text- font-bold">{category}</h2>
+                    categories.map((category, index) => <div className='mr-2  h-[4.2rem]'>
+                        <div onClick={() => handleLocalSearch(category)} key={index} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer  h-[4.2rem]">
+                            <h2 className="capitalize">{category}</h2>
                         </div>
                     </div>)
                 }

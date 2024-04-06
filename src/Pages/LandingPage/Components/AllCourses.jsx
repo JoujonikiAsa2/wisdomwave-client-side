@@ -3,26 +3,30 @@ import "react-multi-carousel/lib/styles.css";
 import Course from './Course';
 import SectionTitle from '../../../SharedComponents/SectionTitle/SectionTitle';
 import { useEffect, useState } from 'react';
-import { axiosPublic } from '../../../hooks/useAxiosPublic';
+import useAxiosPublic, { axiosPublic } from '../../../hooks/useAxiosPublic';
+import useAuth from "../../../hooks/useAuth";
 
 export const AllCourses = ({ courses, setCourses }) => {
 
-    const [total, setTotal] = useState()
+    const [total, setTotal] = useState([])
+    const { user } = useAuth()
+    const axiosPublic = useAxiosPublic()
+    console.log(user.email)
 
     useEffect(() => {
-        axiosPublic.get('/api/totalCourse')
+        axiosPublic.get('/api/courses')
             .then(res => {
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 setTotal(res.data.data)
             })
             .catch(e => {
-                console.log(error)
+                console.log(e)
             })
-    })
-    console.log(total)
+    },[total])
+
     return (
         <div className=''>
-            <SectionTitle title="Courses" total={total} subtitle="Find your favorite course here"></SectionTitle>
+            <SectionTitle title="Courses" total={total.length} subtitle="Find your favorite course here"></SectionTitle>
 
             <Carousel
                 // arrows
@@ -63,12 +67,14 @@ export const AllCourses = ({ courses, setCourses }) => {
                         items: 3,
                     },
                 }}
-               >
+            >
+
+                {/* show all courses in card format with slider */}
                 {
-                    courses.map(course => <div className='rounded-lg'>
-                        <Course key={course._id} course={course}>
+                    total.map(course => <div className='rounded-lg'>
+                        <Course key={course._id} course={course} btnText="Enroll Now">
                         </Course>
-                    </div>)
+                    </div >)
                 }
             </Carousel>
         </div>

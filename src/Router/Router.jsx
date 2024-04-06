@@ -8,7 +8,6 @@ import LandingPage from "../Pages/LandingPage/LandingPage"
 import CourseDetails from "../Pages/Student/Components/CourseDetails"
 import PrivateRoute from "../PrivateRoute/PrivateRoute"
 import AvailableCourses from "../Pages/Student/Components/AvailableCourses"
-import Payment from "../Pages/Payment/Payment"
 import SearchPage from "../SharedComponents/Header/SearchPage"
 import PageNotFound from "../Pages/404_page/PageNotFound"
 import { AllCourses } from "../Pages/LandingPage/Components/AllCourses"
@@ -16,6 +15,11 @@ import Discussions from "../Pages/Discussions/Discussions"
 import DiscussionDetails from "../Pages/Discussions/DiscussionDetails"
 import CreateDiscussion from "../Pages/Discussions/CreateDiscussion"
 import ForgetPassword from "../Components/ForgetPassword/ForgetPassword"
+import SecondaryRoot from "../Layout/SecondaryRoot"
+import PaymentSuccess from "../Pages/Payment/PaymentSuccess"
+import PaymentCancel from "../Pages/Payment/PaymentCancel"
+import PaymentFail from "../Pages/Payment/PaymentFail"
+import CourseDashboard from "../Pages/Student/Components/CourseDashboard"
 
 export const router = createBrowserRouter([
     {
@@ -56,26 +60,51 @@ export const router = createBrowserRouter([
                 element: <PrivateRoute><AvailableCourses /></PrivateRoute>
             },
             {
-                path: '/payment',
-                element: <PrivateRoute><Payment/></PrivateRoute>
-            },
-            {
                 path: '/allCourses',
                 element: <AllCourses></AllCourses>
 
+            },
+            {
+                path: '/myCourses',
+                element: <PrivateRoute><AvailableCourses></AvailableCourses></PrivateRoute>
+            },
+            {
+                path: '/courseDashboard/:playlistId',
+                element: <PrivateRoute><CourseDashboard></CourseDashboard></PrivateRoute>
             }
         ]
     },
     {
-        path: "/login",
-        element: <Login />
-    },
-    {
-        path: "/forgetPassword",
-        element: <ForgetPassword />
-    },
-    {
-        path: "/studentSignUp",
-        element: <StudentSignUp />
+        path: '/',
+        element: <SecondaryRoot></SecondaryRoot>,
+        children:[
+            {
+                path: "/login",
+                element: <Login />
+            },
+            {
+                path: "/forgetPassword",
+                element: <ForgetPassword />
+            },
+            {
+                path: "/studentSignUp",
+                element: <StudentSignUp />
+            },
+            {
+                path: '/payment/success/:tranId',
+                element: <PaymentSuccess></PaymentSuccess>
+
+            },
+            {
+                path: '/payment/cancel/:tranId',
+                element: <PaymentCancel></PaymentCancel>
+
+            },
+            {
+                path: '/payment/fail/:tranId',
+                element: <PaymentFail></PaymentFail>
+
+            }
+        ]
     }
 ])

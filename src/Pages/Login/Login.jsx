@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { FaArrowCircleLeft } from "react-icons/fa";
 import Lottie from 'lottie-react';
 import loginAnimation from './login.json'
 import useAuth from '../../hooks/useAuth';
@@ -90,10 +89,7 @@ const Login = () => {
 
     return (
         <>
-            {/* redirect to the home page */}
-            <div className='flex p-4'>
-                <Link to='/'><FaArrowCircleLeft className='text-2xl'></FaArrowCircleLeft></Link>
-            </div>
+            
             <Toaster
                 position="top-center"
                 reverseOrder={false}
@@ -121,7 +117,7 @@ const Login = () => {
                                         name="email"
                                         placeholder="Email"
                                         {...register("email", { required: true })}
-                                        className='input input-bordered border-[#0766AD] focus:outline-none w-[80vw] h-9 md:w-96 lg:w-96'
+                                        className='input input-bordered border-gray-300 focus:outline-none w-[80vw] h-9 md:w-96 lg:w-96'
                                     />
                                     <div>
                                         {errors.email && <span className='text-xs text-red-500'>This field is required</span>}
@@ -135,7 +131,7 @@ const Login = () => {
                                         name="password"
                                         placeholder='Password'
                                         {...register("password", { required: true })}
-                                        className='input input-bordered border-[#0766AD] focus:outline-none w-[80vw] h-9 md:w-96 lg:w-96'
+                                        className='input input-bordered border-gray-300 focus:outline-none w-[80vw] h-9 md:w-96 lg:w-96'
                                     />
                                     <div className='absolute top-2 right-2'>
                                         <IoMdEyeOff className={`text-xl ${passwordType == 'text' && 'hidden'}`} onClick={() => { setPasswordType('text') }} />
@@ -182,7 +178,7 @@ const Login = () => {
 
                                             {/* this part will be defferent for different types of user */}
 
-                                            <div tabIndex={1} className="dropdown-content ml-4 z-[1] text-black bg-none">
+                                            <div tabIndex={1} className="dropdown-content ml-4 z-[1] text-black bg-none shadow-lg p-3  border-gray-300 card border-t-[1px]">
                                                 <div className='flex flex-col gap-2'>
                                                     <Link to="/studentSignUp"><button className="capitalize hover:underline text-[#0766AD]">Student</button></Link>
                                                     <Link to="/studentSignUp"><button className="capitalize hover:underline text-[#0766AD]">Instructor</button></Link>

@@ -4,15 +4,18 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import "./style.css"
 import "./upStyle.css"
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import useDiscussions from "../../hooks/useDiscussions";
 import Loader from "../../SharedComponents/Loader/Loader";
 import EllipsisText from "react-ellipsis-text/lib/components/EllipsisText";
 import { FaComment, FaReply } from "react-icons/fa";
+import { BiSolidLike } from "react-icons/bi";
 
 const DiscussionDetails = () => {
     const { user } = useAuth()
+    localStorage.setItem('totalClicked', false)
+    const localItem = JSON.parse(localStorage.getItem('totalClicked'))
     const axiosPublic = useAxiosPublic()
     const { id } = useParams()
     const { discussions } = useDiscussions()
@@ -21,7 +24,9 @@ const DiscussionDetails = () => {
     const ref = useRef()
     const [divRef, setDivRef] = useState()
     const [clicked, setClicked] = useState(false)
+    const [totalClicked, setTotalClicked] = useState(localItem)
 
+    // console.log(id)
     // handle content field text changes
     const handleChange = (value) => {
         setText(value);
@@ -36,12 +41,31 @@ const DiscussionDetails = () => {
 
     const { data: discussion, refetch } = useQuery({
         queryKey: ["discussion", id],
-        queryFn: () => axiosPublic.get(`/api/discussions/${id}`).then((res) => res.data.data),
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/api/discussions/${id}`);
+            return res.data.data;
+        }
     });
 
 
     if (!discussion) {
+        
         return <Loader></Loader>
+    }
+
+
+    const handleLikes = () => {
+
+        const likes = {
+            userId: user.email
+        };
+        axiosPublic.get("/api/discussions/likes/user", likes)
+            .then(res => {
+                console.log("updated decreased successfully", res.data);
+            })
+            .catch((e) => {
+                console.log(e.message);
+            });
     }
 
 
@@ -64,6 +88,7 @@ const DiscussionDetails = () => {
             .then(res => {
                 // console.log(res.data)
                 refetch()
+                console.log(ref.current.ref)
                 setDivHidden(!divHidden)
                 setText("")
             })
@@ -90,6 +115,7 @@ const DiscussionDetails = () => {
             .then(res => {
                 // console.log(res.data)
                 refetch()
+                console.log(ref.current.ref)
                 e.target.reset()
             })
             .catch((e) => {
@@ -98,10 +124,11 @@ const DiscussionDetails = () => {
         console.log("Your successfully submited the reply", e.target.replyToReplier.value)
     }
 
+    // console.log("totalClicked",totalClicked)
 
     return (
-        <div className="flex lg:flex-row md:flex-row flex-col-reverse lg:gap-8 px-[2vw] pt-24 min-h-screen">
-            <div className="flex flex-col gap-2 p-2 rounded">
+        <div className="flex lg:flex-row md:flex-col-reverse flex-col-reverse justify-center lg:gap-8 px-[2vw] pt-24 min-h-screen max-w-[2300px]">
+            <div className="flex flex-col gap-2 p-4 rounded bg-[#F3F3F3] mb-10">
                 <h2 className="text-lg pb-2 border-b-2 font-bold">All Blogs</h2>
                 {
                     discussions.map(item =>
@@ -124,10 +151,8 @@ const DiscussionDetails = () => {
                     )
                 }
             </div>
-            <div className="hidden md:divider md:divider-horizontal lg:divider lg:divider-horizontal pb-10"></div>
-
             {/* discussion details */}
-            <div className="flex flex-col  w-full md:w-full min-h-screen lg:pb-10 lg:w-3/4">
+            <div className="flex flex-col  w-full md:w-full min-h-screen lg:pb-10 lg:w-2/4">
                 <div className="w-full rounded-full py-4 space-y-2">
                     <h2 className="text-xl font-medium firstLetterUppercase">{discussion?.discussionTitle}</h2>
                     <div className="flex flex-col space-y-3">
@@ -140,11 +165,16 @@ const DiscussionDetails = () => {
                             </div>
                         </div>
                         {/* discussion contents */}
-                        <div className="border text-base p-4 cont bg-[#F3F3F3] rounded firstLetterUppercase max-h-[700px] overflow-y-auto"
+                        <div className="border text-base p-4 cont bg-[#F3F3F3] rounded firstLetterUppercase max-h-[500px] max-w-[900px] overflow-y-auto"
                             dangerouslySetInnerHTML={{ __html: discussion?.content }}
                         />
-                        <div className="btn w-16 btn-sm bg-transparent flex gap-1">
-                            <FaComment></FaComment> <span>({discussion?.comments?.length})</span>
+                        <div className="w-32 flex gap-4 items-center bg-transparent">
+                            <div className="flex gap-1 items-center">
+                                <FaComment></FaComment> <span>({discussion?.comments?.length})</span>
+                            </div>
+                            <div className="flex gap-1 items-center">
+                                <button onClick={handleLikes}><BiSolidLike className={`text-lg ${totalClicked === 1 ? "text-blue-400" : "text-black "}`}></BiSolidLike></button> <span>({discussion.likes})</span>
+                            </div>
                         </div>
 
                         {/* Post comment form */}

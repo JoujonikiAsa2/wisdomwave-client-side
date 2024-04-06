@@ -10,11 +10,33 @@
     font-family: 'Lora', serif;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 /* https://colorhunt.co/palette/0766ad29adb2c5e898f3f3f3 */
 
 /* 
 Blue: #0766AD
 Teal: #29ADB2
-Green: #C5E898
+Green: #E1F0DA
 gray: #F3F3F3 
  */

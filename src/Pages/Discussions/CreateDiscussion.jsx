@@ -38,6 +38,7 @@ const CreateDiscussion = () => {
             discussionCategory: discussionCategory,
             discussionTitle: discussionTitle,
             content: content,
+            likes: 0
         }
 
         console.log(discussionData)
@@ -80,11 +81,11 @@ const CreateDiscussion = () => {
         // create discussion form
         <Container>
             <div className='py-32 rounded flex justify-center items-center'>
-                <form action="" onSubmit={handlePostSubmission} className='bg-[#F3F3F3]  px-6 space-y-4 py-6'>
+                <form action="" onSubmit={handlePostSubmission} className=' px-6 space-y-4 py-6'>
                     <div>
                         {/* bogger name */}
                         <label htmlFor="discussiongerName">
-                            <p className=' text-base font-bold'>Your Name<span className='text-red-500'>*</span></p>
+                            <p className=' text-base text-gray-500'>Your Name<span className='text-red-500'>*</span></p>
                             <input type="text" name='discussiongerName' defaultValue={user?.displayName} className='input input-bordered w-full' required />
                         </label>
 
@@ -93,7 +94,7 @@ const CreateDiscussion = () => {
                     {/* discussion category */}
                     <div>
                         <label htmlFor="discussionCategory">
-                            <p className=' text-base font-bold'>Discussion Category<span className='text-red-500'>*</span></p>
+                            <p className=' text-base text-gray-500'>Discussion Category<span className='text-red-500'>*</span></p>
                             <select name='discussionCategory' className='input input-bordered w-full ' required>
                                 <option value=""></option>
                                 <option value="web development">Web Development</option>
@@ -113,21 +114,21 @@ const CreateDiscussion = () => {
                     {/* discussion Title */}
                     <div>
                         <label htmlFor="discussionTitle" >
-                            <p className=' text-base font-bold'>Discussion Topic<span className='text-red-500'>*</span></p>
-                            <input type="text" name='discussionTitle' className='input input-bordered w-full' required />
+                            <p className=' text-base text-gray-500'>Discussion Topic<span className='text-red-500'>*</span></p>
+                            <input type="text-base" name='discussionTitle' className='input input-bordered w-full' required />
                         </label>
                     </div>
 
                     {/* discussion content */}
                     <div className='w-full'>
                         <label htmlFor="">
-                            <p className=' text-base font-bold'>Discussion Content<span className='text-red-500'>*</span></p>
+                            <p className=' text-base text-gray-500'>Discussion Content<span className='text-red-500'>*</span></p>
                             <ReactQuill
                                 theme='snow'
                                 value={text}
                                 modules={modules}
                                 onChange={handleChange}
-                                className='w-full bg-white rounded'
+                                className='lg:w-[60vw] bg-white rounded'
                                 required
                             />
                         </label>

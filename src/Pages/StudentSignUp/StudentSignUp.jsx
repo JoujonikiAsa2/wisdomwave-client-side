@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
-import { FaArrowCircleLeft } from "react-icons/fa";
 import Lottie from 'lottie-react';
 import signUpAnimation from './signUp.json'
 import useAuth from '../../hooks/useAuth';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { MdCalendarToday, MdContactPhone, MdDriveFileRenameOutline, MdEmail, MdImage, MdPassword } from "react-icons/md";
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import toast, { Toaster } from 'react-hot-toast';
 import { sendEmailVerification } from 'firebase/auth';
@@ -134,16 +132,12 @@ const StudentSignUp = () => {
 
     return (
         <>
-            {/* Icons and links to back on homepage */}
-            <div className='flex p-4'>
-                <Link to='/'><FaArrowCircleLeft className='text-2xl'></FaArrowCircleLeft></Link>
-            </div>
             <Toaster
                 position="top-center"
                 reverseOrder={false}
             />
             <div className='flex flex-col justify-center items-center h-[80vh] max-w-[96rem] mx-auto mt-4'>
-                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl lg:hover:border-t-2 md:hover:shadow-2xl'>
+                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl'>
                     <div className='flex-1 flex-col justify-end'>
                         {/* side animation */}
                         <Lottie animationData={signUpAnimation} className="max-w-[400px] h-[300px]"></Lottie>
@@ -167,7 +161,7 @@ const StudentSignUp = () => {
                                             name="fname"
                                             placeholder="First Name"
                                             {...register("fname", { required: true })}
-                                            className='input input-bordered border-blue-700 w-full  h-9 focus:outline-none'
+                                            className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none'
                                         />
                                         <div>
                                             {errors.fname && <span className='text-xs text-red-500'>This field is required</span>}
@@ -180,7 +174,7 @@ const StudentSignUp = () => {
                                             name="lname"
                                             placeholder="Last Name"
                                             {...register("lname", { required: true })}
-                                            className='input input-bordered border-blue-700 w-full h-9 focus:outline-none'
+                                            className='input input-bordered border-gray-300 w-full h-9 focus:outline-none'
                                         />
                                         <div>
                                             {errors.lname && <span className='text-xs text-red-500'>This field is required</span>}
@@ -198,7 +192,7 @@ const StudentSignUp = () => {
                                         type='file'
                                         name="profile"
                                         {...register("profile", { required: true })}
-                                        className='input input-bordered border-blue-700 w-full h-9 focus:outline-none pt-[0.4rem] text-xs'
+                                        className='input input-bordered border-gray-300 w-full h-9 focus:outline-none pt-[0.4rem] text-xs'
                                     />
                                     <div>
                                         {errors.profile && <span className='text-xs text-red-500'>This field is required</span>}
@@ -223,7 +217,7 @@ const StudentSignUp = () => {
                                                         field.onChange(date);
                                                     }}
                                                     placeholderText="Date of birth"
-                                                    className="input input-bordered border-blue-700 w-[53vw] lg:w-[116%] h-9 md:w-full focus:outline-none"
+                                                    className="input input-bordered border-gray-300 w-[53vw] lg:w-[116%] h-9 md:w-full focus:outline-none"
                                                 />
                                                 <div>
                                                     {errors.dob && <span className='text-xs text-red-500 '>This field is required</span>}
@@ -239,7 +233,7 @@ const StudentSignUp = () => {
                                         name="phone"
                                         placeholder="Phone"
                                         {...register("phone", { required: true })}
-                                        className='input input-bordered border-blue-700 w-full h-9 focus:outline-none'
+                                        className='input input-bordered border-gray-300 w-full h-9 focus:outline-none'
                                     />
 
                                     {/* error if field will be empty */}
@@ -263,7 +257,7 @@ const StudentSignUp = () => {
                                                 required: true,
                                                 pattern: /\S+@\S+\.\S+/
                                             })}
-                                        className='input input-bordered border-blue-700 w-full h-9 focus:outline-none'
+                                        className='input input-bordered border-gray-300 w-full h-9 focus:outline-none'
                                     />
                                     {/* error if field will be empty */}
                                     <div>
@@ -287,7 +281,7 @@ const StudentSignUp = () => {
                                                 maxLength: 20,
                                                 pattern: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,20}/
                                             })}
-                                        className='input input-bordered border-blue-700 w-full h-9 focus:outline-none' />
+                                        className='input input-bordered border-gray-300 w-full h-9 focus:outline-none' />
                                     <div>
                                         {errors.password?.type === "required" && <span className='text-xs text-red-600'>Password is required</span>}
                                         {errors.password?.type === "minLength" && <span className='text-xs text-red-600'>Password should be 6 character or longer</span>}

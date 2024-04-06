@@ -6,9 +6,9 @@ import Header from "../SharedComponents/Header/Header";
 const Root = () => {
 
     return (
-        <div className=" max-w-screen-2xl mx-auto">
+        <div className=" max-w-[2300px]">
             <Header></Header>
-            <div className="w-full min-h-screen dark:bg-white">
+            <div className="w-full min-h-screen">
                 <Outlet></Outlet>
             </div>
             <Footer></Footer>

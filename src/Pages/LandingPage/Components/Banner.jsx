@@ -1,48 +1,18 @@
-import slider1 from './educational-animation.json'
-import slider2 from './discussion.json'
-
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-
-import './styles.css';
-
-// import required modules
-import {Pagination, Navigation, Autoplay } from 'swiper/modules';
-import BannerSlider from './BannerSlider';
+import Lottie from 'lottie-react';
 
 // Landing page Banner
-const Banner = () => {
-
+const Banner = ({ slider, sliderText, subText }) => {
     return (
-        <>
-            <Swiper
-                spaceBetween={300}
-                centeredSlides={true}
-                // autoplay={{
-                //     delay: 2500,
-                //     disableOnInteraction: false,
-                // }}
-                pagination={{
-                    clickable: true,
-                }}
-                navigation={true}
-                modules={[Pagination, Navigation, Autoplay]}
-                className="mySwiper"
-            >
-                <SwiperSlide>
-                    <BannerSlider slider={slider1} sliderText="Welcome to WishdomWave Take the touch of the wave of learning"></BannerSlider>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <BannerSlider slider={slider2} sliderText="You can disscuss your Problems with other"></BannerSlider>
-                </SwiperSlide>
-            </Swiper>
-        </>
+        <div className="h-[70vh] w-full lg:pt-20 pt-28 flex lg:flex-row md:flex-row flex-col-reverse justify-center items-center bg-[#CEE7E1] lg:gap-20 md:gap-20 pb-10">
+            <div className='max-w-[380px] text-center '>
+                <h2 className="text-2xl lg:text-3xl font-bold text-[#0766AD]">{sliderText}</h2>
+                <p className='p-4 text-gray-500'>{subText}</p>
+            </div>
+            <div>
+                <Lottie animationData={slider} className='lg:h-[300px] md:h-[300px] h-[260px]'></Lottie>
+            </div>
+
+        </div>
     );
 }
 

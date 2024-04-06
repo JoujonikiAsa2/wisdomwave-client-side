@@ -1,13 +1,13 @@
 import React from 'react';
-import { IoNotificationsCircle } from 'react-icons/io5';
+import { IoNotificationsOutline } from 'react-icons/io5';
 
 const Notifications = ({ handleClicked, clicked }) => {
     return (
         <div>
-            <nav className="dropdown dropdown-end">
+            <nav className="dropdown dropdown-end mr-2">
                 <div tabIndex={0} onClick={handleClicked} className="hover:cursor-pointer">
-                    <div><IoNotificationsCircle className="text-3xl text-blue-600"></IoNotificationsCircle></div>
-                    <span className="absolute badge bottom-5 left-3 text-red-400 dark:text-blue-600 bg-[#F3F3F3]">2</span>
+                    <IoNotificationsOutline className="text-xl text-blue-600"></IoNotificationsOutline>
+                    <span className="absolute text-sm bottom-2 left-5 text-red-400 dark:text-blue-600">2</span>
                 </div>
                 <div tabIndex={0} className={`${clicked == false ? "hidden" : "mt-8 z-[1] card card-compact dropdown-content w-72 bg-base-200 shadow"}`}>
                     <div className="card-body">

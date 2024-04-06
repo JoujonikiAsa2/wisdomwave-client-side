@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 //Course card design
 
-const Course = ({ course, enrolled }) => {
+const Course = ({ course, btnText}) => {
 
     const { title, thumbnail, instructor, rating, totalStudents, enrollFee } = course.courseDetails
     // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
@@ -14,7 +14,7 @@ const Course = ({ course, enrolled }) => {
             <div className='flex justify-center items-center'>
                 <img src={thumbnail} alt="" className="w-full h-32  rounded-t-lg" />
             </div>
-            <div className={`${enrolled ? "hidden" : 'w-16 h-7 text-black bg-[#29ADB2] p-1 text-sm text-center rounded-lg absolute bottom-48 top-2 left-2 font-bold'}`}>
+            <div className={`w-16 h-7 text-black bg-[#29ADB2] p-1 text-sm text-center rounded-lg absolute bottom-48 top-2 left-2 font-bold`}>
                 <p>{enrollFee}Tk</p>
             </div>
             <div className='text-start px-2 space-y-6 h-full'>
@@ -27,7 +27,7 @@ const Course = ({ course, enrolled }) => {
 
                     <Link to={`/courseDetails/${course._id}`}>
                         <div className='flex justify-end'>
-                            <button className='btn btn-xs capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] text-white border-2 border-none'>{`${!enrolled ? "Buy Now" : "View Course"}`}</button>
+                            <button className='btn btn-xs capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] text-white border-2 border-none'>{btnText}</button>
                         </div>
                     </Link>
 
