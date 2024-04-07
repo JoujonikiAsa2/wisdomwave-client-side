@@ -6,6 +6,7 @@ import { useState } from 'react';
 // import 'video-react/dist/video-react.css'; // import css
 import ReactPlayer from 'react-player/lazy'
 import { useParams } from 'react-router-dom';
+import Loader from '../../../SharedComponents/Loader/Loader';
 // import ReactPlayer from 'react-player';
 // import { Dropbox } from 'dropbox';
 
@@ -51,6 +52,10 @@ const CourseDashboard = () => {
         setYouTubeVideoId(videoId)
     }
 
+    if(channelVideos.length == 0){
+        return <Loader></Loader>
+    }
+
     return (
         <div className='lg:pt-32 pt-20 flex flex-col-reverse lg:flex-row md:flex-row justify-center lg:gap-10 md:gap-10 gap-4'>
             <div>
@@ -59,7 +64,7 @@ const CourseDashboard = () => {
                 </div>
 
                 {/* show all contents of the play list */}
-                <div className='h-[500px] overflow-y-scroll mb-10 px-4 bg-gray-300 rounded-b-md'>
+                <div className='h-[500px] overflow-y-scroll mb-10 px-4 bg-gray-100 rounded-b-md lg:w-[22.2rem] md:w-[22.2rem overflow-x-hidden'>
                     {
                         channelVideos.map((item, index) => (index + 1) % 7 !== 0
                             ?
@@ -76,7 +81,7 @@ const CourseDashboard = () => {
                 </div>
             </div>
 
-            <div className='lg:w-[50vw] md:w-[50vw] h-[400px] w-full lg:p-0 md:p-0 p-2'>
+            <div className='lg:w-[50vw] md:w-[50vw] h-[400px] w-full lg:p-0 md:p-0 p-2 bg-gray-100'>
                 {
                     youTubeVideoId === null ? <iframe width="560" height="315" src="https://www.youtube.com/embed/" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" style={{ width: "100%", height: "100%" }} allowfullscreen></iframe> : 
                     // used package to play video

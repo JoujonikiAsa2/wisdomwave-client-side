@@ -4,8 +4,8 @@ import { IoNotificationsOutline } from 'react-icons/io5';
 const Notifications = ({ handleClicked, clicked }) => {
     return (
         <div>
-            <nav className="dropdown dropdown-end mr-2">
-                <div tabIndex={0} onClick={handleClicked} className="hover:cursor-pointer">
+            <nav className="dropdown dropdown-end mr-2 flex justify-center items-center">
+                <div tabIndex={0} onClick={handleClicked} className="hover:cursor-pointer ">
                     <IoNotificationsOutline className="text-xl text-blue-600"></IoNotificationsOutline>
                     <span className="absolute text-sm bottom-2 left-5 text-red-400 dark:text-blue-600">2</span>
                 </div>

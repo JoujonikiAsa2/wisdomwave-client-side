@@ -25,7 +25,7 @@ const CourseCategory = ({ handleCategorySearch }) => {
 
     return (
         <div>
-            <SectionTitle title="Categories" subtitle="Find course by clicking on the following categoryname" total={categories.length}></SectionTitle>
+            <SectionTitle title="Categories" subtitle="Find course by clicking on the following category name" total={categories.length}></SectionTitle>
             <Carousel
                 autoPlaySpeed={0}
                 className=" h-full rounded-lg"

@@ -1,14 +1,12 @@
 import { IoMenu, IoNotificationsCircle, IoSearch } from "react-icons/io5";
 import logo from '../../assets/Photos/LandingPage/logo_wave.png'
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Profile from "./Profile";
 import Notifications from "./Notifications";
 import toast, { Toaster } from "react-hot-toast";
 import Cart from "./Cart";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
-import { useQuery } from "@tanstack/react-query";
 
 const Header = () => {
 
@@ -17,15 +15,8 @@ const Header = () => {
     const [clicked, setClicked] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false);
     const navigate = useNavigate()
-    const axiosPublic = useAxiosPublic()
     console.log(user?.email)
-    const { data: purchasedCourses = [], refetch } = useQuery({
-        queryKey: "purchasedCourses",
-        queryFn: async () => {
-            const purchasedCourses = await axiosPublic.get(`api/purchasedCourses/${user?.email}`)
-            return purchasedCourses.data.data
-        }
-    })
+    const [searchValue, setSearchValue] = useState()
 
     // Handle the navbar color
     useEffect(() => {
@@ -88,7 +79,7 @@ const Header = () => {
                 <nav>
                     <NavLink to="/createDiscussion" style={({ isActive }) => {
                         return {
-    
+
                             color: isActive ? "#0766AD" : "",
                             borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
@@ -97,7 +88,7 @@ const Header = () => {
                 <nav>
                     <NavLink to="/mytuitions" style={({ isActive }) => {
                         return {
-    
+
                             color: isActive ? "#0766AD" : "",
                             borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
@@ -106,7 +97,7 @@ const Header = () => {
                 <nav>
                     <NavLink to="/notices" style={({ isActive }) => {
                         return {
-    
+
                             color: isActive ? "#0766AD" : "",
                             borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
@@ -115,7 +106,7 @@ const Header = () => {
                 <nav>
                     <NavLink to="/assignments" style={({ isActive }) => {
                         return {
-    
+
                             color: isActive ? "#0766AD" : "",
                             borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
@@ -159,7 +150,7 @@ const Header = () => {
             }} className="dark:text-black">Discussions Forum</NavLink>
         </nav>
         {
-            user && purchasedCourses.length>0 && <nav className="">
+            user && <nav className="">
                 <NavLink to="/myCourses" style={({ isActive }) => {
                     return {
                         color: isActive ? "#0766AD" : "",
@@ -227,7 +218,7 @@ const Header = () => {
                     {/* search bar for large device*/}
                     <div className="lg:flex hidden md:hidden">
                         <div className="join">
-                            <input className="input input-bordered join-item input-sm bg-[#F3F3F3] focus:outline-none placeholder:text-[#cac9c9] focus:placeholder:text-[#949292]" placeholder="Search Course" />
+                            <input name="search" className="input input-bordered join-item input-sm bg-[#F3F3F3] focus:outline-none placeholder:text-[#cac9c9] focus:placeholder:text-[#949292]" placeholder="Search Course" />
                             <button className=" py-[0.2rem] px-2 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] border-2 border-none text-white text-thin rounded-none rounded-r-lg text-sm">Search</button>
                         </div>
                     </div>
@@ -237,14 +228,14 @@ const Header = () => {
 
                         {/* Search bar for small device */}
                         <Link to='/searchPage'>
-                            <IoSearch className="lg:hidden flex md:flex text-lg" onClick={handleShow}></IoSearch>
+                            <IoSearch className="lg:hidden flex md:flex text-xl text-blue-600" onClick={handleShow}></IoSearch>
                         </Link>
 
                         <div className="lg:hidden md:flex flex gap-3 justify-center items-center">
                             {
                                 user &&
                                 <div className="flex justify-center items-center gap-3 ">
-                                    <Cart  className="text-black" handleClicked={handleClicked} clicked={clicked}></Cart>
+                                    <Cart className="text-black" handleClicked={handleClicked} clicked={clicked}></Cart>
                                     <Notifications handleClicked={handleClicked} clicked={clicked} ></Notifications>
                                 </div>
                             }
@@ -256,7 +247,7 @@ const Header = () => {
                             {/* Dropdown menu for small device */}
                             <div className="dropdown dropdown-end" >
                                 <label tabIndex={3} className="" onClick={handleClicked}>
-                                    <IoMenu className="text-xl"></IoMenu>
+                                    <IoMenu className="text-xl text-blue-600"></IoMenu>
                                 </label>
                                 {/* this part will be defferent for different types of user */}
 
@@ -271,7 +262,7 @@ const Header = () => {
                                                 user && <nav>
                                                     <NavLink to="/profile" style={({ isActive }) => {
                                                         return {
-                                    
+
                                                             color: isActive ? "#0766AD" : "",
                                                             borderBottom: isActive ? "1px solid #0766AD" : ""
                                                         };
@@ -289,7 +280,7 @@ const Header = () => {
                                                         !user && <nav>
                                                             <NavLink to="/login" style={({ isActive }) => {
                                                                 return {
-                                            
+
                                                                     color: isActive ? "#0766AD" : "",
                                                                     borderBottom: isActive ? "1px solid #0766AD" : ""
                                                                 };

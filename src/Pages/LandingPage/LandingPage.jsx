@@ -13,8 +13,6 @@ const LandingPage = () => {
     const bg = "bg-[#CEE7E1]"
 
     const { allCourses } = useCourses()
-    // const bg = "bg-[#C5E898]"
-    // const textColor = "text-[#0766AD]"
     const [courses, setCourses] = useState(allCourses)
     console.log("Courses", allCourses)
 

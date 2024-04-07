@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const Cart = ({ handleClicked, clicked }) => {
     return (
         <div>
-            <nav className="dropdown dropdown-end">
+            <nav className="dropdown dropdown-end flex justify-center items-center">
                 <div tabIndex={0} onClick={handleClicked} className="hover:cursor-pointer">
                     <div><CiShoppingCart  className="text-xl text-blue-600"></CiShoppingCart ></div>
                     <span className="absolute text-sm bottom-2 left-5 text-red-400 dark:text-blue-600">2</span>

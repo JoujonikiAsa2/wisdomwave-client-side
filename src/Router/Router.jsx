@@ -91,18 +91,18 @@ export const router = createBrowserRouter([
                 element: <StudentSignUp />
             },
             {
-                path: '/payment/success/:tranId',
-                element: <PaymentSuccess></PaymentSuccess>
+                path: '/payment/success/:course_Id',
+                element: <PrivateRoute><PaymentSuccess></PaymentSuccess></PrivateRoute>
 
             },
             {
-                path: '/payment/cancel/:tranId',
-                element: <PaymentCancel></PaymentCancel>
+                path: '/payment/cancel/:course_Id',
+                element: <PrivateRoute><PaymentCancel></PaymentCancel></PrivateRoute>
 
             },
             {
-                path: '/payment/fail/:tranId',
-                element: <PaymentFail></PaymentFail>
+                path: '/payment/fail/:courseId',
+                element: <PrivateRoute><PaymentFail></PaymentFail></PrivateRoute>
 
             }
         ]

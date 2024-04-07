@@ -9,21 +9,24 @@ import {
 // Demo styles, see 'Styles' section below for some notes on use.
 import 'react-accessible-accordion/dist/fancy-example.css';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import '@smastrom/react-rating/style.css'
 import { Rating } from '@smastrom/react-rating';
-import { FaCheck  } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 import useAuth from '../../../hooks/useAuth';
 
 const CourseDetails = () => {
     const navigate = useNavigate()
-    const {user} = useAuth()
+    const { user } = useAuth()
 
     // get the id from params
     const { id } = useParams()
     const axiosPublic = useAxiosPublic()
     console.log("Id", id)
+
+    // get the stored data from the localstorage
+    const storedCourses = JSON.parse(localStorage.getItem('courses'))
 
     // fetch the data when window get open
     const { data: courseDetails = [] } = useQuery({
@@ -114,15 +117,28 @@ const CourseDetails = () => {
                     </div>
 
                     {/* Buttons */}
-                    <div className='py-4 flex justify-start items-center gap-2 text-white'>
+                    {
+                        // compared the id with local storage's id
+                        storedCourses.includes(id) ?
+                            <div className='py-4 flex justify-start items-center gap-2 text-white'>
+                                <Link to={`/courseDashboard/${courseDetails.playlistId}`}>
+                                    <button
+                                        className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
+                                    > Go to Course
+                                    </button>
+                                </Link>
+                            </div>
+                            :
+                            <div className='py-4 flex justify-start items-center gap-2 text-white'>
 
-                            <button onClick={() =>handlePayment(id)}
-                                className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
-                            > Buy now
-                            </button>
-                        <button
-                            className='btn btn-sm text-white  capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '>Add to cart</button>
-                    </div>
+                                <button onClick={() => handlePayment(id)}
+                                    className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
+                                > Buy now
+                                </button>
+                                <button
+                                    className='btn btn-sm text-white  capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '>Add to cart</button>
+                            </div>
+                    }
 
                     {/* Course contents accordion*/}
                     <div>

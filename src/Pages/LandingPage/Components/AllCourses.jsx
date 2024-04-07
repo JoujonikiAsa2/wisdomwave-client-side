@@ -5,6 +5,7 @@ import SectionTitle from '../../../SharedComponents/SectionTitle/SectionTitle';
 import { useEffect, useState } from 'react';
 import useAxiosPublic, { axiosPublic } from '../../../hooks/useAxiosPublic';
 import useAuth from "../../../hooks/useAuth";
+import Loader from "../../../SharedComponents/Loader/Loader";
 
 export const AllCourses = ({ courses, setCourses }) => {
 
@@ -12,6 +13,7 @@ export const AllCourses = ({ courses, setCourses }) => {
     const { user } = useAuth()
     const axiosPublic = useAxiosPublic()
     console.log(user.email)
+
 
     useEffect(() => {
         axiosPublic.get('/api/courses')
@@ -22,13 +24,13 @@ export const AllCourses = ({ courses, setCourses }) => {
             .catch(e => {
                 console.log(e)
             })
-    },[total])
+    }, [total])
 
     return (
         <div className=''>
             <SectionTitle title="Courses" total={total.length} subtitle="Find your favorite course here"></SectionTitle>
 
-            <Carousel
+            {total.length == 0 ? <Loader></Loader> : <Carousel
                 // arrows
                 autoPlaySpeed={3000}
                 className="w-full h-full rounded-lg"
@@ -71,12 +73,17 @@ export const AllCourses = ({ courses, setCourses }) => {
 
                 {/* show all courses in card format with slider */}
                 {
-                    total.map(course => <div className='rounded-lg'>
+                    courses.length == 0 ? total.map(course => <div className='rounded-lg'>
+                        <Course key={course._id} course={course} btnText="Enroll Now">
+                        </Course>
+                    </div >) : courses.map(course => <div className='rounded-lg'>
                         <Course key={course._id} course={course} btnText="Enroll Now">
                         </Course>
                     </div >)
                 }
             </Carousel>
+
+            }
         </div>
     )
 };
