@@ -3,16 +3,15 @@ import "react-multi-carousel/lib/styles.css";
 import Course from './Course';
 import SectionTitle from '../../../SharedComponents/SectionTitle/SectionTitle';
 import { useEffect, useState } from 'react';
-import useAxiosPublic, { axiosPublic } from '../../../hooks/useAxiosPublic';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import useAuth from "../../../hooks/useAuth";
-import Loader from "../../../SharedComponents/Loader/Loader";
 
-export const AllCourses = ({ courses, setCourses }) => {
+const Courses = ({ courses, setCourses }) => {
 
     const [total, setTotal] = useState([])
     const { user } = useAuth()
     const axiosPublic = useAxiosPublic()
-    console.log(user.email)
+    // console.log(user.email)
 
 
     useEffect(() => {
@@ -27,10 +26,10 @@ export const AllCourses = ({ courses, setCourses }) => {
     }, [total])
 
     return (
-        <div className=''>
-            <SectionTitle title="Courses" total={total.length} subtitle="Find your favorite course here"></SectionTitle>
+        <div className=' -z-0' >
+            <SectionTitle title="Courses" total={total.length} subtitle="Find your favorite courses here"></SectionTitle>
 
-            {total.length == 0 ? <Loader></Loader> : <Carousel
+            <Carousel
                 // arrows
                 autoPlaySpeed={3000}
                 className="w-full h-full rounded-lg"
@@ -82,8 +81,8 @@ export const AllCourses = ({ courses, setCourses }) => {
                     </div >)
                 }
             </Carousel>
-
-            }
         </div>
     )
 };
+
+export default Courses;

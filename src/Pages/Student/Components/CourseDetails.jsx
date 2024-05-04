@@ -119,7 +119,7 @@ const CourseDetails = () => {
                     {/* Buttons */}
                     {
                         // compared the id with local storage's id
-                        storedCourses.includes(id) ?
+                        storedCourses != null && storedCourses?.includes(id) ?
                             <div className='py-4 flex justify-start items-center gap-2 text-white'>
                                 <Link to={`/courseDashboard/${courseDetails.playlistId}`}>
                                     <button
@@ -200,7 +200,7 @@ const CourseDetails = () => {
                     <div>
                         <h4 className='text-lg font-bold pt-4 pb-2'>Requirements</h4>
                         <div className='pl-6 text-sm'>
-                            {courseDetails.requirements ? courseDetails.requirements.map((item, index) => (
+                            {courseDetails?.requirements ? courseDetails.requirements.map((item, index) => (
                                 <li key={index}>{item}</li>
                             )) : null}
                         </div>

@@ -20,7 +20,7 @@ const Profile = ({ handleClicked, clicked, profileLinks }) => {
                 <div className='p-2'>
                     <h4 className=" text-sm text-[#0766AD] font-bold capitalize">{user?.displayName}</h4>
                     <hr className='my-2 h-1 bg-[#0766AD]' />
-                    {
+                    {/* {
                         user && <nav className='pb-2'>
                         <NavLink to="/profile" style={({ isActive }) => {
                             return {
@@ -31,7 +31,7 @@ const Profile = ({ handleClicked, clicked, profileLinks }) => {
                         }}
                         className="text-sm">Your Profile</NavLink>
                     </nav>
-                    }
+                    } */}
                     <div className='space-y-2 text-sm'>
                         {profileLinks}
                     </div>

@@ -57,8 +57,8 @@ const CourseDashboard = () => {
     }
 
     return (
-        <div className='lg:pt-32 pt-20 flex flex-col-reverse lg:flex-row md:flex-row justify-center lg:gap-10 md:gap-10 gap-4'>
-            <div>
+        <div className='lg:pt-28 md:pt-28 pt-20 flex flex-col-reverse lg:flex-row md:flex-row justify-center lg:gap-10 md:gap-10 gap-10'>
+            <div className=''>
                 <div className='bg-gray-400 rounded-t-md p-1'>
                     <h2 className='text-xl pb-2'>Content</h2>
                 </div>

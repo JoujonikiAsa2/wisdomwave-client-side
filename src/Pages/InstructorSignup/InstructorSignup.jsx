@@ -16,7 +16,7 @@ const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_API}`
 
 
-const StudentSignUp = () => {
+const InstructorSignup = () => {
 
     const axiosPublic = useAxiosPublic()
     // date picker
@@ -60,7 +60,7 @@ const StudentSignUp = () => {
             name: name,
             email: data.email,
             phoneNumber: phoneNumber,
-            userType: 'student',
+            userType: 'instructor',
             profilePicture: image,
             verified: false,
         }
@@ -149,7 +149,7 @@ const StudentSignUp = () => {
             .catch(error => {
 
                 // console if any error
-                toast.error('Failed to Log In!')
+                toast.error('Failed to Log In!', error)
             })
     }
 
@@ -362,4 +362,4 @@ const StudentSignUp = () => {
     );
 };
 
-export default StudentSignUp;
+export default InstructorSignup;

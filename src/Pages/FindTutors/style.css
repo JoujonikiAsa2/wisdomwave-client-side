@@ -1,0 +1,10 @@
+#education > table{
+    border: 1px solid #c9cdd4
+}
+#education > table > th{
+    border: 1px solid #c9cdd4
+}
+#education > table > tr > td{
+    border: 1px solid #c9cdd4;
+    padding: 10px
+}

@@ -9,8 +9,6 @@ import CourseDetails from "../Pages/Student/Components/CourseDetails"
 import PrivateRoute from "../PrivateRoute/PrivateRoute"
 import AvailableCourses from "../Pages/Student/Components/AvailableCourses"
 import SearchPage from "../SharedComponents/Header/SearchPage"
-import PageNotFound from "../Pages/404_page/PageNotFound"
-import { AllCourses } from "../Pages/LandingPage/Components/AllCourses"
 import Discussions from "../Pages/Discussions/Discussions"
 import DiscussionDetails from "../Pages/Discussions/DiscussionDetails"
 import CreateDiscussion from "../Pages/Discussions/CreateDiscussion"
@@ -20,7 +18,14 @@ import PaymentSuccess from "../Pages/Payment/PaymentSuccess"
 import PaymentCancel from "../Pages/Payment/PaymentCancel"
 import PaymentFail from "../Pages/Payment/PaymentFail"
 import CourseDashboard from "../Pages/Student/Components/CourseDashboard"
-
+import AllCourses from "../Pages/AllCourses/AllCourses"
+import FindTutors from "../Pages/FindTutors/FindTutors"
+import CreateTuition from "../Pages/Student/CreateTuition"
+import TutorDetails from "../Pages/FindTutors/TutorDetails"
+import RequestedTuition from "../Pages/FindTutors/RequestedTuition"
+import PageNotFound from "../SharedComponents/404_page/PageNotFound"
+import TutorSignup from "../Pages/TutorSignup/TutorSignup"
+import InstructorSignup from "../Pages/InstructorSignup/InstructorSignup"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -56,22 +61,35 @@ export const router = createBrowserRouter([
             }
             ,
             {
-                path: '/myCourse',
-                element: <PrivateRoute><AvailableCourses /></PrivateRoute>
+                path: '/myCourses',
+                element: <PrivateRoute><AvailableCourses></AvailableCourses></PrivateRoute>
             },
+            ,
             {
                 path: '/allCourses',
                 element: <AllCourses></AllCourses>
-
             },
             {
-                path: '/myCourses',
-                element: <PrivateRoute><AvailableCourses></AvailableCourses></PrivateRoute>
+                path: '/findTutors',
+                element: <FindTutors></FindTutors>
+            },
+            {
+                path: '/tutorDetails/:id',
+                element: <PrivateRoute><TutorDetails></TutorDetails></PrivateRoute>
+            },
+            {
+                path: '/requestedTuition',
+                element: <RequestedTuition></RequestedTuition>
+            },
+            {
+                path: '/createTuition',
+                element: <CreateTuition></CreateTuition>
             },
             {
                 path: '/courseDashboard/:playlistId',
                 element: <PrivateRoute><CourseDashboard></CourseDashboard></PrivateRoute>
-            }
+            },
+            
         ]
     },
     {
@@ -86,9 +104,20 @@ export const router = createBrowserRouter([
                 path: "/forgetPassword",
                 element: <ForgetPassword />
             },
+            // student
             {
                 path: "/studentSignUp",
                 element: <StudentSignUp />
+            },
+            // instructor
+            {
+                path: '/instructorSignup',
+                element: <InstructorSignup></InstructorSignup>
+            },
+            // tutor
+            {
+                path: '/tutorSignup',
+                element: <TutorSignup></TutorSignup>
             },
             {
                 path: '/payment/success/:course_Id',

@@ -15,14 +15,14 @@ import AuthProvider from './AuthProvider/AuthProvider'
 
 const queryClient = new QueryClient()
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <div className='lato'>
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router}/>
-        </QueryClientProvider>
-      </AuthProvider>
-    </div>
-  </React.StrictMode>,
+  <div className='lato'>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router}>
+        </RouterProvider>
+      </QueryClientProvider>
+    </AuthProvider>
+  </div>
 )

@@ -11,7 +11,7 @@ const Cart = ({ handleClicked, clicked }) => {
                     <div><CiShoppingCart  className="text-xl text-blue-600"></CiShoppingCart ></div>
                     <span className="absolute text-sm bottom-2 left-5 text-red-400 dark:text-blue-600">2</span>
                 </div>
-                <div tabIndex={0} className={`${clicked == false ? "hidden" : "mt-9 z-[1] card card-compact dropdown-content w-40 bg-base-200 shadow"}`}>
+                <div tabIndex={0} className={`${clicked == false ? "hidden" : "mt-[11.5rem] z-[1] card card-compact dropdown-content w-40 bg-base-200 shadow"}`}>
                     <div className="card-body">
                         <p>Total items: 2</p>
                         <Link to='/'>

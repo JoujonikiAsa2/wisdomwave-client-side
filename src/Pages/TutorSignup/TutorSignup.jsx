@@ -7,16 +7,16 @@ import signUpAnimation from './signUp.json'
 import useAuth from '../../hooks/useAuth';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 import toast, { Toaster } from 'react-hot-toast';
 import { sendEmailVerification } from 'firebase/auth';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
 '../../hooks/useAxiosPublic';
 const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_API}`
 
 
-const StudentSignUp = () => {
+const TutorSignup = () => {
 
     const axiosPublic = useAxiosPublic()
     // date picker
@@ -29,7 +29,7 @@ const StudentSignUp = () => {
     const location = useLocation()
 
     // get this from useAuth custom hook
-    const { signUpAsStudent, googleLogin, userSignOut, updateUserInfo } = useAuth()
+    const { studentSignUp, googleLogin, userSignOut, updateUserInfo } = useAuth()
 
     // react hook form built in function desctructuring
     const {
@@ -43,8 +43,8 @@ const StudentSignUp = () => {
     // Help to execute all function after submit the form
     const onSubmit = async (data) => {
         // console.log(data)
-        const name = data.fname + " " + data.lname
-        const phoneNumber = data.phone
+        const name = data.fullName
+        const phoneNumber = parseInt(data.phone)
         const imageFile = { image: data.profile[0] }
         const res = await axiosPublic.post(image_hosting_api, imageFile, {
             headers: {
@@ -54,19 +54,11 @@ const StudentSignUp = () => {
 
         // console.log(phone, name, res.data.data.display_url)
         const image = res.data.data.display_url
-        console.log(phoneNumber)
+        console.log(data)
 
-        const user = {
-            name: name,
-            email: data.email,
-            phoneNumber: phoneNumber,
-            userType: 'student',
-            profilePicture: image,
-            verified: false,
-        }
-        console.log(user)
-        signUpAsStudent(data.email, data.password)
+        studentSignUp(data.email, data.password)
             .then(result => {
+
                 // console.log(result.user)
 
                 // updating user information
@@ -80,21 +72,12 @@ const StudentSignUp = () => {
                 // Sending a verification link
                 sendEmailVerification(result.user)
                     .then(() => {
-
                         setStartDate("")
-
-                        axiosPublic.post('/api/users', user)
-                            .then(res => {
-                                console.log(res.data)
-                            })
-                            .catch(error => {
-                                console.log(error)
-                            })
+                        reset()
                         // This is alert message email verification
                         toast.success('Please check your email to verify', {
                             duration: 4000
-                        })
-                        reset()
+                        });
                         setTimeout(() => {
                             userSignOut()
                                 .then(() => {
@@ -102,6 +85,7 @@ const StudentSignUp = () => {
                                 })
                                 .catch(error => console.log(error))
                         }, 1200)
+
                     })
                     .catch(() => {
                         toast.error('Failed to verify', {
@@ -124,13 +108,6 @@ const StudentSignUp = () => {
             .then(res => {
                 {
                     if (res.user) {
-                        axiosPublic.post('/api/users', user)
-                            .then(res => {
-                                console.log(res.data)
-                            })
-                            .catch(error => {
-                                console.log(error)
-                            })
                         toast.success('Successfully Logged In!', {
                             duration: 1000,
                         })
@@ -152,6 +129,9 @@ const StudentSignUp = () => {
                 toast.error('Failed to Log In!')
             })
     }
+
+    const randomString = Math.random().toString(36).substring(2);
+    console.log(randomString)
 
     return (
         <>
@@ -178,29 +158,20 @@ const StudentSignUp = () => {
                             <div className='flex gap-[1.5rem] md:gap-2 lg:gap-4 justify-between lg:justify-center md:justify-end items-center mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
                                 {/* first name */}
                                 <div className='w-full flex gap-3'>
-                                    <div className='w-2/3'>
+                                    <div className='w-full'>
                                         <input
                                             type='text'
-                                            name="fname"
-                                            placeholder="First Name"
-                                            {...register("fname", { required: true })}
-                                            className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none'
-                                        />
-                                        <div>
-                                            {errors.fname && <span className='text-xs text-red-500'>This field is required</span>}
-                                        </div>
-                                    </div>
-                                    {/* last name */}
-                                    <div className='w-1/3'>
-                                        <input
-                                            type='text'
-                                            name="lname"
-                                            placeholder="Last Name"
-                                            {...register("lname", { required: true })}
+                                            name="fullName"
+                                            placeholder="Full Name"
+                                            {...register("email",
+                                                {
+                                                    required: true,
+                                                    pattern: /\S+@\S+\.\S+/
+                                                })}
                                             className='input input-bordered border-gray-300 w-full h-9 focus:outline-none'
                                         />
                                         <div>
-                                            {errors.lname && <span className='text-xs text-red-500'>This field is required</span>}
+                                            {errors.fname && <span className='text-xs text-red-500'>This field is required</span>}
                                         </div>
                                     </div>
                                 </div>
@@ -362,4 +333,4 @@ const StudentSignUp = () => {
     );
 };
 
-export default StudentSignUp;
+export default TutorSignup;

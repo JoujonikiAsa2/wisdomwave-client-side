@@ -1,0 +1,96 @@
+[
+    {
+        "name": "shabnam akter",
+        "age": "22",
+        "profile": "https://i.ibb.co/0ZS1tCZ/Rectangle1.png",
+        "institute": "daffodil international university",
+        "educationalQualication": [
+            "bachelor of science in computer science and engineering"
+        ],
+        "medium": "bangla",
+        "preferableLocation": "mirpur, dhaka",
+        "preferableClass": [
+            "class 6",
+            "class 7 ",
+            "claass 8 ",
+            "class 9"
+        ],
+        "preferableSubject": [
+            "mathematics",
+            "science"
+        ],
+        "experience": 5,
+        "expectedSalary": "4000",
+        "profileCreationDate": "tue apr 09 2024 14:12:56 gmt+0600",
+        "about": "i am passionate about teaching and have a strong background in mathematics and science. i believe in creating a supportive learning environment for my students.",
+        "tuitionType": [
+            "online",
+            "in-person"
+        ],
+        "currentStatus": "available",
+        "tuitionDays": 3,
+        "email": "shawonmandalpartho1@gmail.com"
+    },
+    {
+        "name": "dipto das",
+        "age": "21",
+        "profile": "https://i.ibb.co/0ZS1tCZ/Rectangle2.png",
+        "institute": "daffodil international university",
+        "educationalQualication": [
+            "bachelor of science in english"
+        ],
+        "medium": "english",
+        "preferableLocation": "uttara, sector-11, dhaka",
+        "preferableClass": [
+            "class 6",
+            "class 7",
+            "class 8",
+            "class 9",
+            "class 10"
+        ],
+        "preferableSubject": [
+            "mathematics",
+            "science"
+        ],
+        "experience": 5,
+        "expectedSalary": "5000",
+        "profileCreationDate": "Tue Apr 09 2024 14:12:56 GMT+0600",
+        "about": "i am passionate about teaching and have a strong background in mathematics and science. i believe in creating a supportive learning environment for my students.",
+        "tuitionType": [
+            "in-person"
+        ],
+        "currentStatus": "available",
+        "tuitionDays": 4,
+        "email": "joujonikiasaroy@gmail.com"
+    },
+    {
+        "name": "rishita khan",
+        "age": "22",
+        "profile": "https://i.ibb.co/0ZS1tCZ/Rectangle3.png",
+        "institute": "daffodil international university",
+        "educationalQualication": [
+            "bachelor of science in computer science and engineering"
+        ],
+        "medium": "bangla",
+        "preferableLocation": "mirpur, dhaka",
+        "preferableClass": [
+            "class 11",
+            "class 12"
+        ],
+        "preferableSubject": [
+            "mathematics",
+            "science"
+        ],
+        "experience": 5,
+        "expectedSalary": "4000",
+        "profileCreationDate": "tue apr 09 2024 14:12:56 gmt+0600",
+        "about": "i am passionate about teaching and have a strong background in mathematics and science. i believe in creating a supportive learning environment for my students.",
+        "tuitionType": [
+            "online",
+            "in-person"
+        ],
+        "currentStatus": "available",
+        "tuitionDays": 3,
+        "email": "nibeditaroy582@gmail.com"
+    }
+]

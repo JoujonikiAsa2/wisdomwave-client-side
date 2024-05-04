@@ -9,7 +9,7 @@ const Notifications = ({ handleClicked, clicked }) => {
                     <IoNotificationsOutline className="text-xl text-blue-600"></IoNotificationsOutline>
                     <span className="absolute text-sm bottom-2 left-5 text-red-400 dark:text-blue-600">2</span>
                 </div>
-                <div tabIndex={0} className={`${clicked == false ? "hidden" : "mt-8 z-[1] card card-compact dropdown-content w-72 bg-base-200 shadow"}`}>
+                <div tabIndex={0} className={`${clicked == false ? "hidden" : "mt-[11.5rem] z-[1] card card-compact dropdown-content w-72 bg-base-200 shadow"}`}>
                     <div className="card-body">
                         <p>You added a new course.</p>
                         <p>You have a assignment to submit.</p>

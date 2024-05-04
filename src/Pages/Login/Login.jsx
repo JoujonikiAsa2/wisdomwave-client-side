@@ -7,9 +7,11 @@ import loginAnimation from './login.json'
 import useAuth from '../../hooks/useAuth';
 import toast, { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const Login = () => {
 
+    const axiosPublic = useAxiosPublic()
     const navigate = useNavigate()
     const location = useLocation()
     const { login, googleLogin, userSignOut } = useAuth()
@@ -24,45 +26,84 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         console.log(data)
+        // await login(data.email, data.password)
+        //     .then(data => {
+
+        //         // console the input field data
+        //         console.log(data.user)
+        //         // if the user created successfully then display the sweet alert
+        //         {
+        //             if (data.user.emailVerified == true) {
+        //                 axiosPublic.put(`/api/users/${data.email}`)
+        //                     .then(res => {
+        //                         console.log(res.data)
+        //                     })
+        //                     .then(error => {
+        //                         console.log(error)
+        //                     })
+        //                 toast.success('Successfully Logged In!', {
+        //                     duration: 1000,
+        //                 })
+        //                 reset()
+        //                 setTimeout(() => {
+        //                     navigate(location.state || '/')
+        //                 }, 1200)
+        //             }
+        //             else {
+        //                 userSignOut()
+        //                     .then(() => {
+        //                         toast.error('Verify before login!', {
+        //                             duration: 4000,
+        //                         })
+        //                     })
+        //                     .catch(error => {
+        //                         // Convert the error object to a string
+        //                         const errorMessage = error.message || 'An error occurred';
+
+        //                         // Display the error message using toast.error
+        //                         toast.error(errorMessage);
+        //                     })
+        //             }
+        //         }
+
+        //     })
+        //     .catch(error => {
+
+        //         // console if any error
+        //         toast.error('Failed to Log In!')
+        //     })
+
         await login(data.email, data.password)
-            .then(data => {
-
-                // console the input field data
-                console.log(data.user)
-                // if the user created successfully then display the sweet alert
-                {
-                    if (data.user.emailVerified == true) {
-                        toast.success('Successfully Logged In!', {
-                            duration: 1000,
+            .then(res => {
+                if (res.user.emailVerified == true) {
+                    axiosPublic.put(`/api/user/${data.email}`)
+                        .then(res => {
+                            console.log(res.data);
+                            toast.success('Successfully Logged In!', { duration: 1000 });
+                            reset();
+                            setTimeout(() => {
+                                navigate(location.state || '/');
+                            }, 1200);
                         })
-                        reset()
-                        setTimeout(() => {
-                            navigate(location.state || '/')
-                        }, 1200)
-                    }
-                    else {
-                        userSignOut()
-                            .then(() => {
-                                toast.error('Verify before login!', {
-                                    duration: 4000,
-                                })
-                            })
-                            .catch(error => {
-                                // Convert the error object to a string
-                                const errorMessage = error.message || 'An error occurred';
-
-                                // Display the error message using toast.error
-                                toast.error(errorMessage);
-                            })
-                    }
+                        .catch(error => {
+                            console.log(error);
+                            toast.error('Failed to update user!');
+                        });
+                } else {
+                    userSignOut()
+                        .then(() => {
+                            toast.error('Verify before login!', { duration: 4000 });
+                        })
+                        .catch(error => {
+                            const errorMessage = error.message || 'An error occurred';
+                            toast.error(errorMessage);
+                        });
                 }
-
             })
             .catch(error => {
+                toast.error('Failed to Log In!');
+            });
 
-                // console if any error
-                toast.error('Failed to Log In!')
-            })
     }
 
     const handleGoogleLogin = () => {
@@ -89,7 +130,7 @@ const Login = () => {
 
     return (
         <>
-            
+
             <Toaster
                 position="top-center"
                 reverseOrder={false}

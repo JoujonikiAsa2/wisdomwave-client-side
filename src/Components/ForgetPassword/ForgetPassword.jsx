@@ -30,10 +30,6 @@ const ForgetPassword = () => {
 
     return (
         <>
-            {/* redirect to the home page */}
-            <div className='flex px-8 pt-8'>
-                <Link to='/login'><FaArrowCircleLeft className='text-2xl'></FaArrowCircleLeft></Link>
-            </div>
             <Toaster
                 position="top-center"
                 reverseOrder={false}
