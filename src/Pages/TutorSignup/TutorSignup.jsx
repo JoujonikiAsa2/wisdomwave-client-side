@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import Lottie from 'lottie-react';
 import signUpAnimation from './signUp.json'
-import useAuth from '../../hooks/useAuth';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import toast, { Toaster } from 'react-hot-toast';
 import { sendEmailVerification } from 'firebase/auth';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
-'../../hooks/useAxiosPublic';
+import useAuth from '../../hooks/useAuth';
 const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_API}`
 
@@ -19,8 +17,6 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_AP
 const TutorSignup = () => {
 
     const axiosPublic = useAxiosPublic()
-    // date picker
-    const [startDate, setStartDate] = useState();
     const [passwordType, setPasswordType] = useState('password')
 
     //  navigate helps to navigate the login page after succefully sign up
@@ -29,7 +25,8 @@ const TutorSignup = () => {
     const location = useLocation()
 
     // get this from useAuth custom hook
-    const { studentSignUp, googleLogin, userSignOut, updateUserInfo } = useAuth()
+    const { signUp, updateUserInfo } = useAuth()
+    console.log(signUp)
 
     // react hook form built in function desctructuring
     const {
@@ -54,9 +51,21 @@ const TutorSignup = () => {
 
         // console.log(phone, name, res.data.data.display_url)
         const image = res.data.data.display_url
-        console.log(data)
+        // console.log(data)
 
-        studentSignUp(data.email, data.password)
+        const tutorDetails = {
+            name: data.fullName,
+            profilePicture: image,
+            age: data.age,
+            location: data.location,
+            phoneNumber: data.phone,
+            email: data.email,
+            userType: 'tutor',
+            verified: false
+        }
+
+        console.log(tutorDetails)
+        signUp(data.email, data.password)
             .then(result => {
 
                 // console.log(result.user)
@@ -72,12 +81,18 @@ const TutorSignup = () => {
                 // Sending a verification link
                 sendEmailVerification(result.user)
                     .then(() => {
-                        setStartDate("")
-                        reset()
+                        axiosPublic.post('/api/users', tutorDetails)
+                            .then(res => {
+                                console.log(res.data)
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            })
                         // This is alert message email verification
                         toast.success('Please check your email to verify', {
                             duration: 4000
-                        });
+                        })
+                        reset()
                         setTimeout(() => {
                             userSignOut()
                                 .then(() => {
@@ -85,7 +100,6 @@ const TutorSignup = () => {
                                 })
                                 .catch(error => console.log(error))
                         }, 1200)
-
                     })
                     .catch(() => {
                         toast.error('Failed to verify', {
@@ -101,33 +115,6 @@ const TutorSignup = () => {
                 toast.error(errorMessage);
             })
 
-    }
-
-    const handleGoogleLogin = () => {
-        googleLogin()
-            .then(res => {
-                {
-                    if (res.user) {
-                        toast.success('Successfully Logged In!', {
-                            duration: 1000,
-                        })
-                        reset()
-                        setTimeout(() => {
-                            userSignOut()
-                                .then(() => {
-                                    console.log("Go to login page")
-                                })
-                                .catch(error => console.log(error))
-                            navigate(location.state || '/login')
-                        }, 1200)
-                    }
-                }
-            })
-            .catch(error => {
-
-                // console if any error
-                toast.error('Failed to Log In!')
-            })
     }
 
     const randomString = Math.random().toString(36).substring(2);
@@ -149,7 +136,7 @@ const TutorSignup = () => {
                         {/* vertical line */}
                         <div className='divider divider-neutral divider-vertical md:divider-horizontal lg:divider-horizontal h-0 md:h-96 lg:h-96'></div>
                     </div>
-                    <div className='flex-1 flex flex-col justify-start  h-[400px]'>
+                    <div className='flex-1 flex flex-col justify-start  h-[300px]'>
 
                         {/* react hook form */}
                         <form onSubmit={handleSubmit(onSubmit)} className='space-y-2 w-full h-full'>
@@ -158,20 +145,29 @@ const TutorSignup = () => {
                             <div className='flex gap-[1.5rem] md:gap-2 lg:gap-4 justify-between lg:justify-center md:justify-end items-center mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
                                 {/* first name */}
                                 <div className='w-full flex gap-3'>
-                                    <div className='w-full'>
+                                    <div className='w-1/2'>
                                         <input
                                             type='text'
                                             name="fullName"
                                             placeholder="Full Name"
-                                            {...register("email",
-                                                {
-                                                    required: true,
-                                                    pattern: /\S+@\S+\.\S+/
-                                                })}
+                                            {...register("fullName", { required: true })}
                                             className='input input-bordered border-gray-300 w-full h-9 focus:outline-none'
                                         />
                                         <div>
-                                            {errors.fname && <span className='text-xs text-red-500'>This field is required</span>}
+                                            {errors.fullName && <span className='text-xs text-red-500'>This field is required</span>}
+                                        </div>
+                                    </div>
+
+                                    {/* profile picture */}
+                                    <div className='w-1/2'>
+                                        <input
+                                            type='file'
+                                            name="profile"
+                                            {...register("profile", { required: true })}
+                                            className='input input-bordered border-gray-300 w-full h-9 focus:outline-none pt-[0.4rem] text-xs'
+                                        />
+                                        <div>
+                                            {errors.profile && <span className='text-xs text-red-500'>This field is required</span>}
                                         </div>
                                     </div>
                                 </div>
@@ -179,69 +175,47 @@ const TutorSignup = () => {
 
                             </div>
 
-                            {/* profile picture */}
-                            <div className='flex gap-[1.5rem] md:gap-2 lg:gap-4 justify-between lg:justify-center md:justify-end items-center mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <div className='w-full'>
+                            {/* Age, Location and Phone Number */}
+                            <div className='flex gap-3 mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
+                                <div className='w-1/2'>
                                     <input
-                                        type='file'
-                                        name="profile"
-                                        {...register("profile", { required: true })}
-                                        className='input input-bordered border-gray-300 w-full h-9 focus:outline-none pt-[0.4rem] text-xs'
+                                        type='number'
+                                        name="age"
+                                        placeholder="Age"
+                                        {...register("age",
+                                            {
+                                                required: true,
+                                            })}
+                                        className='input input-bordered border-gray-300 w-full h-9 focus:outline-none'
                                     />
                                     <div>
-                                        {errors.profile && <span className='text-xs text-red-500'>This field is required</span>}
+                                        {errors.age && <span className='text-xs text-red-500'>This field is required</span>}
                                     </div>
                                 </div>
-
-                            </div>
-
-                            {/* date of birth and Phone Number */}
-                            <div className='flex gap-3 mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <div className='w-2/3'>
-                                    <Controller
-                                        control={control}
-                                        name="dob"
-                                        render={({ field }) => (
-                                            <>
-                                                <DatePicker
-                                                    {...field}
-                                                    selected={startDate}
-                                                    onChange={date => {
-                                                        setStartDate(date);
-                                                        field.onChange(date);
-                                                    }}
-                                                    placeholderText="Date of birth"
-                                                    className="input input-bordered border-gray-300 w-[53vw] lg:w-[116%] h-9 md:w-full focus:outline-none"
-                                                />
-                                                <div>
-                                                    {errors.dob && <span className='text-xs text-red-500 '>This field is required</span>}
-                                                </div>
-                                            </>
-                                        )}
-                                    />
-                                </div>
-                                {/* phone number */}
-                                <div className=''>
+                                <div className='w-1/2'>
                                     <input
                                         type='text'
-                                        name="phone"
-                                        placeholder="Phone"
-                                        {...register("phone", { required: true })}
+                                        name="location"
+                                        placeholder="Your Location"
+                                        {...register("location", { required: true })}
                                         className='input input-bordered border-gray-300 w-full h-9 focus:outline-none'
                                     />
 
                                     {/* error if field will be empty */}
                                     <div>
-                                        {errors.phone && <span className='text-xs text-red-500'>This field is required</span>}
+                                        {errors.location && <span className='text-xs text-red-500'>This field is required</span>}
                                     </div>
                                 </div>
+
+                                {/* phone number */}
+
                             </div>
 
 
 
                             {/* email address */}
-                            <div className='flex mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <div className='w-full '>
+                            <div className='flex gap-3 mr-0 lg:mr-[1.8rem] md:mr-[1.1rem]'>
+                                <div className='w-1/2 '>
                                     <input
                                         type='email'
                                         name="email"
@@ -259,6 +233,23 @@ const TutorSignup = () => {
                                         {errors.email && <span className='text-xs text-red-500'>This field is required</span>}
                                     </div>
                                 </div>
+
+                                {/* phone number */}
+                                <div className='w-1/2'>
+                                    <input
+                                        type='text'
+                                        name="phone"
+                                        placeholder="Phone"
+                                        {...register("phone",
+                                            {
+                                                required: true,
+                                            })}
+                                        className='input input-bordered border-gray-300 w-full h-9 focus:outline-none'
+                                    />
+                                    <div>
+                                        {errors.phone && <span className='text-xs text-red-500'>This field is required</span>}
+                                    </div>
+                                </div>
                             </div>
 
                             {/* password */}
@@ -271,16 +262,16 @@ const TutorSignup = () => {
                                         {...register("password",
                                             {
                                                 required: true,
-                                                minLength: 6,
-                                                maxLength: 20,
-                                                pattern: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,20}/
+                                                // minLength: 6,
+                                                // maxLength: 20,
+                                                // pattern: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,20}/
                                             })}
                                         className='input input-bordered border-gray-300 w-full h-9 focus:outline-none' />
                                     <div>
                                         {errors.password?.type === "required" && <span className='text-xs text-red-600'>Password is required</span>}
-                                        {errors.password?.type === "minLength" && <span className='text-xs text-red-600'>Password should be 6 character or longer</span>}
+                                        {/* {errors.password?.type === "minLength" && <span className='text-xs text-red-600'>Password should be 6 character or longer</span>}
                                         {errors.password?.type === "maxLength" && <span className='text-xs text-red-600'>Password should be less then 20 character</span>}
-                                        {errors.password?.type === "pattern" && <span className='text-xs text-red-600'>Must contain 1 upercase,1 lowercase, 1 number and 1 special character.</span>}
+                                        {errors.password?.type === "pattern" && <span className='text-xs text-red-600'>Must contain 1 upercase,1 lowercase, 1 number and 1 special character.</span>} */}
 
                                     </div>
                                     <div className='absolute top-2 right-2'>
@@ -312,14 +303,14 @@ const TutorSignup = () => {
                         </form>
                         <div className='flex flex-col justify-center items-center space-y-2'>
                             {/* horizontal line */}
-                            <div className="">
+                            {/* <div className="">
                                 <div className="divider divider-neutral py-2 w-[80vw] md:w-96 lg:w-[23rem]">OR</div>
-                            </div>
+                            </div> */}
 
                             {/* social media login icon */}
-                            <div className='flex justify-start items-center gap-2'>
+                            {/* <div className='flex justify-start items-center gap-2'>
                                 <FcGoogle className=' text-3xl md:text-3xl lg:text-3xl font-bold hover:cursor-pointer' onClick={handleGoogleLogin}></FcGoogle >
-                            </div>
+                            </div> */}
 
                             {/* toggle to the login page */}
                             <div>

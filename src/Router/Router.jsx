@@ -4,7 +4,6 @@ import {
 import Root from "../Layout/Root"
 import Login from "../Pages/Login/Login"
 import StudentSignUp from "../Pages/StudentSignUp/StudentSignUp"
-import LandingPage from "../Pages/LandingPage/LandingPage"
 import CourseDetails from "../Pages/Student/Components/CourseDetails"
 import PrivateRoute from "../PrivateRoute/PrivateRoute"
 import AvailableCourses from "../Pages/Student/Components/AvailableCourses"
@@ -26,6 +25,11 @@ import RequestedTuition from "../Pages/FindTutors/RequestedTuition"
 import PageNotFound from "../SharedComponents/404_page/PageNotFound"
 import TutorSignup from "../Pages/TutorSignup/TutorSignup"
 import InstructorSignup from "../Pages/InstructorSignup/InstructorSignup"
+import InstructorLayout from "../Layout/InstructorLayout"
+import InstructorDashboard from "../Pages/InstructorDashboard/InstructorDashboard"
+import TutorLayout from "../Layout/tutorLayout"
+import TutorDashboard from "../Pages/TutorDashboard/TutorDashboard"
+import LandingPage from "../Pages/LandingPage/LandingPage"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -134,6 +138,26 @@ export const router = createBrowserRouter([
                 element: <PrivateRoute><PaymentFail></PaymentFail></PrivateRoute>
 
             }
+        ]
+    },
+    {
+        path: 'instructor',
+        element: <InstructorLayout></InstructorLayout>,
+        children:[
+            {
+                path: "instructorDashboard",
+                element: <InstructorDashboard />
+            },
+        ]
+    },
+    {
+        path: 'tutor',
+        element: <TutorLayout></TutorLayout>,
+        children:[
+            {
+                path: "tutorDashboard",
+                element: <TutorDashboard />
+            },
         ]
     }
 ])

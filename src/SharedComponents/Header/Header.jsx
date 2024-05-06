@@ -6,17 +6,20 @@ import useAuth from "../../hooks/useAuth";
 import Profile from "./Profile";
 // import Notifications from "./Notifications";
 import toast, { Toaster } from "react-hot-toast";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 // import Cart from "./Cart";
 
 
-const Header = ({handleSearch}) => {
+const Header = ({ handleSearch }) => {
 
+    const axiosPublic = useAxiosPublic()
     const { user, userSignOut } = useAuth()
+    const [userInfo, setUserInfo] = useState(null)
     const [show, setShow] = useState(false)
     const [clicked, setClicked] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false);
     const navigate = useNavigate()
-    console.log(user?.email)
+    console.log(userInfo)
 
     // Handle the navbar color
     useEffect(() => {
@@ -33,6 +36,20 @@ const Header = ({handleSearch}) => {
         };
     }, []);
 
+    // Handle user roles and routing
+    useEffect(() => {
+        const fetchUserRoles = async () => {
+            try {
+                const response = await axiosPublic.get(`/api/user/${user?.email}`);
+                setUserInfo(response.data.data)
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchUserRoles();
+    }, [user?.email]);
+
     // Helps to show the search bar on click( Small device )
     const handleShow = () => {
         setShow(!show)
@@ -44,12 +61,12 @@ const Header = ({handleSearch}) => {
     }
 
     // handle searching
-    const localHandleSearch = (e) =>{
+    const localHandleSearch = (e) => {
         e.preventDefault()
         const form = e.target
         const searchString = e.target.search.value
         handleSearch(searchString)
-        console.log("String",searchString)
+        console.log("String", searchString)
         form.reset()
     }
     // Join dropdown's navlinks
@@ -85,14 +102,30 @@ const Header = ({handleSearch}) => {
     const profileLinks = <>
         {
             user && <>
-                <nav className="">
+                {userInfo?.userType === 'student' && <nav className="">
                     <NavLink to="/allCourses" style={({ isActive }) => {
                         return {
                             color: isActive ? "#0766AD" : "",
                             borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
                     }} className="dark:text-black">All Courses</NavLink>
-                </nav>
+                </nav>}
+                {userInfo?.userType === 'instructor' && <nav className="">
+                    <NavLink to="/allCourses" style={({ isActive }) => {
+                        return {
+                            color: isActive ? "#0766AD" : "",
+                            borderBottom: isActive ? "1px solid #0766AD" : ""
+                        };
+                    }} className="dark:text-black">All Courses</NavLink>
+                </nav>}
+                {userInfo?.userType === 'admin' && <nav className="">
+                    <NavLink to="/allCourses" style={({ isActive }) => {
+                        return {
+                            color: isActive ? "#0766AD" : "",
+                            borderBottom: isActive ? "1px solid #0766AD" : ""
+                        };
+                    }} className="dark:text-black">All Courses</NavLink>
+                </nav>}
                 <nav>
                     <NavLink to="/createDiscussion" style={({ isActive }) => {
                         return {
@@ -102,8 +135,8 @@ const Header = ({handleSearch}) => {
                         };
                     }} className="dark:text-black">Create Discussion</NavLink>
                 </nav>
-                
-                <nav>
+
+                {userInfo?.userType === 'student' && <nav>
                     <NavLink to="/requestedTuition" style={({ isActive }) => {
                         return {
 
@@ -111,7 +144,7 @@ const Header = ({handleSearch}) => {
                             borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
                     }} className="dark:text-black">Requested Tuitions</NavLink>
-                </nav>
+                </nav>}
                 {/* <nav>
                     <NavLink to="/notices" style={({ isActive }) => {
                         return {
@@ -137,7 +170,7 @@ const Header = ({handleSearch}) => {
                                 toast.success('Successfully Logged Out!', {
                                     duration: 1000,
                                 })
-                                navigate('/')
+                                navigate('/login')
                             })
                             .catch(error => console.log(error))
                     }
@@ -159,15 +192,28 @@ const Header = ({handleSearch}) => {
                 };
             }} className="dark:text-black">Home</NavLink>
         </nav>
-        <nav>
-            <NavLink to="/findTutors" style={({ isActive }) => {
-                return {
+        {
+            userInfo?.userType === "student" && <nav>
+                <NavLink to="/findTutors" style={({ isActive }) => {
+                    return {
 
-                    color: isActive ? "#0766AD" : "",
-                    borderBottom: isActive ? "1px solid #0766AD" : ""
-                };
-            }} className="dark:text-black">Find Tutors</NavLink>
-        </nav>
+                        color: isActive ? "#0766AD" : "",
+                        borderBottom: isActive ? "1px solid #0766AD" : ""
+                    };
+                }} className="dark:text-black">Find Tutors</NavLink>
+            </nav>
+        }
+        {
+            userInfo?.userType === "tutor" && <nav>
+                <NavLink to="/findTuition" style={({ isActive }) => {
+                    return {
+
+                        color: isActive ? "#0766AD" : "",
+                        borderBottom: isActive ? "1px solid #0766AD" : ""
+                    };
+                }} className="dark:text-black">Find Tuition</NavLink>
+            </nav>
+        }
         <nav className="">
             <NavLink to="/discussions" style={({ isActive }) => {
                 return {
@@ -177,7 +223,7 @@ const Header = ({handleSearch}) => {
             }} className="dark:text-black">Discussions Forum</NavLink>
         </nav>
         {
-            user && <nav className="">
+            userInfo?.userType === "student" && <nav className="">
                 <NavLink to="/myCourses" style={({ isActive }) => {
                     return {
                         color: isActive ? "#0766AD" : "",
@@ -186,6 +232,37 @@ const Header = ({handleSearch}) => {
                 }} className="dark:text-black">My Courses</NavLink>
             </nav>
         }
+        {
+            userInfo?.userType === "instructor" && <nav className="">
+                <NavLink to="/instructor/instructorDashboard" style={({ isActive }) => {
+                    return {
+                        color: isActive ? "#0766AD" : "",
+                        borderBottom: isActive ? "1px solid #0766AD" : ""
+                    };
+                }} className="dark:text-black">Dashboard</NavLink>
+            </nav>
+        }
+        {
+            userInfo?.userType === "tutor" && <nav className="">
+                <NavLink to="/tutor/tutorDashboard" style={({ isActive }) => {
+                    return {
+                        color: isActive ? "#0766AD" : "",
+                        borderBottom: isActive ? "1px solid #0766AD" : ""
+                    };
+                }} className="dark:text-black">Dashboard</NavLink>
+            </nav>
+        }
+        {
+            userInfo?.userType === "admin" && <nav className="">
+                <NavLink to="/admin/adminDashboard" style={({ isActive }) => {
+                    return {
+                        color: isActive ? "#0766AD" : "",
+                        borderBottom: isActive ? "1px solid #0766AD" : ""
+                    };
+                }} className="dark:text-black">Dashboard</NavLink>
+            </nav>
+        }
+
     </>
 
     // login navbar
@@ -223,45 +300,45 @@ const Header = ({handleSearch}) => {
     </>
 
     return (
-            <div >
-                <Toaster
-                    position="top-center"
-                    reverseOrder={false}
-                />
-                <div className={`navbar font-semi md:px-[5vw] lg:px-[5vw] max-w-[2300px] h-20 fixed z-50 text-white ${isScrolled ? "bg-white shadow-md" : 'bg-[#FFFFFF] border-b-[1px]'}`}>
+        <div >
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
+            <div className={`navbar font-semi md:px-[5vw] lg:px-[5vw] max-w-[2300px] h-20 fixed z-50 text-white ${isScrolled ? "bg-white shadow-md" : 'bg-[#FFFFFF] border-b-[1px]'}`}>
 
-                    {/* this is common part for all users */}
+                {/* this is common part for all users */}
 
-                    <div className="navbar-start gap-4">
+                <div className="navbar-start gap-4">
 
-                        {/* Logo and name of the website */}
-                        <Link to="/">
-                            <div className="flex justify-center items-center gap-2 lg:text-2xl md:text-2xl xl:text-2xl 2xl:text-2xl text-lg font-">
-                                <img src={logo} alt="" className="w-6 h-6 lg:w-10 lg:h-10 md:w-10 md:h-10 " />
-                                <h2><span className="text-[#5c802d] lato">Wisdom</span><span className="text-[#0766AD] lato">Wave</span></h2>
+                    {/* Logo and name of the website */}
+                    <Link to="/">
+                        <div className="flex justify-center items-center gap-2 lg:text-2xl md:text-2xl xl:text-2xl 2xl:text-2xl text-lg font-">
+                            <img src={logo} alt="" className="w-6 h-6 lg:w-10 lg:h-10 md:w-10 md:h-10 " />
+                            <h2><span className="text-[#5c802d] lato">Wisdom</span><span className="text-[#0766AD] lato">Wave</span></h2>
+                        </div>
+                    </Link>
+
+                    {/* search bar for large device*/}
+                    <div className="lg:flex hidden md:hidden">
+                        <form action="" onSubmit={(e) => localHandleSearch(e)}>
+                            <div className="join">
+                                <input type="text" name="search" className="input input-bordered join-item input-sm bg-[#F3F3F3] focus:outline-none placeholder:text-[#cac9c9] focus:placeholder:text-[#949292] text-black" placeholder="Search Course" />
+                                <button type="submit" className=" py-[0.2rem] px-2 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] border-2 border-none text-white text-thin rounded-none rounded-r-lg text-sm">Search</button>
                             </div>
+                        </form>
+                    </div>
+                </div>
+                <div className="navbar-end text-black">
+                    <div className="lg:hidden flex md:flex justify-center items-center gap-3">
+
+                        {/* Search bar for small device */}
+                        <Link to='/searchPage'>
+                            <IoSearch className="lg:hidden flex md:flex text-xl text-blue-600" onClick={handleShow}></IoSearch>
                         </Link>
 
-                        {/* search bar for large device*/}
-                        <div className="lg:flex hidden md:hidden">
-                            <form action="" onSubmit={(e) => localHandleSearch(e)}>
-                                <div className="join">
-                                    <input type="text" name="search" className="input input-bordered join-item input-sm bg-[#F3F3F3] focus:outline-none placeholder:text-[#cac9c9] focus:placeholder:text-[#949292] text-black" placeholder="Search Course" />
-                                    <button type="submit" className=" py-[0.2rem] px-2 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] border-2 border-none text-white text-thin rounded-none rounded-r-lg text-sm">Search</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div className="navbar-end text-black">
-                        <div className="lg:hidden flex md:flex justify-center items-center gap-3">
-
-                            {/* Search bar for small device */}
-                            <Link to='/searchPage'>
-                                <IoSearch className="lg:hidden flex md:flex text-xl text-blue-600" onClick={handleShow}></IoSearch>
-                            </Link>
-
-                            <div className="lg:hidden md:flex flex gap-3 justify-center items-center">
-                                {/* {
+                        <div className="lg:hidden md:flex flex gap-3 justify-center items-center">
+                            {/* {
                                     user &&
                                     <div className="flex justify-center items-center gap-3 ">
                                         <Cart className="text-black" handleClicked={handleClicked} clicked={clicked}></Cart>
@@ -271,23 +348,23 @@ const Header = ({handleSearch}) => {
 
 
 
-                                {/* Join for small and medium device */}
-                                {join}
-                                {/* Dropdown menu for small device */}
-                                <div className="dropdown dropdown-end" >
-                                    <label tabIndex={3} className="" onClick={handleClicked}>
-                                        <IoMenu className="text-xl text-blue-600"></IoMenu>
-                                    </label>
-                                    {/* this part will be defferent for different types of user */}
+                            {/* Join for small and medium device */}
+                            {join}
+                            {/* Dropdown menu for small device */}
+                            <div className="dropdown dropdown-end" >
+                                <label tabIndex={3} className="" onClick={handleClicked}>
+                                    <IoMenu className="text-xl text-blue-600"></IoMenu>
+                                </label>
+                                {/* this part will be defferent for different types of user */}
 
-                                    <div tabIndex={3} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-7 z-[1] bg-gray-200 shadow rounded-box w-48 text-base text-black gap-2"}`}>
-                                        <div className='p-2'>
-                                            <h4 className=" text-base text-[#0766AD] font- capitalize">{user?.displayName}</h4>
-                                            {
-                                                user && <hr className='my-2 h-1 bg-[#0766AD]' />
-                                            }
-                                            <div className='space-y-2'>
-                                                {/* {
+                                <div tabIndex={3} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-7 z-[1] bg-gray-200 shadow rounded-box w-48 text-base text-black gap-2"}`}>
+                                    <div className='p-2'>
+                                        <h4 className=" text-base text-[#0766AD] font- capitalize">{user?.displayName}</h4>
+                                        {
+                                            user && <hr className='my-2 h-1 bg-[#0766AD]' />
+                                        }
+                                        <div className='space-y-2'>
+                                            {/* {
                                                     user && <nav>
                                                         <NavLink to="/profile" style={({ isActive }) => {
                                                             return {
@@ -298,40 +375,40 @@ const Header = ({handleSearch}) => {
                                                         }} className="dark:text-black">Your Profile</NavLink>
                                                     </nav>
                                                 } */}
-                                                {sNavLinks}
-                                                {profileLinks}
-                                                {
-                                                    !user && <>
-                                                        <p>Join</p>
+                                            {sNavLinks}
+                                            {profileLinks}
+                                            {
+                                                !user && <>
+                                                    <p>Join</p>
 
-                                                        {/* login for small and medium device */}
-                                                        {
-                                                            !user && <nav>
-                                                                <NavLink to="/login" style={({ isActive }) => {
-                                                                    return {
+                                                    {/* login for small and medium device */}
+                                                    {
+                                                        !user && <nav>
+                                                            <NavLink to="/login" style={({ isActive }) => {
+                                                                return {
 
-                                                                        color: isActive ? "#0766AD" : "",
-                                                                        borderBottom: isActive ? "1px solid #0766AD" : ""
-                                                                    };
-                                                                }} className="dark:text-black">Login</NavLink>
-                                                            </nav>
-                                                        }
-                                                    </>
-                                                }
-                                            </div>
+                                                                    color: isActive ? "#0766AD" : "",
+                                                                    borderBottom: isActive ? "1px solid #0766AD" : ""
+                                                                };
+                                                            }} className="dark:text-black">Login</NavLink>
+                                                        </nav>
+                                                    }
+                                                </>
+                                            }
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+
                         </div>
+                    </div>
 
-                        {/* Navbar end for the large device */}
-                        <div className="lg:flex hidden md:hidden justify-center items-center gap-4 text-base">
+                    {/* Navbar end for the large device */}
+                    <div className="lg:flex hidden md:hidden justify-center items-center gap-4 text-base">
 
-                            {/* Navlinks for large device */}
-                            {sNavLinks}
-                            {/* {
+                        {/* Navlinks for large device */}
+                        {sNavLinks}
+                        {/* {
                                 user &&
                                 <div className="flex justify-center items-center gap-4 ">
                                     <Cart handleClicked={handleClicked} clicked={clicked}></Cart>
@@ -339,23 +416,23 @@ const Header = ({handleSearch}) => {
                                 </div>
                             } */}
 
-                            {/* Join dropdown for large device */}
-                            {join}
+                        {/* Join dropdown for large device */}
+                        {join}
 
-                            {/* Login for large device */}
-                            {login}
-                            {/* user profile for large device*/}
-                            {
-                                user &&
-                                <>
-                                    <Profile handleClicked={handleClicked} clicked={clicked} profileLinks={profileLinks}></Profile>
-                                </>
-                            }
-                        </div>
-
+                        {/* Login for large device */}
+                        {login}
+                        {/* user profile for large device*/}
+                        {
+                            user &&
+                            <>
+                                <Profile handleClicked={handleClicked} clicked={clicked} profileLinks={profileLinks}></Profile>
+                            </>
+                        }
                     </div>
+
                 </div>
-            </div >
+            </div>
+        </div >
     );
 };
 

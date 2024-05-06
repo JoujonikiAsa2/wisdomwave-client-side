@@ -11,6 +11,7 @@ const Root = () => {
     const axiosPublic = useAxiosPublic()
     const navigate  = useNavigate()
 
+
     // create a function to getting the search keyword
     const handleSearch = (search) => {
         // set the search keyword to the search value

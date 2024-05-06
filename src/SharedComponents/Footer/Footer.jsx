@@ -3,9 +3,9 @@ import logo from '../../assets/Photos/LandingPage/logo_wave.png'
 const Footer = () => {
     return (
         <div className='bg-[#CEE7E1]'>
-            <footer className="flex lg:flex-row md:flex-row flex-col text-base-content lg:justify-between md:justify-between justify-center lg:px-28 px-10 pt-4">
-                <aside className='flex flex-col justify-center items-center gap-3 lg:text-left text-center w-60'>
-                    <div className='flex flex-col justify-center items-center gap-3'>
+            <footer className="flex lg:flex-row md:flex-row flex-col text-base-content lg:justify-between md:justify-between justify-center lg:px-28 px-10 pt-4 gap-8">
+                <div className='flex flex-col justify-center items-center gap-3 lg:text-left text-center lg:w-[25%] w-full'>
+                    <div className='w-full flex flex-col justify-center items-center gap-3'>
                         <div className='flex gap-2 justify-center items-center'>
                             <img src={logo} alt="" className='lg:w-10 lg:h-10 w-6 h-6' />
                             <div>
@@ -17,22 +17,13 @@ const Footer = () => {
                             <button className='btn  btn-sm w-24 bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] text-white border-2 border-none capitalize'>Join</button>
                         </div>
                     </div>
-                </aside>
-                <nav className='flex flex-col lg:text-left text-center dark:text-black'>
-                    <header className="text-base text-black pb-3">Company</header>
-                    <a className="link link-hover text-gray-500">About Us</a>
-                    <a className="link link-hover text-gray-500">Blog</a>
-                    <a className="link link-hover text-gray-500">Cources</a>
-                    <a className="link link-hover text-gray-500">FAQ</a>
-                </nav>
+                </div>
                 <nav className='flex flex-col lg:text-left text-center dark:text-black'>
                     <header className="text-base text-black pb-3">Quick Links</header>
-                    <a className="link link-hover text-gray-500">About Us</a>
-                    <a className="link link-hover text-gray-500">Blog</a>
-                    <a className="link link-hover text-gray-500">Cources</a>
-                    <a className="link link-hover text-gray-500">FAQ</a>
-                    <a className="link link-hover text-gray-500">Contact Us</a>
-                    <a className="link link-hover text-gray-500">My Account</a>
+                    <a className="link link-hover text-gray-500">Home</a>
+                    <a className="link link-hover text-gray-500">Find Tutors</a>
+                    <a className="link link-hover text-gray-500">Discussions Forum</a>
+                    <a className="link link-hover text-gray-500">All Cources</a>
                 </nav>
                 <nav className='flex flex-col lg:text-left text-center dark:text-black'>
                     <header className="text-base text-black pb-3">Legal</header>

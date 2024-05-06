@@ -6,12 +6,13 @@ import useCourses from "../../hooks/useCourses";
 import Banner from "./Components/Banner";
 import slider from './Components/Education.json'
 import Courses from "./Components/Courses";
+import useAuth from "../../hooks/useAuth";
 
 // This is a landing page for all users and also student homepage
 const LandingPage = () => {
 
     const bg = "bg-[#CEE7E1]"
-
+    const { user } = useAuth()
     const { allCourses } = useCourses()
     const [courses, setCourses] = useState(allCourses)
     console.log("Searches", allCourses)
@@ -27,8 +28,7 @@ const LandingPage = () => {
                 console.log(e)
             })
     }
-
-
+    
     return (
 
         <div className="space-y-10">
@@ -51,4 +51,4 @@ const LandingPage = () => {
     );
 };
 
-export default LandingPage;
+export default LandingPage

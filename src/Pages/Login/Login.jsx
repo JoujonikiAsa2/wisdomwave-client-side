@@ -11,11 +11,14 @@ import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const Login = () => {
 
+    console.log("console check");
     const axiosPublic = useAxiosPublic()
     const navigate = useNavigate()
     const location = useLocation()
     const { login, googleLogin, userSignOut } = useAuth()
     const [passwordType, setPasswordType] = useState('password')
+    const userDetails = JSON.parse(localStorage.getItem('user'))
+    // console.log(userDetails.userType)
     const {
         register,
         handleSubmit,
@@ -73,6 +76,7 @@ const Login = () => {
         //         toast.error('Failed to Log In!')
         //     })
 
+        console.log(userDetails)
         await login(data.email, data.password)
             .then(res => {
                 if (res.user.emailVerified == true) {
@@ -82,12 +86,23 @@ const Login = () => {
                             toast.success('Successfully Logged In!', { duration: 1000 });
                             reset();
                             setTimeout(() => {
-                                navigate(location.state || '/');
+                                if (res.data.data.userType === "student") {
+                                    navigate(location.state || '/')
+                                }
+                                else if (res.data.data.userType === "instructor") {
+                                    navigate(location.state || '/instructor/instructorDashboard')
+                                }
+                                else if (res.data.data.userType === "tutor") {
+                                    navigate(location.state || '/tutor/tutorDashboard')
+                                }
+                                else if (res.data.data.userType === "admin") {
+                                    navigate(location.state || '/admin/adminDashboard')
+                                }
                             }, 1200);
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            toast.error('Failed to update user!');
+                        // })
+                        // .catch(error => {
+                        //     console.log(error);
+                        //     toast.error('Failed to update user!');
                         });
                 } else {
                     userSignOut()
@@ -101,7 +116,7 @@ const Login = () => {
                 }
             })
             .catch(error => {
-                toast.error('Failed to Log In!');
+                toast.error('Failed to Log In!', error);
             });
 
     }
@@ -114,9 +129,10 @@ const Login = () => {
                         toast.success('Successfully Logged In!', {
                             duration: 1000,
                         })
+                        console.log(res)
                         reset()
                         setTimeout(() => {
-                            navigate(location.state || '/')
+                            // navigate(location.state || '/')
                         }, 1200)
                     }
                 }
@@ -136,11 +152,11 @@ const Login = () => {
                 reverseOrder={false}
 
             />
-            <div className='flex justify-center items-center h-[85vh] max-w-[96rem] mx-auto'>
+            <div className='flex justify-center items-center h-[100vh] max-w-[96rem] mx-auto'>
                 <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl'>
 
                     {/* Loign animation */}
-                    <div className='flex-1 flex justify-end'>
+                    <div className='flex-1 flex justify-end mt-10'>
                         <Lottie animationData={loginAnimation} className="max-w-[500px] h-[400px]"></Lottie>
                     </div>
                     <div className='flex justify-center items-center'>
@@ -222,8 +238,8 @@ const Login = () => {
                                             <div tabIndex={1} className="dropdown-content ml-4 z-[1] text-black bg-none shadow-lg p-3  border-gray-300 card border-t-[1px]">
                                                 <div className='flex flex-col gap-2'>
                                                     <Link to="/studentSignUp"><button className="capitalize hover:underline text-[#0766AD]">Student</button></Link>
-                                                    <Link to="/studentSignUp"><button className="capitalize hover:underline text-[#0766AD]">Instructor</button></Link>
-                                                    <Link to="/studentSignUp"><button className=" capitalize hover:underline text-[#0766AD]">Tutor</button></Link>
+                                                    <Link to="/instructorSignup"><button className="capitalize hover:underline text-[#0766AD]">Instructor</button></Link>
+                                                    <Link to="/tutorSignup"><button className=" capitalize hover:underline text-[#0766AD]">Tutor</button></Link>
                                                 </div>
                                             </div>
                                         </div>

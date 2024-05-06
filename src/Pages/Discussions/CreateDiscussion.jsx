@@ -86,7 +86,7 @@ const CreateDiscussion = () => {
                         {/* bogger name */}
                         <label htmlFor="discussiongerName">
                             <p className=' text-base text-gray-500'>Your Name<span className='text-red-500'>*</span></p>
-                            <input type="text" name='discussiongerName' defaultValue={user?.displayName} className='input input-bordered w-full' required />
+                            <input type="text" name='discussiongerName' defaultValue={user?.name} className='input input-bordered w-full' required />
                         </label>
 
                     </div>

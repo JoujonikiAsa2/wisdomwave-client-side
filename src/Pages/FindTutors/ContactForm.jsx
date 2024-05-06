@@ -17,7 +17,7 @@ const ContactForm = ({ tutorEmail }) => {
         e.preventDefault();
         const formField = e.target;
 
-        const name = user?.displayName
+        const name = user?.name
         const phone = formField.user_phone.value;
         const email = tutorEmail
         const message = formField.message.value;

@@ -29,7 +29,7 @@ const InstructorSignup = () => {
     const location = useLocation()
 
     // get this from useAuth custom hook
-    const { signUpAsStudent, googleLogin, userSignOut, updateUserInfo } = useAuth()
+    const { signUp, googleLogin, userSignOut, updateUserInfo } = useAuth()
 
     // react hook form built in function desctructuring
     const {
@@ -65,7 +65,7 @@ const InstructorSignup = () => {
             verified: false,
         }
         console.log(user)
-        signUpAsStudent(data.email, data.password)
+        signUp(data.email, data.password)
             .then(result => {
                 // console.log(result.user)
 
@@ -300,16 +300,16 @@ const InstructorSignup = () => {
                                         {...register("password",
                                             {
                                                 required: true,
-                                                minLength: 6,
-                                                maxLength: 20,
-                                                pattern: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,20}/
+                                                // minLength: 6,
+                                                // maxLength: 20,
+                                                // pattern: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,20}/
                                             })}
                                         className='input input-bordered border-gray-300 w-full h-9 focus:outline-none' />
                                     <div>
                                         {errors.password?.type === "required" && <span className='text-xs text-red-600'>Password is required</span>}
-                                        {errors.password?.type === "minLength" && <span className='text-xs text-red-600'>Password should be 6 character or longer</span>}
+                                        {/* {errors.password?.type === "minLength" && <span className='text-xs text-red-600'>Password should be 6 character or longer</span>}
                                         {errors.password?.type === "maxLength" && <span className='text-xs text-red-600'>Password should be less then 20 character</span>}
-                                        {errors.password?.type === "pattern" && <span className='text-xs text-red-600'>Must contain 1 upercase,1 lowercase, 1 number and 1 special character.</span>}
+                                        {errors.password?.type === "pattern" && <span className='text-xs text-red-600'>Must contain 1 upercase,1 lowercase, 1 number and 1 special character.</span>} */}
 
                                     </div>
                                     <div className='absolute top-2 right-2'>

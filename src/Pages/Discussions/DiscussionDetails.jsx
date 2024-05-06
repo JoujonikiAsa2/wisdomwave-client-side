@@ -75,7 +75,7 @@ const DiscussionDetails = () => {
         const comment = text
         console.log(comment)
         const commentData = {
-            commenterName: user?.displayName,
+            commenterName: user?.name,
             commenterEmail: user?.email,
             replydate: new Date(),
             comment: comment,
@@ -102,7 +102,7 @@ const DiscussionDetails = () => {
     const handleReplies = (e) => {
         e.preventDefault()
         const replyData = {
-            replierName: user?.displayName,
+            replierName: user?.name,
             replierEmail: user?.email,
             replydate: new Date(),
             isReply: true,

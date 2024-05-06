@@ -16,34 +16,35 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
 
-    const signUpAsStudent = (email, password) => {
+    const signUp = (email, password) => {
         setIsLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    const googleLogin =()=>{
+    const googleLogin = () => {
         setIsLoading(true)
         return signInWithPopup(auth, googleProvider)
     }
 
-    const updateUserInfo = (name, phone, image) =>{
+    const updateUserInfo = (name, phone, image) => {
         return updateProfile(auth.currentUser, {
-            displayName: name, 
+            name: name,
             phoneNumber: phone,
             photoURL: image
         })
     }
 
     useEffect(() => {
+
         const subscriber = onAuthStateChanged(auth, (currentUser) => {
             console.log(currentUser)
             setUser(currentUser)
-            setIsLoading(false)
         })
         return () => {
             return subscriber()
         }
     }, [])
+
 
     const userSignOut = () => {
         return signOut(auth)
@@ -53,7 +54,7 @@ const AuthProvider = ({ children }) => {
         user,
         isLoading,
         login,
-        signUpAsStudent,
+        signUp,
         googleLogin,
         updateUserInfo,
         userSignOut
@@ -68,3 +69,4 @@ const AuthProvider = ({ children }) => {
 };
 
 export default AuthProvider;
+

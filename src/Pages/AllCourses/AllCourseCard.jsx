@@ -8,11 +8,11 @@ const AllCourseCard = ({course, btnText}) => {
     // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
     return (
         <Link to={`/courseDetails/${course._id}`}>
-            <div className="h-[10rem] hover:shadow hover:cursor-pointer relative w-full border bg-white flex items-center rounded-lg">
-                <div className='flex justify-between items-center h-full rounded-lg'>
-                    <img src={thumbnail} alt="" className="w-56 h-full rounded-lg rounded-r-none object-fill" />
+            <div className="h-[13rem] hover:shadow hover:cursor-pointer relative w-full border bg-white flex items-center rounded-lg">
+                <div className='w-32 flex justify-between items-center h-full rounded-lg'>
+                    <img src={thumbnail} alt="" className="w-full md:w-56 lg:w-56 h-full rounded-lg rounded-r-none object-fill" />
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col pt-8'>
                     <div className={`w-16 h-7 text-black bg-[#29ADB2] p-1 text-sm text-center rounded-lg absolute bottom-48 top-2 right-2 font-bold`}>
                         <p>{enrollFee}Tk</p>
                     </div>
