@@ -30,6 +30,8 @@ import InstructorDashboard from "../Pages/InstructorDashboard/InstructorDashboar
 import TutorLayout from "../Layout/tutorLayout"
 import TutorDashboard from "../Pages/TutorDashboard/TutorDashboard"
 import LandingPage from "../Pages/LandingPage/LandingPage"
+import AdminLayout from "../Layout/AdminLayout"
+import AdminDashboard from "../Pages/AdminDashboard/AdminDashboard"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -39,7 +41,7 @@ export const router = createBrowserRouter([
             {
                 path: "/",
                 // student home route
-                element: <LandingPage />
+            element: <LandingPage />
             },
             {
                 path: "/courseDetails/:id",
@@ -157,6 +159,17 @@ export const router = createBrowserRouter([
             {
                 path: "tutorDashboard",
                 element: <TutorDashboard />
+            },
+        ]
+    }
+    ,
+    {
+        path: 'admin',
+        element: <AdminLayout></AdminLayout>,
+        children:[
+            {
+                path: "adminDashboard",
+                element: <AdminDashboard />
             },
         ]
     }

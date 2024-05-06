@@ -183,7 +183,7 @@ const Header = ({ handleSearch }) => {
     // student NavLinks for all user 
 
     const sNavLinks = <>
-        <nav className="">
+        <nav>
             <NavLink to="/" style={({ isActive }) => {
                 return {
                     color: isActive ? "#0766AD" : "",

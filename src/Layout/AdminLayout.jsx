@@ -22,9 +22,9 @@ import RightArrowIcon from "../assets/rightArrow.svg";
 const variants = {
     // todo: change expanded to 30% and nonexpanded to %6
     expanded: {
-         width: "230px",
+        width: "230px",
         backgroundColor: "#E1F0DA",
-         },
+    },
     nonexpanded: { width: "3.5rem", backgroundColor: "#E1F0DA", },
 };
 
@@ -77,13 +77,13 @@ const otherLinks = [
 
 
 
-const InstructorLayout = () => {
+const AdminLayout = () => {
     const { userSignOut } = useAuth()
     const navigate = useNavigate()
     const [isExpanded, setIsExpanded] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
 
-   
+
     return (
 
         <div>
@@ -138,7 +138,7 @@ const InstructorLayout = () => {
                                 >
                                     <div
                                         className={
-                                            "flex  w-full p-2 rounded pt-20 gap-3" 
+                                            "flex  w-full p-2 rounded pt-20 gap-3"
                                         }
                                     >
                                         <item.icon className="md:w-6 w-4" />
@@ -200,24 +200,24 @@ const InstructorLayout = () => {
                             </Link>
                         ))}
 
-                            {
-                                otherLinks.map((item) => <Link to={`${item.link}`}>
-                                    <div className="nav-links w-full pt-10"
+                        {
+                            otherLinks.map((item) => <Link to={`${item.link}`}>
+                                <div className="nav-links w-full pt-10"
+                                >
+                                    <div
+                                        className={
+                                            "flex  w-full p-2 rounded pt-20 gap-3"
+                                        }
                                     >
-                                        <div
-                                            className={
-                                                "flex  w-full p-2 rounded pt-20 gap-3" 
-                                            }
-                                        >
-                                            <item.icon className="md:w-6 w-4" />
-                                            <span className={!isExpanded ? "hidden" : "block"}>
-                                                {item.nav}
-                                            </span>
-                                        </div>
+                                        <item.icon className="md:w-6 w-4" />
+                                        <span className={!isExpanded ? "hidden" : "block"}>
+                                            {item.nav}
+                                        </span>
                                     </div>
-                                </Link>)
-                            }
-                        
+                                </div>
+                            </Link>)
+                        }
+
                     </div>
                 </motion.div>
                 <div className="w-full ml-[3.5rem]">
@@ -228,4 +228,4 @@ const InstructorLayout = () => {
     );
 }
 
-export default InstructorLayout;
+export default AdminLayout;
