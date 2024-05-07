@@ -32,6 +32,7 @@ import TutorDashboard from "../Pages/TutorDashboard/TutorDashboard"
 import LandingPage from "../Pages/LandingPage/LandingPage"
 import AdminLayout from "../Layout/AdminLayout"
 import AdminDashboard from "../Pages/AdminDashboard/AdminDashboard"
+import CreateCourse from "../Pages/InstructorDashboard/CreateCourse"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -150,6 +151,10 @@ export const router = createBrowserRouter([
                 path: "instructorDashboard",
                 element: <InstructorDashboard />
             },
+            {
+                path: "createCourse",
+                element: <CreateCourse />
+            },
         ]
     },
     {
@@ -171,6 +176,7 @@ export const router = createBrowserRouter([
                 path: "adminDashboard",
                 element: <AdminDashboard />
             },
+            
         ]
     }
 ])

@@ -1,75 +1,71 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import toast from "react-hot-toast";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Logo from "../assets/Photos/LandingPage/logo_wave.png";
-import {
-    ArrowLeftRightIcon,
-    BarChart3Icon,
-    FilePen,
-    FolderCog,
-    BellPlus,
-    LayoutDashboard,
-    SquareCheckBig,
-    SquarePlus,
-    LaptopMinimal,
-    AlignJustify
-} from "lucide-react";
-import { motion } from "framer-motion";
+import { TbCoinTaka } from "react-icons/tb";
+import { IoHome  } from "react-icons/io5";
+import { MdOutlineCreateNewFolder, MdOutlineManageAccounts, MdDashboard, MdOutlineAssignment, MdPeople } from "react-icons/md";
+import { TfiAnnouncement } from "react-icons/tfi";
+import { FiEdit } from "react-icons/fi";
+import { SiGoogleclassroom } from "react-icons/si";
 
-import RightArrowIcon from "../assets/rightArrow.svg";
 
-const variants = {
-    // todo: change expanded to 30% and nonexpanded to %6
-    expanded: {
-         width: "230px",
-        backgroundColor: "#E1F0DA",
-         },
-    nonexpanded: { width: "3.5rem", backgroundColor: "#E1F0DA", },
-};
+
+// https://lucide.dev/icons/
 
 const navLinks = [
     {
         nav: "Dashboard",
-        icon: LayoutDashboard,
+        icon: MdDashboard,
         link: "/instructor/instructorDashboard",
     },
     {
         nav: "Create Course",
-        icon: SquarePlus,
+        icon: MdOutlineCreateNewFolder,
         link: "/instructor/createCourse",
     },
     {
-        nav: "Manage Course",
-        icon: FolderCog,
-        link: "/instructor/manageCourse",
+        nav: "Manage Courses",
+        icon: MdOutlineManageAccounts,
+        link: "/instructor/manageCourses",
     },
     {
         nav: "Update Course",
-        icon: FilePen,
+        icon: FiEdit,
         link: "/instructor/updateCourse",
     },
     {
-        nav: "Announcement ",
-        icon: BellPlus,
-        link: "/instructor/announcement",
+        nav: "Announcements ",
+        icon: TfiAnnouncement,
+        link: "/instructor/announcements",
     },
     {
-        nav: "Assignment",
-        icon: SquareCheckBig,
-        link: "/instructor/assignment/",
+        nav: "Assignments",
+        icon: MdOutlineAssignment,
+        link: "/instructor/assignments/",
     },
     {
         nav: "Manage Classes",
-        icon: LaptopMinimal,
+        icon: SiGoogleclassroom,
         link: "/instructor/manageClasses",
-    }
+    },
+    {
+        nav: "Payment Dashboard",
+        icon: TbCoinTaka,
+        link: "/instructor/paymentDashboard",
+    },
+    {
+        nav: "Student Information",
+        icon: MdPeople,
+        link: "/instructor/studentInfo",
+    },
+    
 ];
 
 const otherLinks = [
     {
         nav: "Home",
-        icon: AlignJustify,
+        icon: IoHome,
         link: "/",
     }
 ];
@@ -78,34 +74,23 @@ const otherLinks = [
 
 
 const InstructorLayout = () => {
-    const { userSignOut } = useAuth()
+    const { userSignOut, user } = useAuth()
     const navigate = useNavigate()
-    const [isExpanded, setIsExpanded] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
 
+    console.log(user)
    
     return (
 
         <div>
-            <div className="lg:flex md:flex hidden fixed ">
-                <motion.div
-                    animate={isExpanded ? "expanded" : "nonexpanded"}
-                    variants={variants}
-                    className={
-                        "py-10 h-screen flex flex-col border border-r-1 bg-[#FDFDFD] fixed" +
-                        (isExpanded ? " px-4 duration-1000 fixed" : " px-2 duration-1000")
-                    }
+            <div className="flex ">
+                <div
+                    className="py-10 h-screen flex flex-col border border-r-1 bg-[#FDFDFD] fixed z-50" id="sidebar"
                 >
-                    <div
-                        onClick={() => setIsExpanded(!isExpanded)}
-                        className="cursor-pointer absolute -right-4 bottom-10 rounded-full w-8 h-8 bg-[#84d45f] flex justify-center items-center"
-                    >
-                        <img src={RightArrowIcon} className="w-2" />
-                    </div>
 
-                    <div className="logo-div flex space-x-4 items-center">
-                        <img src={Logo} className="md:w-8 w-4 lg:w-8 " />
-                        <span className={!isExpanded ? "hidden" : "block text-2xl"}>WisdomWave</span>
+                    <div className="logo-div flex space-x-4 w-full">
+                        <img src={Logo} className="md:w-10 w-8 lg:w-10 ml-[0.6rem]" />
+                        <h2 className="logo"><span className="text-[#5c802d] lato">Wisdom</span><span className="text-[#0766AD] lato">Wave</span></h2>
                     </div>
 
                     <div className="flex flex-col space-y-2 mt-12">
@@ -116,15 +101,15 @@ const InstructorLayout = () => {
                                     <div
                                         onClick={() => setActiveIndex(index)}
                                         className={
-                                            "flex space-x-3 w-full p-2 rounded " +
+                                            "flex  w-full p-1 rounded-full justify-start items-center gap-2 " +
                                             (activeIndex === index
-                                                ? "bg-[#94d476] text-white"
-                                                : " text-black") +
-                                            (!isExpanded ? " pl-3" : "")
+                                                ? "bg-[#94d476] text-white duration-500"
+                                                : " text-black")
                                         }
                                     >
-                                        <item.icon className="md:w-6 w-4" />
-                                        <span className={!isExpanded ? "hidden" : "block"}>
+
+                                        <item.icon className="lg:text-2xl text-lg ml-[0.8rem]" />
+                                        <span className="navlink">
                                             {item.nav}
                                         </span>
                                     </div>
@@ -134,15 +119,15 @@ const InstructorLayout = () => {
 
                         {
                             otherLinks.map((item) => <Link to={`${item.link}`}>
-                                <div className="nav-links w-full pt-10"
+                                <div className="nav-links w-full pt-16"
                                 >
                                     <div
                                         className={
-                                            "flex  w-full p-2 rounded pt-20 gap-3" 
+                                            "flex  w-full p-2 rounded-full pt-20 gap-3"
                                         }
                                     >
-                                        <item.icon className="md:w-6 w-4" />
-                                        <span className={!isExpanded ? "hidden" : "block"}>
+                                        <item.icon className="lg:text-xl text-lg ml-[0.8rem]" />
+                                        <span className="navlink ">
                                             {item.nav}
                                         </span>
                                     </div>
@@ -150,78 +135,23 @@ const InstructorLayout = () => {
                             </Link>)
                         }
                     </div>
-                </motion.div>
-                <div className="w-full ml-[3.5rem]">
-                    <Outlet />
                 </div>
-            </div>
-            <div className="lg:hidden md:hidden flex">
-                <motion.div
-                    animate={isExpanded ? "expanded" : "nonexpanded"}
-                    variants={variants}
-                    className={
-                        "py-10 h-screen flex flex-col border border-r-1 bg-[#FDFDFD] fixed" +
-                        (isExpanded ? " px-5 fixed" : " px-2 duration-500")
-                    }
-                >
-                    <div
-                        onClick={() => setIsExpanded(!isExpanded)}
-                        className="cursor-pointer absolute -right-4 bottom-10 rounded-full w-8 h-8 bg-[#84d45f] flex justify-center items-center"
-                    >
-                        <img src={RightArrowIcon} className="w-2" />
+                <div className="flex flex-col w-full fixed z-30">
+                    <div className="w-full flex justify-end items-center h-16 pr-8">
+                        <div className="w-10 h-10 rounded-full flex justify-center items-center bg-[#0766AD] text-white">
+                            {user?.displayName && user.displayName.length > 0 ? (
+                                <>
+                                    {user.displayName.charAt(0)}
+                                    {user.displayName.split(" ")[1] && user.displayName.split(" ")[1].charAt(0)}
+                                </>
+                            ) : null}
+                        </div>
                     </div>
-
-                    <div className="logo-div flex space-x-4 items-center">
-                        <img src={Logo} className="md:w-8 w-4 lg:w-8 ml-2" />
-                        <span className={!isExpanded ? "hidden" : "block text-2xl"}>WisdomWave</span>
+                    <div className="w-full  flex flex-col ml-[4rem]">
+                        <div>
+                            <Outlet />
+                        </div>
                     </div>
-
-                    <div className="flex flex-col space-y-2 mt-8">
-                        {navLinks.map((item, index) => (
-                            <Link to={`${item.link}`}>
-                                <div className="nav-links w-full" key={index}
-                                >
-                                    <div
-                                        onClick={() => setActiveIndex(index)}
-                                        className={
-                                            "flex  w-full p-2 rounded " +
-                                            (activeIndex === index
-                                                ? "bg-[#94d476] text-white"
-                                                : " text-black") +
-                                            (!isExpanded ? " pl-2" : "")
-                                        }
-                                    >
-                                        <item.icon className="md:w-4 w-4" />
-                                        <span className={!isExpanded ? "hidden" : "block"}>
-                                            {item.nav}
-                                        </span>
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
-
-                            {
-                                otherLinks.map((item) => <Link to={`${item.link}`}>
-                                    <div className="nav-links w-full pt-10"
-                                    >
-                                        <div
-                                            className={
-                                                "flex  w-full p-2 rounded pt-20 gap-3" 
-                                            }
-                                        >
-                                            <item.icon className="md:w-6 w-4" />
-                                            <span className={!isExpanded ? "hidden" : "block"}>
-                                                {item.nav}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </Link>)
-                            }
-                        
-                    </div>
-                </motion.div>
-                <div className="w-full ml-[3.5rem]">
-                    <Outlet />
                 </div>
             </div>
         </div>

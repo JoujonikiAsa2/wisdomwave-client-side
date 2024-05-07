@@ -1,0 +1,32 @@
+/* sidebar hover make all lin */
+#sidebar:hover {
+    visibility: visible;
+    background-color: #E1F0DA;
+    width: 180px;
+    display: flex;
+    transition-duration: 300ms;
+}
+
+/* initially the logo is hidden */
+.logo-div .logo {
+    visibility: hidden;
+}
+
+/* after hover the logo will visible */
+#sidebar:hover .logo {
+    visibility: visible;
+    font-size: 1.2rem;
+}
+
+/* initial width of the sidebar  */
+#sidebar {
+    width: 4rem;
+}
+
+#sidebar:hover .navlink {
+    display: flex;
+}
+
+#sidebar .navlink {
+    display: none;
+}
