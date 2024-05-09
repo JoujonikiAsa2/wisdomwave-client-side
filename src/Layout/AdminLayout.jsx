@@ -3,7 +3,7 @@ import useAuth from "../hooks/useAuth";
 import Logo from "../assets/Photos/LandingPage/logo_wave.png";
 import './styles.css'
 import { useState } from "react";
-import { MdAnnouncement, MdDashboard, MdManageAccounts, MdOutlineManageAccounts } from "react-icons/md";
+import { MdAnnouncement, MdDashboard, MdLogout, MdManageAccounts, MdOutlineManageAccounts } from "react-icons/md";
 import { IoHome } from "react-icons/io5";
 import { IoMdFolder } from "react-icons/io";
 import { TbCoinTaka, TbFolderOpen } from "react-icons/tb";
@@ -39,13 +39,6 @@ const navLinks = [
     }
 ];
 
-const otherLinks = [
-    {
-        nav: "Home",
-        icon: IoHome,
-        link: "/",
-    }
-];
 
 
 
@@ -93,23 +86,40 @@ const AdminLayout = () => {
                             </Link>
                         ))}
 
-                        {
-                            otherLinks.map((item) => <Link to={`${item.link}`}>
-                                <div className="nav-links w-full pt-56"
+                        <div className="divider"></div>
+
+                        {/* others link */}
+                        <div className="pt-6">
+
+                            <Link to="/">
+                                <div className="nav-links w-full"
                                 >
                                     <div
                                         className={
-                                            "flex  w-full p-2 rounded-full pt-20 gap-3"
+                                            "flex  w-full p-2 rounded-full gap-3"
                                         }
                                     >
-                                        <item.icon className="lg:text-xl text-lg ml-[0.8rem]" />
+                                        <IoHome className="lg:text-xl text-lg ml-[0.8rem]" />
                                         <span className="navlink ">
-                                            {item.nav}
+                                            Home
                                         </span>
                                     </div>
                                 </div>
-                            </Link>)
-                        }
+                            </Link>
+                            <div className="nav-links w-full"
+                            >
+                                <div
+                                    className={
+                                        "flex  w-full p-2 rounded-full justify-start items-center gap-3"
+                                    }
+                                >
+                                    <MdLogout className="lg:text-xl text-lg ml-[0.8rem]" />
+                                    <span className="navlink ">
+                                        Log Out
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="w-full ml-[4rem]">

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Logo from "../assets/Photos/LandingPage/logo_wave.png";
 import { TbCoinTakaFilled } from "react-icons/tb";
 import { IoHome } from "react-icons/io5";
-import { MdOutlineAddCircleOutline, MdOutlineManageAccounts, MdDashboard, MdFormatListBulleted } from "react-icons/md";
+import { MdOutlineAddCircleOutline, MdOutlineManageAccounts, MdDashboard, MdFormatListBulleted, MdLogout } from "react-icons/md";
 import { CiSquareQuestion } from "react-icons/ci";
 import useAuth from "../hooks/useAuth";
 import { FiEdit } from "react-icons/fi";
@@ -39,13 +39,6 @@ const navLinks = [
         nav: "My tuitions",
         icon: MdFormatListBulleted,
         link: "/tutor/myTuitons/",
-    }
-];
-const otherLinks = [
-    {
-        nav: "Home",
-        icon: IoHome,
-        link: "/",
     }
 ];
 
@@ -94,24 +87,39 @@ const TutorLayout = () => {
                             </Link>
                         ))}
 
-                        <div>
-                            {
-                            otherLinks.map((item) => <Link to={`${item.link}`}>
-                                <div className="nav-links w-full pt-64 "
+                        <div className="divider"></div>
+
+                        {/* others link */}
+                        <div className="pt-6">
+
+                            <Link to="/">
+                                <div className="nav-links w-full"
                                 >
                                     <div
                                         className={
                                             "flex  w-full p-2 rounded-full gap-3"
                                         }
                                     >
-                                        <item.icon className="lg:text-xl text-lg ml-[0.8rem]" />
+                                        <IoHome className="lg:text-xl text-lg ml-[0.8rem]" />
                                         <span className="navlink ">
-                                            {item.nav}
+                                            Home
                                         </span>
                                     </div>
                                 </div>
-                            </Link>)
-                        }
+                            </Link>
+                            <div className="nav-links w-full"
+                            >
+                                <div
+                                    className={
+                                        "flex  w-full p-2 rounded-full justify-start items-center gap-3"
+                                    }
+                                >
+                                    <MdLogout className="lg:text-xl text-lg ml-[0.8rem]" />
+                                    <span className="navlink ">
+                                        Log Out
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -2,8 +2,10 @@
 #sidebar:hover {
     visibility: visible;
     background-color: #E1F0DA;
-    width: 180px;
+    width: 230px;
+    height: 100vh;
     display: flex;
+    justify-items: flex-start;
     transition-duration: 300ms;
 }
 
@@ -18,10 +20,12 @@
     font-size: 1.2rem;
 }
 
-/* initial width of the sidebar  */
-#sidebar {
-    width: 4rem;
+/* instructor layout content div */
+#content{
+    width: calc(100% - 8%);
+    /* width: 100%; */
 }
+
 
 #sidebar:hover .navlink {
     display: flex;

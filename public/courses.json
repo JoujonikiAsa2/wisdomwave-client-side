@@ -1,114 +1,19 @@
 [
     {
         "courseDetails": {
-            "thumbnail": "https://i.ibb.co/njxgkpY/download1.jpg",
-            "title": "Web Development Complete Course",
-            "instructor": "John Doe",
-            "rating": 4.2,
-            "totalStudents": 800,
-            "creditHour": "40 Hours",
-            "enrollFee": "49.99",
-            "whatYouWillLearn": [
-                "Build a solid foundation in HTML, CSS, and JavaScript, the fundamental building blocks of web development.",
-                "Create well-structured and semantic HTML documents to lay the groundwork for web pages.",
-                "Apply CSS styling techniques to enhance the visual appeal and layout of web content.",
-                "Develop interactive and dynamic web pages using JavaScript, understanding variables, data types, and control flow.",
-                "Master the principles of responsive web design, ensuring your creations look great on various devices.",
-                "Explore essential web development tools, including text editors, version control systems, and browser developer tools.",
-                "Discover and utilize popular JavaScript frameworks like React and Vue.js for building dynamic user interfaces.",
-                "Build a personal portfolio website to showcase your projects and establish a strong online presence.",
-                "Understand and apply best practices in web development, covering topics such as code organization, performance optimization, and security."
-            ],
-            "courseDescription": "Embark on a transformative journey with our 'Web Development Basics' course, where you'll dive deep into the foundational pillars of web development...",
-            "languages": [
-                "Hindi"
-            ],
-            "introductoryVideo": "https://www.youtube.com/watch?v=l1EssrLxt7E",
-            "outcome": [
-                "Build static websites with confidence using HTML, CSS, and JavaScript.",
-                "Develop a responsive web design to ensure your creations look exceptional on all devices.",
-                "Master essential web development tools and gain proficiency in their effective usage.",
-                "Explore popular JavaScript frameworks like React and Vue.js, opening doors to dynamic and interactive user interfaces.",
-                "Create a personal portfolio website, showcasing your projects and establishing a strong online presence.",
-                "Understand and apply web development best practices, covering aspects like code organization, performance optimization, and security."
-            ],
-            "technologies": [
-                "HTML",
-                "CSS",
-                "JavaScript"
-            ],
-            "skillsAcquired": [
-                "Foundational understanding of HTML, CSS, and JavaScript",
-                "Adaptability to different learning styles",
-                "Problem-solving and critical thinking",
-                "Effective communication in a collaborative environment"
-            ],
-            "courseContents": [
-                {
-                    "_id": "1",
-                    "title": "Introduction to HTML",
-                    "content": "This module introduces the basic structure of HTML, teaching you how to create the skeleton of a webpage and add content like headings, paragraphs, and lists."
-                },
-                {
-                    "_id": "2",
-                    "title": "CSS Styling Techniques",
-                    "content": "Explore various CSS styling techniques to enhance the visual appeal of your web pages. Learn about selectors, colors, fonts, and layout strategies."
-                },
-                {
-                    "_id": "3",
-                    "title": "JavaScript Basics",
-                    "content": "Get a solid foundation in JavaScript programming. Cover topics such as variables, data types, control flow, and functions."
-                },
-                {
-                    "_id": "4",
-                    "title": "Responsive Web Design",
-                    "content": "Learn the principles of responsive web design and how to create websites that look great on all devices, from desktops to smartphones."
-                },
-                {
-                    "_id": "5",
-                    "title": "Web Development Tools",
-                    "content": "Explore essential tools for web development, including text editors, version control systems, and browser developer tools."
-                },
-                {
-                    "_id": "6",
-                    "title": "Building a Portfolio Website",
-                    "content": "Apply your skills to build a personal portfolio website. Showcase your projects and create an online presence."
-                },
-                {
-                    "_id": "7",
-                    "title": "JavaScript Frameworks",
-                    "content": "Discover popular JavaScript frameworks like React and Vue.js. Learn how to build dynamic and interactive user interfaces."
-                },
-                {
-                    "_id": "8",
-                    "title": "Web Development Best Practices",
-                    "content": "Understand best practices in web development, covering topics such as code organization, performance optimization, and security."
-                }
-            ],
-            "requirements": [
-                "Basic understanding of using a computer",
-                "Access to a computer with internet connectivity",
-                "Curiosity and a willingness to learn",
-                "No specific programming background required"
-            ],
             "enrollmentDates": {
-                "enrollStart": "2023-03-01T00:00:00.000Z",
-                "enrollEnd": "2023-04-30T00:00:00.000Z"
+                "enrollStart": "2023-09-01T00:00:00.000Z",
+                "enrollEnd": "2023-10-31T00:00:00.000Z"
             },
-            "category": "Web Development",
-            "classStart": "2023-05-01T00:00:00.000Z",
-            "subtitle": "Build Your First Website"
-        }
-    },
-    {
-        "courseDetails": {
             "thumbnail": "https://i.ibb.co/QCyn5V8/images.png",
-            "title": "Python Programming Fundamentals",
-            "instructor": "Dr. Amanda Johnson",
-            "rating": 4.8,
-            "totalStudents": 1500,
-            "creditHour": "30 Hours",
-            "enrollFee": "69.99",
+            "title": "Python Programming In Bengali",
+            "instructor": "Anisul Islam",
+            "rating": 0,
+            "totalVideo": 30,
+            "totalLiveClasses": 6,
+            "totalStudents": 0,
+            "duration": 5,
+            "enrollFee": "6999",
             "whatYouWillLearn": [
                 "Fundamental concepts of Python programming.",
                 "Data structures, loops, and conditionals in Python.",
@@ -139,32 +44,32 @@
             ],
             "courseContents": [
                 {
-                    "_id": "1",
+                    "_id": "663d10eb7486520e57277633",
                     "title": "Introduction to Python",
                     "content": "Understand the basics of Python programming language and its applications."
                 },
                 {
-                    "_id": "2",
+                    "_id": "663d10eb7486520e57277634",
                     "title": "Data Structures in Python",
                     "content": "Explore fundamental data structures such as lists, tuples, and dictionaries in Python."
                 },
                 {
-                    "_id": "3",
+                    "_id": "663d10eb7486520e57277635",
                     "title": "Control Flow in Python",
                     "content": "Learn how to use loops and conditionals for effective control flow in Python."
                 },
                 {
-                    "_id": "4",
+                    "_id": "663d10eb7486520e57277636",
                     "title": "Object-Oriented Programming",
                     "content": "Dive into the principles of object-oriented programming (OOP) using Python."
                 },
                 {
-                    "_id": "5",
+                    "_id": "663d10eb7486520e57277637",
                     "title": "File Handling and Exceptions",
                     "content": "Master the handling of files and exceptions for robust Python applications."
                 },
                 {
-                    "_id": "6",
+                    "_id": "663d10eb7486520e57277638",
                     "title": "Functions and Modules",
                     "content": "Create reusable functions and modules for efficient and modular Python code."
                 }
@@ -174,178 +79,28 @@
                 "Access to a computer with Python installed",
                 "Curiosity and eagerness to learn"
             ],
-            "enrollmentDates": {
-                "enrollStart": "2023-09-01T00:00:00.000Z",
-                "enrollEnd": "2023-10-31T00:00:00.000Z"
-            },
-            "category": "Programming Language",
+            "category": "programming language",
             "classStart": "2023-11-01T00:00:00.000Z",
-            "subtitle": "Master Python from Scratch"
+            "subtitle": "Master Python from Scratch",
+            "playlistId": "UU1M6N5LUj3c1JhiZXiNDq3A",
+            "instructorEmail": "nibeditaroy582@gmail.com"
         }
     },
     {
         "courseDetails": {
-            "thumbnail": "https://i.ibb.co/WK7TZ67/download-1.jpg",
-            "title": "JavaScript for Web Development",
-            "instructor": "Prof. Michael Rodriguez",
-            "rating": 4.6,
-            "totalStudents": 1800,
-            "creditHour": "35 Hours",
-            "enrollFee": "79.99",
-            "whatYouWillLearn": [
-                "Core concepts of JavaScript programming.",
-                "DOM manipulation and event handling.",
-                "Asynchronous programming with promises and async/await.",
-                "Client-side web development using popular frameworks.",
-                "Integration of JavaScript with HTML and CSS."
-            ],
-            "courseDescription": "Elevate your web development skills with 'JavaScript for Web Development' by Prof. Michael Rodriguez. This course provides a deep dive into the world of JavaScript, covering core concepts, DOM manipulation, and advanced asynchronous programming. Whether you're a beginner or seeking to enhance your skills, this course is your gateway to mastering JavaScript for modern web development.",
-            "languages": [
-                "English"
-            ],
-            "introductoryVideo": "https://www.youtube.com/watch?v=PlbupGCBV6w",
-            "outcome": [
-                "Master JavaScript programming for effective client-side development.",
-                "Manipulate the DOM and handle events for dynamic web pages.",
-                "Understand asynchronous programming using promises and async/await in JavaScript.",
-                "Explore popular JavaScript frameworks for client-side web development.",
-                "Integrate JavaScript seamlessly with HTML and CSS."
-            ],
-            "technologies": [
-                "JavaScript"
-            ],
-            "skillsAcquired": [
-                "JavaScript programming proficiency",
-                "DOM manipulation and event handling",
-                "Asynchronous programming skills",
-                "Integration with popular web development frameworks"
-            ],
-            "courseContents": [
-                {
-                    "_id": "1",
-                    "title": "Introduction to JavaScript",
-                    "content": "Explore the basics of JavaScript programming language and its role in web development."
-                },
-                {
-                    "_id": "2",
-                    "title": "DOM Manipulation and Events",
-                    "content": "Learn how to manipulate the Document Object Model (DOM) and handle events using JavaScript."
-                },
-                {
-                    "_id": "3",
-                    "title": "Asynchronous Programming",
-                    "content": "Understand asynchronous programming using promises and async/await in JavaScript."
-                },
-                {
-                    "_id": "4",
-                    "title": "Client-Side Web Development",
-                    "content": "Explore popular JavaScript frameworks for client-side web development."
-                },
-                {
-                    "_id": "5",
-                    "title": "Integration with HTML and CSS",
-                    "content": "Integrate JavaScript seamlessly with HTML and CSS for dynamic web pages."
-                }
-            ],
-            "requirements": [
-                "Basic understanding of HTML and CSS",
-                "Access to a computer with a text editor",
-                "Curiosity and enthusiasm for web development"
-            ],
             "enrollmentDates": {
-                "enrollStart": "2023-10-01T00:00:00.000Z",
-                "enrollEnd": "2023-12-15T00:00:00.000Z"
+                "enrollStart": "2023-06-01T00:00:00.000Z",
+                "enrollEnd": "2023-08-31T00:00:00.000Z"
             },
-            "category": "Web Development",
-            "classStart": "2023-12-16T00:00:00.000Z",
-            "subtitle": "Master JavaScript for Modern Web"
-        }
-    },
-    {
-        "courseDetails": {
-            "thumbnail": "https://i.ibb.co/fqVTbsp/download-2.jpg",
-            "title": "English Language Mastery",
-            "instructor": "Dr. Sarah Thompson",
-            "rating": 4.9,
-            "totalStudents": 2000,
-            "creditHour": "25 Hours",
-            "enrollFee": "59.99",
-            "whatYouWillLearn": [
-                "Grammar and sentence structure in English.",
-                "Effective communication and writing skills.",
-                "Vocabulary expansion and word usage.",
-                "Public speaking and presentation skills.",
-                "Critical thinking and analytical skills."
-            ],
-            "courseDescription": "Enhance your language skills with 'English Language Mastery' led by Dr. Sarah Thompson. This comprehensive course focuses on improving grammar, communication, and writing skills. Whether you're a non-native speaker or looking to refine your language proficiency, this course provides a solid foundation for effective English language usage in various contexts.",
-            "languages": [
-                "English"
-            ],
-            "introductoryVideo": "https://youtu.be/CbPy_CjJR90?si=nNfJLnOMB2wSvSAS",
-            "outcome": [
-                "Achieve mastery in English grammar and sentence structure.",
-                "Enhance communication and writing skills for various contexts.",
-                "Expand vocabulary and use words effectively in written and spoken language.",
-                "Develop public speaking and presentation skills.",
-                "Sharpen critical thinking and analytical skills through language."
-            ],
-            "skillsAcquired": [
-                "English language proficiency",
-                "Effective communication and writing",
-                "Vocabulary expansion and word usage",
-                "Public speaking and presentation skills",
-                "Critical thinking and analytical skills"
-            ],
-            "courseContents": [
-                {
-                    "_id": "1",
-                    "title": "Grammar and Sentence Structure",
-                    "content": "Master the fundamentals of English grammar and sentence construction."
-                },
-                {
-                    "_id": "2",
-                    "title": "Effective Communication Skills",
-                    "content": "Enhance communication skills for different contexts, including formal and informal settings."
-                },
-                {
-                    "_id": "3",
-                    "title": "Vocabulary Expansion",
-                    "content": "Expand your vocabulary and learn how to use words effectively in both written and spoken language."
-                },
-                {
-                    "_id": "4",
-                    "title": "Public Speaking and Presentation",
-                    "content": "Develop confidence and skills in public speaking and delivering effective presentations."
-                },
-                {
-                    "_id": "5",
-                    "title": "Critical Thinking and Analysis",
-                    "content": "Sharpen critical thinking and analytical skills through language exploration and discussion."
-                }
-            ],
-            "requirements": [
-                "Basic understanding of the English language",
-                "Access to a computer with internet connectivity",
-                "Passion for improving English language skills"
-            ],
-            "enrollmentDates": {
-                "enrollStart": "2023-11-01T00:00:00.000Z",
-                "enrollEnd": "2023-12-31T00:00:00.000Z"
-            },
-            "category": "Language",
-            "classStart": "2024-01-01T00:00:00.000Z",
-            "subtitle": "Master English for Success"
-        }
-    },
-    {
-        "courseDetails": {
             "thumbnail": "https://i.ibb.co/rZQBmHb/download.jpg",
             "title": "Full Stack Web Development",
-            "instructor": "Jane Smith",
-            "rating": 4.7,
-            "totalStudents": 1200,
-            "creditHour": "60 Hours",
-            "enrollFee": "79.99",
+            "instructor": "Jhanker Mahbub",
+            "rating": 0,
+            "totalVideo": 30,
+            "totalLiveClasses": 6,
+            "totalStudents": 0,
+            "duration": 6,
+            "enrollFee": "5500",
             "whatYouWillLearn": [
                 "Comprehensive understanding of both front-end and back-end web development.",
                 "Building responsive and dynamic web applications using modern technologies.",
@@ -391,52 +146,52 @@
             ],
             "courseContents": [
                 {
-                    "_id": "1",
+                    "_id": "663d10eb7486520e57277639",
                     "title": "Introduction to Full Stack Development",
                     "content": "Understand the fundamentals of full-stack development and the role of front-end and back-end technologies."
                 },
                 {
-                    "_id": "2",
+                    "_id": "663d10eb7486520e5727763a",
                     "title": "Front-End Technologies (HTML, CSS, JavaScript)",
                     "content": "Master the essential front-end technologies for creating visually appealing and interactive user interfaces."
                 },
                 {
-                    "_id": "3",
+                    "_id": "663d10eb7486520e5727763b",
                     "title": "Back-End Technologies (Node.js, Express)",
                     "content": "Explore back-end technologies, focusing on Node.js and Express for server-side development."
                 },
                 {
-                    "_id": "4",
+                    "_id": "663d10eb7486520e5727763c",
                     "title": "Database Design and Integration (MongoDB)",
                     "content": "Learn database design principles and integrate MongoDB for efficient data storage and retrieval."
                 },
                 {
-                    "_id": "5",
+                    "_id": "663d10eb7486520e5727763d",
                     "title": "Version Control with Git and GitHub",
                     "content": "Effectively use Git for version control and GitHub for collaborative development."
                 },
                 {
-                    "_id": "6",
+                    "_id": "663d10eb7486520e5727763e",
                     "title": "Authentication and Authorization",
                     "content": "Implement secure user authentication and authorization mechanisms in web applications."
                 },
                 {
-                    "_id": "7",
+                    "_id": "663d10eb7486520e5727763f",
                     "title": "Cloud Deployment (Heroku)",
                     "content": "Deploy web applications on cloud platforms like Heroku for global accessibility and scalability."
                 },
                 {
-                    "_id": "8",
+                    "_id": "663d10eb7486520e57277640",
                     "title": "API Integration and Third-Party Services",
                     "content": "Integrate RESTful APIs and leverage third-party services to enhance application functionality."
                 },
                 {
-                    "_id": "9",
+                    "_id": "663d10eb7486520e57277641",
                     "title": "Agile Development and Project Management",
                     "content": "Adopt agile development methodologies and use project management tools for efficient teamwork."
                 },
                 {
-                    "_id": "10",
+                    "_id": "663d10eb7486520e57277642",
                     "title": "Capstone Project",
                     "content": "Apply all acquired skills and knowledge to build a full-stack web application in a real-world scenario."
                 }
@@ -447,13 +202,279 @@
                 "Intermediate level programming skills",
                 "Familiarity with version control (Git) is a plus"
             ],
-            "enrollmentDates": {
-                "enrollStart": "2023-06-01T00:00:00.000Z",
-                "enrollEnd": "2023-08-31T00:00:00.000Z"
-            },
-            "category": "Web Development",
+            "category": "web development",
             "classStart": "2023-09-01T00:00:00.000Z",
-            "subtitle": "Master the Full Stack"
+            "subtitle": "Master the Full Stack",
+            "playlistId": "UU1M6N5LUj3c1JhiZXiNDq3A",
+            "instructorEmail": "nibeditaroy582@gmail.com"
+        }
+    },
+    {
+        "courseDetails": {
+            "enrollmentDates": {
+                "enrollStart": "2023-03-01T00:00:00.000Z",
+                "enrollEnd": "2023-04-30T00:00:00.000Z"
+            },
+            "thumbnail": "https://i.ibb.co/njxgkpY/download1.jpg",
+            "title": "Web Development Complete Course",
+            "instructor": "Rabbil Haque",
+            "rating": 0,
+            "totalVideo": 30,
+            "totalLiveClasses": 6,
+            "totalStudents": 0,
+            "duration": 3,
+            "enrollFee": "6999",
+            "whatYouWillLearn": [
+                "Build a solid foundation in HTML, CSS, and JavaScript, the fundamental building blocks of web development.",
+                "Create well-structured and semantic HTML documents to lay the groundwork for web pages.",
+                "Apply CSS styling techniques to enhance the visual appeal and layout of web content.",
+                "Develop interactive and dynamic web pages using JavaScript, understanding variables, data types, and control flow.",
+                "Master the principles of responsive web design, ensuring your creations look great on various devices.",
+                "Explore essential web development tools, including text editors, version control systems, and browser developer tools.",
+                "Discover and utilize popular JavaScript frameworks like React and Vue.js for building dynamic user interfaces.",
+                "Build a personal portfolio website to showcase your projects and establish a strong online presence.",
+                "Understand and apply best practices in web development, covering topics such as code organization, performance optimization, and security."
+            ],
+            "courseDescription": "Embark on a transformative journey with our 'Web Development Basics' course, where you'll dive deep into the foundational pillars of web development...",
+            "languages": [
+                "Hindi"
+            ],
+            "introductoryVideo": "https://www.youtube.com/watch?v=l1EssrLxt7E",
+            "outcome": [
+                "Build static websites with confidence using HTML, CSS, and JavaScript.",
+                "Develop a responsive web design to ensure your creations look exceptional on all devices.",
+                "Master essential web development tools and gain proficiency in their effective usage.",
+                "Explore popular JavaScript frameworks like React and Vue.js, opening doors to dynamic and interactive user interfaces.",
+                "Create a personal portfolio website, showcasing your projects and establishing a strong online presence.",
+                "Understand and apply web development best practices, covering aspects like code organization, performance optimization, and security."
+            ],
+            "technologies": [
+                "HTML",
+                "CSS",
+                "JavaScript"
+            ],
+            "skillsAcquired": [
+                "Foundational understanding of HTML, CSS, and JavaScript",
+                "Adaptability to different learning styles",
+                "Problem-solving and critical thinking",
+                "Effective communication in a collaborative environment"
+            ],
+            "courseContents": [
+                {
+                    "_id": "663d10eb7486520e57277643",
+                    "title": "Introduction to HTML",
+                    "content": "This module introduces the basic structure of HTML, teaching you how to create the skeleton of a webpage and add content like headings, paragraphs, and lists."
+                },
+                {
+                    "_id": "663d10eb7486520e57277644",
+                    "title": "CSS Styling Techniques",
+                    "content": "Explore various CSS styling techniques to enhance the visual appeal of your web pages. Learn about selectors, colors, fonts, and layout strategies."
+                },
+                {
+                    "_id": "663d10eb7486520e57277645",
+                    "title": "JavaScript Basics",
+                    "content": "Get a solid foundation in JavaScript programming. Cover topics such as variables, data types, control flow, and functions."
+                },
+                {
+                    "_id": "663d10eb7486520e57277646",
+                    "title": "Responsive Web Design",
+                    "content": "Learn the principles of responsive web design and how to create websites that look great on all devices, from desktops to smartphones."
+                },
+                {
+                    "_id": "663d10eb7486520e57277647",
+                    "title": "Web Development Tools",
+                    "content": "Explore essential tools for web development, including text editors, version control systems, and browser developer tools."
+                },
+                {
+                    "_id": "663d10eb7486520e57277648",
+                    "title": "Building a Portfolio Website",
+                    "content": "Apply your skills to build a personal portfolio website. Showcase your projects and create an online presence."
+                },
+                {
+                    "_id": "663d10eb7486520e57277649",
+                    "title": "JavaScript Frameworks",
+                    "content": "Discover popular JavaScript frameworks like React and Vue.js. Learn how to build dynamic and interactive user interfaces."
+                },
+                {
+                    "_id": "663d10eb7486520e5727764a",
+                    "title": "Web Development Best Practices",
+                    "content": "Understand best practices in web development, covering topics such as code organization, performance optimization, and security."
+                }
+            ],
+            "requirements": [
+                "Basic understanding of using a computer",
+                "Access to a computer with internet connectivity",
+                "Curiosity and a willingness to learn",
+                "No specific programming background required"
+            ],
+            "category": "web development",
+            "classStart": "2023-05-01T00:00:00.000Z",
+            "subtitle": "Build Your First Website",
+            "playlistId": "UU1M6N5LUj3c1JhiZXiNDq3A",
+            "instructorEmail": "joujoniki15-13928@diu.edu.bd"
+        }
+    },
+    {
+        "courseDetails": {
+            "enrollmentDates": {
+                "enrollStart": "2023-11-01T00:00:00.000Z",
+                "enrollEnd": "2023-12-31T00:00:00.000Z"
+            },
+            "technologies": [],
+            "thumbnail": "https://i.ibb.co/fqVTbsp/download-2.jpg",
+            "title": "English Language Mastery",
+            "instructor": "Munzereen Shahid",
+            "rating": 0,
+            "totalVideo": 30,
+            "totalLiveClasses": 6,
+            "totalStudents": 0,
+            "duration": 6,
+            "enrollFee": "1999",
+            "whatYouWillLearn": [
+                "Grammar and sentence structure in English.",
+                "Effective communication and writing skills.",
+                "Vocabulary expansion and word usage.",
+                "Public speaking and presentation skills.",
+                "Critical thinking and analytical skills."
+            ],
+            "courseDescription": "Enhance your language skills with 'English Language Mastery' led by Dr. Sarah Thompson. This comprehensive course focuses on improving grammar, communication, and writing skills. Whether you're a non-native speaker or looking to refine your language proficiency, this course provides a solid foundation for effective English language usage in various contexts.",
+            "languages": [
+                "English"
+            ],
+            "introductoryVideo": "https://youtu.be/CbPy_CjJR90?si=nNfJLnOMB2wSvSAS",
+            "outcome": [
+                "Achieve mastery in English grammar and sentence structure.",
+                "Enhance communication and writing skills for various contexts.",
+                "Expand vocabulary and use words effectively in written and spoken language.",
+                "Develop public speaking and presentation skills.",
+                "Sharpen critical thinking and analytical skills through language."
+            ],
+            "skillsAcquired": [
+                "English language proficiency",
+                "Effective communication and writing",
+                "Vocabulary expansion and word usage",
+                "Public speaking and presentation skills",
+                "Critical thinking and analytical skills"
+            ],
+            "courseContents": [
+                {
+                    "_id": "663d10eb7486520e5727764b",
+                    "title": "Grammar and Sentence Structure",
+                    "content": "Master the fundamentals of English grammar and sentence construction."
+                },
+                {
+                    "_id": "663d10eb7486520e5727764c",
+                    "title": "Effective Communication Skills",
+                    "content": "Enhance communication skills for different contexts, including formal and informal settings."
+                },
+                {
+                    "_id": "663d10eb7486520e5727764d",
+                    "title": "Vocabulary Expansion",
+                    "content": "Expand your vocabulary and learn how to use words effectively in both written and spoken language."
+                },
+                {
+                    "_id": "663d10eb7486520e5727764e",
+                    "title": "Public Speaking and Presentation",
+                    "content": "Develop confidence and skills in public speaking and delivering effective presentations."
+                },
+                {
+                    "_id": "663d10eb7486520e5727764f",
+                    "title": "Critical Thinking and Analysis",
+                    "content": "Sharpen critical thinking and analytical skills through language exploration and discussion."
+                }
+            ],
+            "requirements": [
+                "Basic understanding of the English language",
+                "Access to a computer with internet connectivity",
+                "Passion for improving English language skills"
+            ],
+            "category": "language",
+            "classStart": "2024-01-01T00:00:00.000Z",
+            "subtitle": "Master English for Success",
+            "playlistId": "UU1M6N5LUj3c1JhiZXiNDq3A",
+            "instructorEmail": "nibeditaroy582@gmail.com"
+        }
+    },
+    {
+        "courseDetails": {
+            "enrollmentDates": {
+                "enrollStart": "2023-10-01T00:00:00.000Z",
+                "enrollEnd": "2023-12-15T00:00:00.000Z"
+            },
+            "thumbnail": "https://i.ibb.co/WK7TZ67/download-1.jpg",
+            "title": "JavaScript for Web Development",
+            "instructor": "Md Shakil Ahmed",
+            "rating": 0,
+            "totalVideo": 30,
+            "totalLiveClasses": 6,
+            "totalStudents": 0,
+            "duration": 1,
+            "enrollFee": "4900",
+            "whatYouWillLearn": [
+                "Core concepts of JavaScript programming.",
+                "DOM manipulation and event handling.",
+                "Asynchronous programming with promises and async/await.",
+                "Client-side web development using popular frameworks.",
+                "Integration of JavaScript with HTML and CSS."
+            ],
+            "courseDescription": "Elevate your web development skills with 'JavaScript for Web Development' by Prof. Michael Rodriguez. This course provides a deep dive into the world of JavaScript, covering core concepts, DOM manipulation, and advanced asynchronous programming. Whether you're a beginner or seeking to enhance your skills, this course is your gateway to mastering JavaScript for modern web development.",
+            "languages": [
+                "English"
+            ],
+            "introductoryVideo": "https://www.youtube.com/watch?v=PlbupGCBV6w",
+            "outcome": [
+                "Master JavaScript programming for effective client-side development.",
+                "Manipulate the DOM and handle events for dynamic web pages.",
+                "Understand asynchronous programming using promises and async/await in JavaScript.",
+                "Explore popular JavaScript frameworks for client-side web development.",
+                "Integrate JavaScript seamlessly with HTML and CSS."
+            ],
+            "technologies": [
+                "JavaScript"
+            ],
+            "skillsAcquired": [
+                "JavaScript programming proficiency",
+                "DOM manipulation and event handling",
+                "Asynchronous programming skills",
+                "Integration with popular web development frameworks"
+            ],
+            "courseContents": [
+                {
+                    "_id": "663d10eb7486520e57277650",
+                    "title": "Introduction to JavaScript",
+                    "content": "Explore the basics of JavaScript programming language and its role in web development."
+                },
+                {
+                    "_id": "663d10eb7486520e57277651",
+                    "title": "DOM Manipulation and Events",
+                    "content": "Learn how to manipulate the Document Object Model (DOM) and handle events using JavaScript."
+                },
+                {
+                    "_id": "663d10eb7486520e57277652",
+                    "title": "Asynchronous Programming",
+                    "content": "Understand asynchronous programming using promises and async/await in JavaScript."
+                },
+                {
+                    "_id": "663d10eb7486520e57277653",
+                    "title": "Client-Side Web Development",
+                    "content": "Explore popular JavaScript frameworks for client-side web development."
+                },
+                {
+                    "_id": "663d10eb7486520e57277654",
+                    "title": "Integration with HTML and CSS",
+                    "content": "Integrate JavaScript seamlessly with HTML and CSS for dynamic web pages."
+                }
+            ],
+            "requirements": [
+                "Basic understanding of HTML and CSS",
+                "Access to a computer with a text editor",
+                "Curiosity and enthusiasm for web development"
+            ],
+            "category": "web development",
+            "classStart": "2023-12-16T00:00:00.000Z",
+            "subtitle": "Master JavaScript for Modern Web",
+            "playlistId": "UU1M6N5LUj3c1JhiZXiNDq3A",
+            "instructorEmail": "joujoniki15-13928@diu.edu.bd"
         }
     }
 ]

@@ -1,13 +1,9 @@
 import DashboardTitle from '../../SharedComponents/DashboardTitle/DashboardTitle';
 import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
-import DatePicker from "react-datepicker";
+import { useForm } from 'react-hook-form';
 import "react-datepicker/dist/react-datepicker.css";
 import toast, { Toaster } from 'react-hot-toast';
 import { sendEmailVerification } from 'firebase/auth';
-import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 '../../hooks/useAxiosPublic';
 const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
@@ -16,40 +12,30 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 import '../../Layout/styles.css'
-import { IoAdd } from 'react-icons/io5';
-const CreateCourse = () => {
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
+const UpdateCourse = () => {
+    const { id } = useParams()
     const axiosPublic = useAxiosPublic();
     const [text, setText] = useState("");
-    const [fields, setFields] = useState([{ title: '', content: '' }]);
-    const [outcomeFields, seOutcomeFields] = useState(['']);
-
-    const handleOutcomeFieldAdd = (event) => {
-        event.preventDefault();
-        seOutcomeFields([...outcomeFields, '']);
-    };
-
-    const handleOutcomeChange = (index, event) => {
-        const { name, value } = event.target;
-        const newOutcomeFields = [...outcomeFields];
-        newOutcomeFields[index][name] = value;
-        setOutcomeFields(newOutcomeFields);
-    }
-
-    const handleOulineAddField = (event) => {
-        event.preventDefault();
-        setFields([...fields, { title: '', content: '' }]);
-    };
-
-    const handleOulineChange = (index, event) => {
-        const { name, value } = event.target;
-        const newFields = [...fields];
-        newFields[index][name] = value;
-        setFields(newFields);
-    };
 
     const handleChange = (value) => {
         setText(value);
     };
+
+    const { data: courseDetails = [] } = useQuery({
+        queryKey: ['course'],
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/api/courses/${id}`)
+            console.log(res.data.data.courseDetails)
+            return res.data.data.courseDetails
+        }
+    })
+    console.log("Course details: ", courseDetails)
+
+    const { enrollmentDates, thumbnail, title, instructor, rating, totalStudents, totalVideo, totalLiveClasses, duration, enrollFee, whatYouWillLearn, courseDescription, languages, introductoryVideo, outcome, technologies, skillsAcquired, courseContents, requirements, category, classStart, subtitle, playlistId, instructorEmail
+    } = courseDetails;
+
 
     // react hook form built in function desctructuring
     const {
@@ -160,6 +146,10 @@ const CreateCourse = () => {
         ]
     };
 
+    const mapValue = courseContents
+    console.log(mapValue)
+
+
     return (
         <>
             <Toaster
@@ -168,19 +158,7 @@ const CreateCourse = () => {
             />
             <div className='w-full' id='create-course'>
                 <div className=' w-full'>
-                    <DashboardTitle title="Create Course" subTitle="Fillup the form to create your course"></DashboardTitle>
-                </div>
-                <div className='flex flex-wrap gap-5 justify-start items-start mb-8'>
-                    <div className=''>
-                        <h3 className='text-base font-bold'>Instructions</h3>
-                        <ol className='list-decimal pl-8 py-2'>
-                            <li>Go to you tube and create a playlist for your course</li>
-                            <li>Make all video public</li>
-                            <li>view the playlist</li>
-                            <li>Copy the playlist url</li>
-                            <li>Provide the playlist url in the form</li>
-                        </ol>
-                    </div>
+                    <DashboardTitle title="Update your course" subTitle="Update the course information to update your course"></DashboardTitle>
                 </div>
                 <div className='w-full pb-8'>
                     <form action="">
@@ -188,7 +166,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="yourName">
                                     <p className='text-base text-gray-500'>Yout name<span className='text-red-500'>*</span> </p>
-                                    <input type="text" name='youtName' {...register("yourName", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="text" name='youtName' defaultValue={instructor} {...register("yourName", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.yourName && <span className='text-xs text-red-500'>This field is required</span>}
@@ -197,7 +175,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="email">
                                     <p className='text-base text-gray-500'>Your email<span className='text-red-500'>*</span> </p>
-                                    <input type="email" name='email'  {...register("email", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="email" name='email' defaultValue={instructorEmail} {...register("email", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.email && <span className='text-xs text-red-500'>This field is required</span>}
@@ -206,7 +184,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="category">
                                     <p className='text-base text-gray-500'>Course category<span className='text-red-500'>*</span> </p>
-                                    <input type="text" name='category' {...register("category", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="text" name='category' defaultValue={category} {...register("category", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.category && <span className='text-xs text-red-500'>This field is required</span>}
@@ -215,7 +193,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="courseTitle">
                                     <p className='text-base text-gray-500'>Course title<span className='text-red-500'>*</span> </p>
-                                    <input type="text" name='courseTitle' {...register("courseTitle", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="text" name='courseTitle' defaultValue={title} {...register("courseTitle", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.courseTitle && <span className='text-xs text-red-500'>This field is required</span>}
@@ -224,7 +202,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="courseSubTitle">
                                     <p className='text-base text-gray-500'>Course subtitle<span className='text-red-500'>*</span> </p>
-                                    <input type="text" name='courseSubTitle'  {...register("courseSubTitle", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="text" name='courseSubTitle' defaultValue={subtitle} {...register("courseSubTitle", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.courseSubTitle && <span className='text-xs text-red-500'>This field is required</span>}
@@ -246,7 +224,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full '>
                                 <label htmlFor="objective">
                                     <p className='text-base text-gray-500'>Course objective<span className='text-red-500'>*</span> </p>
-                                    <input type="text" name='objective' {...register("objective", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="text" name='objective' defaultValue={whatYouWillLearn} {...register("objective", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.objective && <span className='text-xs text-red-500'>This field is required</span>}
@@ -255,7 +233,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full '>
                                 <label htmlFor="language">
                                     <p className='text-base text-gray-500'>Language<span className='text-red-500'>*</span> </p>
-                                    <input type="text" name='language' {...register("language", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="text" name='language' defaultValue={languages} {...register("language", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.language && <span className='text-xs text-red-500'>This field is required</span>}
@@ -264,7 +242,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="technologies">
                                     <p className='text-base text-gray-500'>Technologies<span className='text-red-500'>*</span> </p>
-                                    <input type="email" name="technologies"  {...register("technologies", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="email" name="technologies" defaultValue={technologies?.map((tech) => tech)} {...register("technologies", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.technologies && <span className='text-xs text-red-500'>This field is required</span>}
@@ -273,7 +251,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="skills">
                                     <p className='text-base text-gray-500'>Skills required <span className='text-red-500'>*</span> </p>
-                                    <input type="text" name='skills' className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="text" name='skills' defaultValue={requirements?.map((skill) => skill)} {...register("skills", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.skills && <span className='text-xs text-red-500'>This field is required</span>}
@@ -282,7 +260,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="introductoryVideo">
                                     <p className='text-base text-gray-500'>Introductory video link<span className='text-red-500'>*</span> </p>
-                                    <input type="text" name='introductoryVideo' {...register("introductoryVideo", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="text" name='introductoryVideo' defaultValue={introductoryVideo} {...register("introductoryVideo", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.introductoryVideo && <span className='text-xs text-red-500'>This field is required</span>}
@@ -291,7 +269,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="playlistLink">
                                     <p className='text-base text-gray-500'>Youtube playlist link<span className='text-red-500'>*</span> </p>
-                                    <input type="text" name='playlistLink' {...register("playlistLink", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="text" name='playlistLink' defaultValue={"https://www.youtube.com/playlist?list=" + playlistId} {...register("playlistLink", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.introductoryVideo && <span className='text-xs text-red-500'>This field is required</span>}
@@ -303,23 +281,21 @@ const CreateCourse = () => {
                                     <input
                                         type="date"
                                         name='enrollStart'
+                                        defaultValue={enrollmentDates ? new Date(enrollmentDates?.enrollStart).toISOString().slice(0, 10) : ''}
                                         {...register("enrollStart", { required: true })}
                                         className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none text-gray-500'
                                     />
                                 </label>
-                                <div>
-                                    <div>
-                                        {errors.enrollStart && <span className='text-xs text-red-500'>This field is required</span>}
-                                    </div>
-                                </div>
-                            </div>
 
+                            </div>
+                           
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="enrollEnd">
                                     <p className='text-base text-gray-500'>Enrollment end<span className='text-red-500'>*</span> </p>
                                     <input
                                         type="date"
                                         name='enrollEnd'
+                                        defaultValue={enrollmentDates ? new Date(enrollmentDates?.enrollEnd).toISOString().slice(0, 10) : ''}
                                         {...register("enrollEnd", { required: true })}
                                         className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none text-gray-500'
                                     />
@@ -334,6 +310,7 @@ const CreateCourse = () => {
                                     <input
                                         type="date"
                                         name='classStart'
+                                        defaultValue={classStart ? new Date(classStart).toISOString().slice(0, 10) : ''}
                                         {...register("classStart", { required: true })}
                                         className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none text-gray-500'
                                     />
@@ -345,7 +322,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="duration">
                                     <p className='text-base text-gray-500'>Course duration<span className='text-red-500'>*</span> </p>
-                                    <input type="number" name='duration' {...register("duration", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none  text-gray-500' />
+                                    <input type="number" name='duration' defaultValue={duration} {...register("duration", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none  text-gray-500' />
                                 </label>
                                 <div>
                                     {errors.duration && <span className='text-xs text-red-500'>This field is required</span>}
@@ -354,7 +331,7 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="courseFee">
                                     <p className='text-base text-gray-500'>Course fee<span className='text-red-500'>*</span> </p>
-                                    <input type="number" name="courseFee"  {...register("courseFee", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
+                                    <input type="number" name="courseFee" defaultValue={enrollFee} {...register("courseFee", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none' />
                                 </label>
                                 <div>
                                     {errors.courseFee && <span className='text-xs text-red-500'>This field is required</span>}
@@ -365,6 +342,7 @@ const CreateCourse = () => {
                                     <input
                                         type='number'
                                         name="totalVideo"
+                                        defaultValue={totalVideo}
                                         {...register("totalVideo", { required: true })}
                                         className='input input-bordered border-gray-300 w-full h-9 focus:outline-none pt-[0.4rem] text-xs'
                                     />
@@ -378,6 +356,7 @@ const CreateCourse = () => {
                                     <input
                                         type='number'
                                         name="totleLiveClass"
+                                        defaultValue={totalLiveClasses}
                                         {...register("totleLiveClass", { required: true })}
                                         className='input input-bordered border-gray-300 w-full h-9 focus:outline-none pt-[0.4rem] text-xs'
                                     />
@@ -386,80 +365,61 @@ const CreateCourse = () => {
                                     {errors.totleLiveClass && <span className='text-xs text-red-500'>This field is required</span>}
                                 </div>
                             </div>
-                            <div className='w-full lg:w-[80%] flex justify-between items-center'>
-                               <div className='w-full flex flex-col gap-2'>
-                                    {
-                                        outcomeFields.map((outcome, index) => <div className='w-full flex flex-col gap-2'>
-                                            <label htmlFor={`contentTitle`}>
-                                                <p className='text-base text-gray-500'>Outcome {index+1}<span className='text-red-500'>*</span></p>
-                                                <input
-                                                    type='text'
-                                                    name={`outcomes`}
-                                                    {...register(`outcomes`, { required: true })}
-                                                    onChange={(event) => handleOutcomeChange(event, index)}
-                                                    className='input input-bordered border-gray-300 w-full h-9 focus:outline-none text-base'
-                                                />
-                                            </label>
-                                            <div>
-                                                {errors.outcomes && <span className='text-xs text-red-500'>This field is required</span>}
-                                            </div>
-                                        </div>)
-                                    }
-                                    <button onClick={handleOutcomeFieldAdd} className="mb-2 btn btn-circle">
-                                        <IoAdd></IoAdd>
-                                    </button>
-                               </div>
-                            </div>
-                            <div className='w-full flex flex-col lg:w-[80%]  justify-between items-start'>
-                                <div><p className='text-gray-500'>Course Outline  <span className='text-red-500'>*</span></p> </div>
-                                <div className='w-full' id='outline'>
-                                    <div className='flex flex-col gap-2'>
-                                        {fields.map((field, index) => (
-                                            <div key={index} className="w-full flex flex-col gap-2">
-                                                <div>
-                                                    <label htmlFor={`contentTitle${index}`}>
-                                                        <p className="text-base text-gray-500">Title {index+1}</p>
-                                                        <input
-                                                            type="text"
-                                                            name="title"
-                                                            id={`contentTitle${index}`}
-                                                            value={field.title}
-                                                            onChange={(event) => handleOulineChange(index, event)}
-                                                            className="input input-bordered border-gray-300 w-full h-9 focus:outline-none text-base"
-                                                        />
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label htmlFor={`content${index}`}>
-                                                        <p className="text-base text-gray-500">Content</p>
-                                                        <input
-                                                            type="text"
-                                                            name="content"
-                                                            id={`content${index}`}
-                                                            value={field.content}
-                                                            onChange={(event) => handleFieldChange(index, event)}
-                                                            className="input input-bordered border-gray-300 w-full h-9 focus:outline-none text-base"
-                                                        />
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        ))}
-                                        <button onClick={handleOulineAddField} className="mt-4 btn btn-circle">
-                                            <IoAdd></IoAdd>
-                                        </button>
+                           {/* map the content title and content from courseContents */}
+                            {outcome?.map((outline, index) => (
+                                <div key={index} className='w-full lg:w-[80%] flex justify-between items-center'>
+                                    <div className='w-full flex flex-col gap-2'>
+                                        <label htmlFor={`contentTitle${index}`}>
+                                            <p className='text-base text-gray-500'>Outcome {index}</p>
+                                            <input
+                                                type='text'
+                                                name={`outcomes${index}`}
+                                                defaultValue={outline}
+                                                {...register(`outcomes${index}`)}
+                                                className='input input-bordered border-gray-300 w-full h-9 focus:outline-none text-base'
+                                            />
+                                        </label>
                                     </div>
                                 </div>
-                            </div>
+                            ))}
+                           {/* map the content title and content from courseContents */}
+                            {courseContents?.map((content, index) => (
+                                <div key={index} className='w-full flex flex-col lg:w-[80%]  justify-between items-start'>
+                                    <h5 className='text-gray-500'>Course Outline {index + 1} <span className='text-red-500'>*</span></h5>
+                                    <div className='w-full flex flex-col gap-2'>
+                                        <label htmlFor={`contentTitle${index}`}>
+                                            <p className='text-base text-gray-500'>Title</p>
+                                            <input
+                                                type='text'
+                                                name={`contentTitle${index}`}
+                                                defaultValue={content.title}
+                                                {...register(`contentTitle${index}`)}
+                                                className='input input-bordered border-gray-300 w-full h-9 focus:outline-none text-base'
+                                            />
+                                        </label>
+                                        <label htmlFor={`content${index}`}>
+                                            <p className='text-base text-gray-500'>Content</p>
+                                            <input
+                                                type='text'
+                                                name={`content${index}`}
+                                                defaultValue={content.content}
+                                                {...register(`content${index}`)}
+                                                className='input input-bordered border-gray-300 w-full h-9 focus:outline-none text-base'
+                                            />
+                                        </label>
+                                    </div>
+                                </div>
+                            ))}
 
                             <div className='w-full flex justify-center'>
                                 <label htmlFor="">
                                     <p className='text-base text-gray-500'>Short Description about your course<span className='text-red-500'>*</span> </p>
                                     <ReactQuill
                                         theme='snow'
-                                        value={text}
+                                        value={courseDescription}
                                         modules={modules}
                                         onChange={handleChange}
-                                        className='w-[100%] bg-white'
+                                        className='w-full bg-white'
                                         required
                                     />
                                 </label>
@@ -476,4 +436,4 @@ const CreateCourse = () => {
     );
 };
 
-export default CreateCourse;
+export default UpdateCourse;

@@ -33,6 +33,8 @@ import LandingPage from "../Pages/LandingPage/LandingPage"
 import AdminLayout from "../Layout/AdminLayout"
 import AdminDashboard from "../Pages/AdminDashboard/AdminDashboard"
 import CreateCourse from "../Pages/InstructorDashboard/CreateCourse"
+import ManageCourse from "../Pages/InstructorDashboard/ManageCourse"
+import UpdateCourse from "../Pages/InstructorDashboard/UpdateCourse"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -154,6 +156,14 @@ export const router = createBrowserRouter([
             {
                 path: "createCourse",
                 element: <CreateCourse />
+            },
+            {
+                path: "manageCourses",
+                element: <ManageCourse />
+            },
+            {
+                path: "updateCourse/:id",
+                element: <UpdateCourse />
             },
         ]
     },
