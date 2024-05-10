@@ -35,6 +35,11 @@ import AdminDashboard from "../Pages/AdminDashboard/AdminDashboard"
 import CreateCourse from "../Pages/InstructorDashboard/CreateCourse"
 import ManageCourse from "../Pages/InstructorDashboard/ManageCourse"
 import UpdateCourse from "../Pages/InstructorDashboard/UpdateCourse"
+import Quiz from "../Pages/InstructorDashboard/Quiz"
+import ManageClasses from "../Pages/InstructorDashboard/ManageClasses"
+import PaymentDashboard from "../Pages/InstructorDashboard/PaymentDashboard"
+import StudentInformation from "../Pages/InstructorDashboard/StudentInformation"
+import Announcement from "../Pages/InstructorDashboard/Announcement"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -164,6 +169,26 @@ export const router = createBrowserRouter([
             {
                 path: "updateCourse/:id",
                 element: <UpdateCourse />
+            },
+            {
+                path: "announcements",
+                element: <Announcement />
+            },
+            {
+                path: "quiz",
+                element: <Quiz />
+            },
+            {
+                path: "manageClasses",
+                element: <ManageClasses />
+            },
+            {
+                path: "paymentDashboard",
+                element: <PaymentDashboard/>
+            },
+            {
+                path: "studentInfo",
+                element: <StudentInformation />
             },
         ]
     },

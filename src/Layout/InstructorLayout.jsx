@@ -6,7 +6,6 @@ import { TbCoinTaka } from "react-icons/tb";
 import { IoHome, IoLogOut } from "react-icons/io5";
 import { MdOutlineCreateNewFolder, MdOutlineManageAccounts, MdDashboard, MdOutlineAssignment, MdPeople, MdLogout } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
-import { FiEdit } from "react-icons/fi";
 import { SiGoogleclassroom } from "react-icons/si";
 
 
@@ -35,9 +34,9 @@ const navLinks = [
         link: "/instructor/announcements",
     },
     {
-        nav: "Assignments",
+        nav: "Quiz",
         icon: MdOutlineAssignment,
-        link: "/instructor/assignments/",
+        link: "/instructor/quiz",
     },
     {
         nav: "Manage Classes",
