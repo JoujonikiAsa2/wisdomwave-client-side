@@ -14,8 +14,11 @@ const DiscussionCard = ({ discussion }) => {
                         <img src={discussion?.userProfile} alt="" className='w-8 h-8 rounded-full' />
                     </div>
                     <div>
-                        <h4 className='text-[0.9rem] font-bold firstLetterUppercase'><EllipsisText text={discussion?.discussionTitle} length={"28"} tooltip={discussion?.discussionTitle}
-                        /></h4>
+                        <h4 className='text-[0.9rem] font-bold firstLetterUppercase'> {discussion.discussionTitle ? (
+                            <EllipsisText text={discussion.discussionTitle} length={28} tooltip={discussion?.discussionTitle} />
+                        ) : (
+                            <span>No discussion title available</span>
+                        )}</h4>
                         <h2 className='text-[0.65rem] font-bold text-gray-500'><span className='text-black font-bold'>Author:</span> {discussion?.userName}</h2>
                     </div>
                 </div>

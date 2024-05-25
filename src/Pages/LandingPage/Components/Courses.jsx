@@ -72,11 +72,11 @@ const Courses = ({ courses, setCourses }) => {
 
                 {/* show all courses in card format with slider */}
                 {
-                    courses.length == 0 ? total.map(course => <div className='rounded-lg'>
-                        <Course key={course._id} course={course} btnText="Enroll Now">
+                    courses.length == 0 ? total.map(course => <div className='rounded-lg' key={course._id}>
+                        <Course  course={course} btnText="Enroll Now">
                         </Course>
-                    </div >) : courses.map(course => <div className='rounded-lg'>
-                        <Course key={course._id} course={course} btnText="Enroll Now">
+                    </div >) : courses.map(course => <div className='rounded-lg' key={course._id}>
+                        <Course  course={course} btnText="Enroll Now">
                         </Course>
                     </div >)
                 }

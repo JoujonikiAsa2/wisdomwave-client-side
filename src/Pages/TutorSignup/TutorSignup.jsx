@@ -302,17 +302,6 @@ const TutorSignup = () => {
                             </div>
                         </form>
                         <div className='flex flex-col justify-center items-center space-y-2'>
-                            {/* horizontal line */}
-                            {/* <div className="">
-                                <div className="divider divider-neutral py-2 w-[80vw] md:w-96 lg:w-[23rem]">OR</div>
-                            </div> */}
-
-                            {/* social media login icon */}
-                            {/* <div className='flex justify-start items-center gap-2'>
-                                <FcGoogle className=' text-3xl md:text-3xl lg:text-3xl font-bold hover:cursor-pointer' onClick={handleGoogleLogin}></FcGoogle >
-                            </div> */}
-
-                            {/* toggle to the login page */}
                             <div>
                                 <p className='text-base'>Already have an account? <Link to="/login"><span className=' text-[#0766AD] active:underline'>Login here</span></Link></p>
                             </div>

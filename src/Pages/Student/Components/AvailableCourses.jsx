@@ -26,10 +26,14 @@ const AvailableCourses = () => {
             {/* shows all available courses in a card format */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center justify-items-center items-center gap-8">
                 {
-                    purchasedCourses.map(course => <div className='rounded-lg'>
-                        <AvaiableCourseCard key={course._id} course={course}>
+                    purchasedCourses.length != 0 ? purchasedCourses.map(course => <div className='rounded-lg' key={course._id}>
+                        <AvaiableCourseCard course={course} id={course.courseId}>
                         </AvaiableCourseCard>
-                    </div>)
+                    </div>) : <div className='w-full h-full col-span-3 flex justify-center items-center justify-items-center'>
+                    <div className='w-72 h-12 flex justify-center items-center'>
+                        <h2>You did not purchased any course</h2>
+                    </div>
+                </div>
                 }
             </div>
         </div>

@@ -11,6 +11,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { sendEmailVerification } from 'firebase/auth';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
+import { PiSpinnerGapBold } from 'react-icons/pi';
 '../../hooks/useAxiosPublic';
 const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_API}`
@@ -19,6 +20,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_AP
 const StudentSignUp = () => {
 
     const axiosPublic = useAxiosPublic()
+    const [click,setClick] = useState(false)
     // date picker
     const [startDate, setStartDate] = useState();
     const [passwordType, setPasswordType] = useState('password')
@@ -42,6 +44,7 @@ const StudentSignUp = () => {
 
     // Help to execute all function after submit the form
     const onSubmit = async (data) => {
+        setClick(true)
         // console.log(data)
         const name = data.fname + " " + data.lname
         const phoneNumber = data.phone
@@ -94,6 +97,7 @@ const StudentSignUp = () => {
                             .catch(error => {
                                 console.log(error)
                             })
+                        setClick(false)
                         // This is alert message email verification
                         toast.success('Please check your email to verify', {
                             duration: 4000
@@ -116,45 +120,11 @@ const StudentSignUp = () => {
             .catch(error => {
                 // Convert the error object to a string
                 const errorMessage = error.message || 'An error occurred';
-
+                setClick(false)
                 // Display the error message using toast.error
                 toast.error(errorMessage);
             })
 
-    }
-
-    const handleGoogleLogin = () => {
-        googleLogin()
-            .then(res => {
-                {
-                    if (res.user) {
-                        axiosPublic.post('/api/users', user)
-                            .then(res => {
-                                console.log(res.data)
-                            })
-                            .catch(error => {
-                                console.log(error)
-                            })
-                        toast.success('Successfully Logged In!', {
-                            duration: 1000,
-                        })
-                        reset()
-                        setTimeout(() => {
-                            userSignOut()
-                                .then(() => {
-                                    console.log("Go to login page")
-                                })
-                                .catch(error => console.log(error))
-                            navigate(location.state || '/login')
-                        }, 1200)
-                    }
-                }
-            })
-            .catch(error => {
-
-                // console if any error
-                toast.error('Failed to Log In!')
-            })
     }
 
     return (
@@ -163,8 +133,8 @@ const StudentSignUp = () => {
                 position="top-center"
                 reverseOrder={false}
             />
-            <div className='flex flex-col justify-center items-center h-screen max-w-[96rem] mx-auto lg:my-0 my-10'>
-                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl'>
+            <div className='flex flex-col justify-center items-center max-w-[96rem] mx-auto'>
+                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl mt-10'>
                     <div className='flex-1 flex-col justify-end'>
                         {/* side animation */}
                         <Lottie animationData={signUpAnimation} className="max-w-[400px] h-[300px]"></Lottie>
@@ -173,7 +143,7 @@ const StudentSignUp = () => {
                         {/* vertical line */}
                         <div className='divider divider-neutral divider-vertical md:divider-horizontal lg:divider-horizontal h-0 md:h-96 lg:h-96'></div>
                     </div>
-                    <div className='flex-1 flex flex-col justify-start  h-[400px]'>
+                    <div className='flex-1 flex flex-col justify-start  h-[350px]'>
 
                         {/* react hook form */}
                         <form onSubmit={handleSubmit(onSubmit)} className='space-y-2 w-full h-full'>
@@ -335,24 +305,21 @@ const StudentSignUp = () => {
                                 </div>
                             </div>
                             {/* submit button */}
-                            <div className='flex  mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <div className='w-full'>
-                                    <input
-                                        type="submit"
-                                        className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize' />
+                            <div className='flex w-full '>
+                                    {click == true ? (
+                                        <button
+                                            className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize'><PiSpinnerGapBold className='animate-spin text-2xl' ></PiSpinnerGapBold  ></button>
+                                    ) : (
+                                        <div className='w-full mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
+                                            <input
+                                                type="submit"
+                                                value="Sign Up"
+                                                className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize' />
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
                         </form>
                         <div className='flex flex-col justify-center items-center space-y-2'>
-                            {/* horizontal line */}
-                            <div className="">
-                                <div className="divider divider-neutral py-2 w-[80vw] md:w-96 lg:w-[23rem]">OR</div>
-                            </div>
-
-                            {/* social media login icon */}
-                            <div className='flex justify-start items-center gap-2'>
-                                <FcGoogle className=' text-3xl md:text-3xl lg:text-3xl font-bold hover:cursor-pointer' onClick={handleGoogleLogin}></FcGoogle >
-                            </div>
 
                             {/* toggle to the login page */}
                             <div>

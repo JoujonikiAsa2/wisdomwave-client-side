@@ -7,7 +7,7 @@ import "react-multi-carousel/lib/styles.css";
 
 // All course categoories will appear
 const CourseCategory = ({ handleCategorySearch }) => {
-    
+
     const axiosPublic = useAxiosPublic()
 
     const { refetch, data: categories = [] } = useQuery({
@@ -65,8 +65,8 @@ const CourseCategory = ({ handleCategorySearch }) => {
                     },
                 }}>
                 {
-                    categories.map((category, index) => <div className='mr-2  h-[4.2rem]'>
-                        <div onClick={() => handleLocalSearch(category)} key={index} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer  h-[4.2rem]">
+                    categories.map((category, index) => <div className='mr-2  h-[4.2rem]' key={index}>
+                        <div onClick={() => handleLocalSearch(category)}  className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer  h-[4.2rem]">
                             <h2 className="capitalize">{category}</h2>
                         </div>
                     </div>)

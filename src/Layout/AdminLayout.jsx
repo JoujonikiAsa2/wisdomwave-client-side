@@ -64,8 +64,8 @@ const AdminLayout = () => {
 
                     <div className="flex flex-col space-y-2 mt-12">
                         {navLinks.map((item, index) => (
-                            <Link to={`${item.link}`}>
-                                <div className="nav-links w-full" key={index}
+                            <Link to={`${item.link}`} key={index}>
+                                <div className="nav-links w-full" 
                                 >
                                     <div
                                         onClick={() => setActiveIndex(index)}
@@ -112,6 +112,7 @@ const AdminLayout = () => {
                                     className={
                                         "flex  w-full p-2 rounded-full justify-start items-center gap-3"
                                     }
+                                    onClick={() => userSignOut()}
                                 >
                                     <MdLogout className="lg:text-xl text-lg ml-[0.8rem]" />
                                     <span className="navlink ">

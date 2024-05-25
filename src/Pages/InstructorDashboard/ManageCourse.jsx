@@ -4,7 +4,7 @@ import DashboardTitle from '../../SharedComponents/DashboardTitle/DashboardTitle
 import useAuth from '../../hooks/useAuth';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import CourseCard from './CourseCard';
-import { MdDelete, MdDeleteForever, MdDeleteOutline, MdEdit } from 'react-icons/md';
+import { MdAddTask, MdDelete, MdDeleteForever, MdDeleteOutline, MdEdit } from 'react-icons/md';
 import { FiDelete } from 'react-icons/fi';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
@@ -43,6 +43,7 @@ const ManageCourse = () => {
                 position="top-center"
                 reverseOrder={false}
             />
+            <DashboardTitle title='Course Management' subTitle="Update or delete your course"></DashboardTitle>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 justify-center items-center justify-items-center'>
                 {
                     courses ? courses.map(course => <div className='flex justify-center gap-4'>
@@ -54,6 +55,11 @@ const ManageCourse = () => {
                             <Link to={`/instructor/updateCourse/${course._id}`}>
                                 <div className='w-8 bg-slate-700 flex justify-center items-center rounded cursor-pointer'>
                                     <MdEdit className=' text-2xl text-white'></MdEdit>
+                                </div>
+                            </Link>
+                            <Link to={`/instructor/createAssignments/${course._id}`}>
+                                <div className='w-8 bg-slate-700 flex justify-center items-center rounded cursor-pointer'>
+                                    <MdAddTask className=' text-2xl text-white'></MdAddTask>
                                 </div>
                             </Link>
                         </div>

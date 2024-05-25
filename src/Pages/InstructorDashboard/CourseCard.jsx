@@ -7,7 +7,7 @@ const CourseCard = ({ course }) => {
     const { title, thumbnail, instructor, rating, totalStudents, enrollFee } = course.courseDetails
     // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
     return (
-        <Link to={`/courseDetails/${course._id}`}>
+        <Link to={`/instructor/viewCourse/${course._id}`}>
             <div className="h-[13rem] hover:shadow hover:cursor-pointer relative lg:w-[35vw] md:w-[40vw] w-[70vw] border bg-white flex items-start rounded-lg">
                 <div className='lg:w-64 md:w-42 w-32 flex justify-between items-center h-full rounded-lg'>
                     <img src={thumbnail} alt="" className="w-full md:w-56 lg:w-56 h-full rounded-lg rounded-r-none object-fill" />

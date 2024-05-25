@@ -18,6 +18,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_AP
 
 const InstructorSignup = () => {
 
+    const [click,setClick] = useState(false)
     const axiosPublic = useAxiosPublic()
     // date picker
     const [startDate, setStartDate] = useState();
@@ -43,6 +44,7 @@ const InstructorSignup = () => {
     // Help to execute all function after submit the form
     const onSubmit = async (data) => {
         // console.log(data)
+        setClick(true)
         const name = data.fname + " " + data.lname
         const phoneNumber = data.phone
         const imageFile = { image: data.profile[0] }
@@ -90,6 +92,7 @@ const InstructorSignup = () => {
                             .catch(error => {
                                 console.log(error)
                             })
+                            setClick(false)
                         // This is alert message email verification
                         toast.success('Please check your email to verify', {
                             duration: 4000
@@ -104,6 +107,7 @@ const InstructorSignup = () => {
                         }, 1200)
                     })
                     .catch(() => {
+                        setClick(false)
                         toast.error('Failed to verify', {
                             duration: 4000
                         });
@@ -112,46 +116,13 @@ const InstructorSignup = () => {
             .catch(error => {
                 // Convert the error object to a string
                 const errorMessage = error.message || 'An error occurred';
-
+                setClick(false)
                 // Display the error message using toast.error
                 toast.error(errorMessage);
             })
 
     }
 
-    const handleGoogleLogin = () => {
-        googleLogin()
-            .then(res => {
-                {
-                    if (res.user) {
-                        axiosPublic.post('/api/users', user)
-                            .then(res => {
-                                console.log(res.data)
-                            })
-                            .catch(error => {
-                                console.log(error)
-                            })
-                        toast.success('Successfully Logged In!', {
-                            duration: 1000,
-                        })
-                        reset()
-                        setTimeout(() => {
-                            userSignOut()
-                                .then(() => {
-                                    console.log("Go to login page")
-                                })
-                                .catch(error => console.log(error))
-                            navigate(location.state || '/login')
-                        }, 1200)
-                    }
-                }
-            })
-            .catch(error => {
-
-                // console if any error
-                toast.error('Failed to Log In!', error)
-            })
-    }
 
     return (
         <>
@@ -169,7 +140,7 @@ const InstructorSignup = () => {
                         {/* vertical line */}
                         <div className='divider divider-neutral divider-vertical md:divider-horizontal lg:divider-horizontal h-0 md:h-96 lg:h-96'></div>
                     </div>
-                    <div className='flex-1 flex flex-col justify-start  h-[400px]'>
+                    <div className='flex-1 flex flex-col justify-start  h-[350px]'>
 
                         {/* react hook form */}
                         <form onSubmit={handleSubmit(onSubmit)} className='space-y-2 w-full h-full'>
@@ -331,26 +302,21 @@ const InstructorSignup = () => {
                                 </div>
                             </div>
                             {/* submit button */}
-                            <div className='flex  mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <div className='w-full'>
-                                    <input
-                                        type="submit"
-                                        className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize' />
-                                </div>
+                            <div className='flex w-full '>
+                                {click == true ? (
+                                    <button
+                                        className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize'><PiSpinnerGapBold className='animate-spin text-2xl' ></PiSpinnerGapBold  ></button>
+                                ) : (
+                                    <div className='w-full mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
+                                        <input
+                                            type="submit"
+                                            value="Sign Up"
+                                            className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize' />
+                                    </div>
+                                )}
                             </div>
                         </form>
                         <div className='flex flex-col justify-center items-center space-y-2'>
-                            {/* horizontal line */}
-                            <div className="">
-                                <div className="divider divider-neutral py-2 w-[80vw] md:w-96 lg:w-[23rem]">OR</div>
-                            </div>
-
-                            {/* social media login icon */}
-                            <div className='flex justify-start items-center gap-2'>
-                                <FcGoogle className=' text-3xl md:text-3xl lg:text-3xl font-bold hover:cursor-pointer' onClick={handleGoogleLogin}></FcGoogle >
-                            </div>
-
-                            {/* toggle to the login page */}
                             <div>
                                 <p className='text-base'>Already have an account? <Link to="/login"><span className=' text-[#0766AD] active:underline'>Login here</span></Link></p>
                             </div>

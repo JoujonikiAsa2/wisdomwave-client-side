@@ -1,18 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoNotificationsOutline } from 'react-icons/io5';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import { useQuery } from '@tanstack/react-query';
+import useAuth from '../../hooks/useAuth';
 
 const Notifications = ({ handleClicked, clicked }) => {
+    const axiosPublic = useAxiosPublic()
+    const {user} = useAuth()
+    const [count, setCount] = useState(0)
+    const [unreadAnnouncement, setUnreadAnnouncement] = useState([])
+
+    const { data: announcements = [], refetch } = useQuery({
+        queryKey: ['announcements'],
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/api/announcements/${user?.email}`)
+            console.log(res.data)
+            return res.data.data
+        }
+    })
+
+    useEffect(()=>{
+        axiosPublic.get(`/api/announcements/isRead/email/${user?.email}`)
+        .then((res)=>{
+            setCount(res.data.total)
+            setUnreadAnnouncement(res.data.data)
+        })
+    },[user?.email])
+
+    const handleReadNotification = () => {
+        // update the isRead status 
+        axiosPublic.patch(`/api/announcements/${user?.email}`)
+        .then((res)=>{
+            if(res.modifiedCount > 0){
+                // setCount(0)
+            }
+        })
+        handleClicked(!clicked)
+    }
+
+    console.log(announcements, unreadAnnouncement)
     return (
         <div>
             <nav className="dropdown dropdown-end mr-2 flex justify-center items-center">
-                <div tabIndex={0} onClick={handleClicked} className="hover:cursor-pointer ">
+                <div tabIndex={0} onClick={handleReadNotification} className="hover:cursor-pointer ">
                     <IoNotificationsOutline className="text-xl text-blue-600"></IoNotificationsOutline>
-                    <span className="absolute text-sm bottom-2 left-5 text-red-400 dark:text-blue-600">2</span>
+                    <div className="absolute text-sm bottom-2 left-2 text-white dark:text-white bg-blue-400 rounded-full w-6 h-6 flex justify-center items-center">{count > 0 ? count : 0}</div>
                 </div>
-                <div tabIndex={0} className={`${clicked == false ? "hidden" : "mt-[11.5rem] z-[1] card card-compact dropdown-content w-72 bg-base-200 shadow"}`}>
+                <div tabIndex={0} className={`${clicked == false ? "hidden" : "mt-[8.5rem] z-[1] card card-compact dropdown-content w-72 bg-base-200 shadow"}`}>
                     <div className="card-body">
-                        <p>You added a new course.</p>
-                        <p>You have a assignment to submit.</p>
+                        {
+                           announcements.map(announcement =><div className='w-full flex justify-between items-center'>
+                                <p>{announcement.details}</p>
+                            </div>) 
+                        }
                     </div>
                 </div>
             </nav>

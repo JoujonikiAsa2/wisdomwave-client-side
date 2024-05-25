@@ -4,10 +4,9 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Profile from "./Profile";
-// import Notifications from "./Notifications";
+import Notifications from "./Notifications";
 import toast, { Toaster } from "react-hot-toast";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-// import Cart from "./Cart";
 
 
 const Header = ({ handleSearch }) => {
@@ -338,13 +337,12 @@ const Header = ({ handleSearch }) => {
                         </Link>
 
                         <div className="lg:hidden md:flex flex gap-3 justify-center items-center">
-                            {/* {
-                                    user &&
-                                    <div className="flex justify-center items-center gap-3 ">
-                                        <Cart className="text-black" handleClicked={handleClicked} clicked={clicked}></Cart>
-                                        <Notifications handleClicked={handleClicked} clicked={clicked} ></Notifications>
-                                    </div>
-                                } */}
+                            {
+                                user &&
+                                <div className="flex justify-center items-center gap-3 ">
+                                    <Notifications handleClicked={handleClicked} clicked={clicked} ></Notifications>
+                                </div>
+                            }
 
 
 
@@ -408,13 +406,12 @@ const Header = ({ handleSearch }) => {
 
                         {/* Navlinks for large device */}
                         {sNavLinks}
-                        {/* {
+                        {
                                 user &&
                                 <div className="flex justify-center items-center gap-4 ">
-                                    <Cart handleClicked={handleClicked} clicked={clicked}></Cart>
-                                    <Notifications handleClicked={handleClicked} clicked={clicked} ></Notifications>
+                                     <Notifications handleClicked={handleClicked} clicked={clicked} ></Notifications>
                                 </div>
-                            } */}
+                            }
 
                         {/* Join dropdown for large device */}
                         {join}

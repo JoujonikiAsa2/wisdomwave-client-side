@@ -34,19 +34,9 @@ const navLinks = [
         link: "/instructor/announcements",
     },
     {
-        nav: "Quiz",
-        icon: MdOutlineAssignment,
-        link: "/instructor/quiz",
-    },
-    {
         nav: "Manage Classes",
         icon: SiGoogleclassroom,
         link: "/instructor/manageClasses",
-    },
-    {
-        nav: "Payment Dashboard",
-        icon: TbCoinTaka,
-        link: "/instructor/paymentDashboard",
     },
     {
         nav: "Student Information",
@@ -82,8 +72,8 @@ const InstructorLayout = () => {
 
                     <div className="flex flex-col justify-start items-start space-y-2 mt-8 w-full ">
                         {navLinks.map((item, index) => (
-                            <Link to={`${item.link}`}>
-                                <div className="nav-links w-full" key={index}
+                            <Link to={`${item.link}`} key={index}>
+                                <div className="nav-links w-full"
                                 >
                                     <div
                                         onClick={() => setActiveIndex(index)}
@@ -103,7 +93,7 @@ const InstructorLayout = () => {
                                 </div>
                             </Link>
                         ))}
-                        <div className="divider"></div> 
+                        <div className="divider"></div>
 
                         {/* others link */}
                         <div className="pt-6 flex flex-col justify-start items-start gap-2">
@@ -112,11 +102,7 @@ const InstructorLayout = () => {
                                 <Link to="/">
                                     <div className="nav-links w-full"
                                     >
-                                        <div
-                                            className={
-                                                "flex  w-full py-1 px-2 rounded-full gap-3"
-                                            }
-                                        >
+                                        <div className="flex  w-full py-1 px-2 rounded-full gap-3 ">
                                             <IoHome className="lg:text-xl text-lg" />
                                             <span className="navlink ">
                                                 Home
@@ -127,11 +113,10 @@ const InstructorLayout = () => {
                             </div>
                             <div className="nav-links w-full"
                             >
-                                <div
-                                    className={
-                                        "flex  w-full py-1 px-2 rounded-full justify-start items-center gap-3"
-                                    }
-                                >
+                                <div className="flex  w-full py-1 px-2 rounded-full justify-start items-center gap-3 cursor-pointer" onClick={() => {
+                                    userSignOut()
+                                    navigate("/")
+                                }} >
                                     <MdLogout className="lg:text-xl text-lg" />
                                     <span className="navlink ">
                                         Log Out

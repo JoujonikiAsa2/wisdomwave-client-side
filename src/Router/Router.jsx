@@ -5,7 +5,6 @@ import Root from "../Layout/Root"
 import Login from "../Pages/Login/Login"
 import StudentSignUp from "../Pages/StudentSignUp/StudentSignUp"
 import CourseDetails from "../Pages/Student/Components/CourseDetails"
-import PrivateRoute from "../PrivateRoute/PrivateRoute"
 import AvailableCourses from "../Pages/Student/Components/AvailableCourses"
 import SearchPage from "../SharedComponents/Header/SearchPage"
 import Discussions from "../Pages/Discussions/Discussions"
@@ -35,11 +34,18 @@ import AdminDashboard from "../Pages/AdminDashboard/AdminDashboard"
 import CreateCourse from "../Pages/InstructorDashboard/CreateCourse"
 import ManageCourse from "../Pages/InstructorDashboard/ManageCourse"
 import UpdateCourse from "../Pages/InstructorDashboard/UpdateCourse"
-import Quiz from "../Pages/InstructorDashboard/Quiz"
 import ManageClasses from "../Pages/InstructorDashboard/ManageClasses"
-import PaymentDashboard from "../Pages/InstructorDashboard/PaymentDashboard"
 import StudentInformation from "../Pages/InstructorDashboard/StudentInformation"
 import Announcement from "../Pages/InstructorDashboard/Announcement"
+import PrivateRoute from "./PrivateRoute/PrivateRoute"
+import InstructorRoute from "./InstructorRoute/InstructorRoute"
+import TutorRoute from "./TutorRoute/TutorRoute"
+import AdminRoute from "./AdminRoute/AdminRoute"
+import InstructorCourseDetails from "../Pages/InstructorDashboard/Components/InstructorCourseDetails"
+import Assignments from "../Pages/InstructorDashboard/Assignments"
+import CreateAssignments from "../Pages/InstructorDashboard/Components/CreateAssignments"
+import CreateQuiz from "../Pages/InstructorDashboard/Components/CreateQuiz"
+import TakeQuiz from "../Pages/Student/Components/TakeQuiz"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -67,7 +73,6 @@ export const router = createBrowserRouter([
             {
                 path: '/discussions/:id',
                 element: <PrivateRoute><DiscussionDetails/></PrivateRoute>,
-                // loader: () => fetch('http://localhost:5000/api/blogs')
             },
             {
                 path: '/createDiscussion',
@@ -93,15 +98,19 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/requestedTuition',
-                element: <RequestedTuition></RequestedTuition>
+                element: <PrivateRoute><RequestedTuition></RequestedTuition></PrivateRoute>
             },
             {
                 path: '/createTuition',
-                element: <CreateTuition></CreateTuition>
+                element: <PrivateRoute><CreateTuition></CreateTuition></PrivateRoute>
             },
             {
-                path: '/courseDashboard/:playlistId',
+                path: '/courseDashboard/:id/:playlistId',
                 element: <PrivateRoute><CourseDashboard></CourseDashboard></PrivateRoute>
+            },
+            {
+                path: "/takeQuiz/:id/:title",
+                element: <TakeQuiz />,
             },
             
         ]
@@ -152,64 +161,73 @@ export const router = createBrowserRouter([
     },
     {
         path: 'instructor',
-        element: <InstructorLayout></InstructorLayout>,
+        element: <InstructorRoute><InstructorLayout></InstructorLayout></InstructorRoute>,
         children:[
             {
                 path: "instructorDashboard",
-                element: <InstructorDashboard />
+                element: <InstructorRoute><InstructorDashboard /></InstructorRoute>
             },
             {
                 path: "createCourse",
-                element: <CreateCourse />
+                element: <InstructorRoute><CreateCourse /></InstructorRoute>
             },
             {
                 path: "manageCourses",
-                element: <ManageCourse />
+                element: <InstructorRoute><ManageCourse /></InstructorRoute>
             },
             {
                 path: "updateCourse/:id",
-                element: <UpdateCourse />
+                element: <InstructorRoute><UpdateCourse /></InstructorRoute>
             },
             {
                 path: "announcements",
-                element: <Announcement />
+                element: <InstructorRoute><Announcement /></InstructorRoute>
             },
             {
-                path: "quiz",
-                element: <Quiz />
+                path: "assignments",
+                element: <InstructorRoute><Assignments /></InstructorRoute>
             },
+            // {
+            //     path: "createAssignments",
+            //     element: <CreateAssignments />
+            // },
             {
                 path: "manageClasses",
-                element: <ManageClasses />
-            },
-            {
-                path: "paymentDashboard",
-                element: <PaymentDashboard/>
+                element: <InstructorRoute><ManageClasses /></InstructorRoute>
             },
             {
                 path: "studentInfo",
-                element: <StudentInformation />
+                element: <InstructorRoute><StudentInformation /></InstructorRoute>
             },
+            {
+                path: "viewCourse/:id",
+                element: <InstructorCourseDetails></InstructorCourseDetails>
+            },
+            {
+                path: "createAssignments/:id",
+                element: <CreateQuiz />
+            },
+            
         ]
     },
     {
         path: 'tutor',
-        element: <TutorLayout></TutorLayout>,
+        element: <TutorRoute><TutorLayout></TutorLayout></TutorRoute>,
         children:[
             {
                 path: "tutorDashboard",
-                element: <TutorDashboard />
+                element: <TutorRoute><TutorDashboard /></TutorRoute>
             },
         ]
     }
     ,
     {
         path: 'admin',
-        element: <AdminLayout></AdminLayout>,
+        element: <AdminRoute><AdminLayout></AdminLayout></AdminRoute>,
         children:[
             {
                 path: "adminDashboard",
-                element: <AdminDashboard />
+                element: <AdminRoute><AdminDashboard /></AdminRoute>
             },
             
         ]

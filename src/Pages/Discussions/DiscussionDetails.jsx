@@ -1,6 +1,6 @@
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import "./style.css"
 import "./upStyle.css"
@@ -11,6 +11,7 @@ import Loader from "../../SharedComponents/Loader/Loader";
 import EllipsisText from "react-ellipsis-text/lib/components/EllipsisText";
 import { FaComment, FaReply } from "react-icons/fa";
 import { BiSolidLike } from "react-icons/bi";
+import toast from "react-hot-toast";
 
 const DiscussionDetails = () => {
     const { user } = useAuth()
@@ -25,6 +26,7 @@ const DiscussionDetails = () => {
     const [divRef, setDivRef] = useState()
     const [clicked, setClicked] = useState(false)
     const [totalClicked, setTotalClicked] = useState(localItem)
+    const navigate = useNavigate()
 
     // console.log(id)
     // handle content field text changes
@@ -49,7 +51,7 @@ const DiscussionDetails = () => {
 
 
     if (!discussion) {
-        
+
         return <Loader></Loader>
     }
 
@@ -124,6 +126,20 @@ const DiscussionDetails = () => {
         console.log("Your successfully submited the reply", e.target.replyToReplier.value)
     }
 
+    const handleDelete = (id) => {
+        axiosPublic.delete(`/api/discussions/${id}/${user.email}`)
+            .then(res => {
+                toast.success('Successfully Deleted!', { duration: 1000 });
+                setTimeout(() => {
+                    navigate("/discussions")
+                })
+            })
+            .catch((e) => {
+                console.log(e.message)
+            })
+        console.log("delete", id)
+    }
+
     // console.log("totalClicked",totalClicked)
 
     return (
@@ -131,8 +147,8 @@ const DiscussionDetails = () => {
             <div className="flex flex-col gap-2 p-4 rounded bg-[#F3F3F3] mb-10">
                 <h2 className="text-lg pb-2 border-b-2 font-bold">All Blogs</h2>
                 {
-                    discussions.map(item =>
-                        <Link to={`/discussions/${item._id}`}>
+                    discussions.map((item,index) =>
+                        <Link to={`/discussions/${item._id}`} key={index}>
                             {/* discussion card */}
                             <div key={item._id} className={`w-[250px] bg-white ${id == item._id && 'border-[0.2px] border-[#29ADB2]'}`}>
                                 <div className='flex gap-2 justif-center items-center p-2 text-xs'>
@@ -141,8 +157,13 @@ const DiscussionDetails = () => {
                                         <img src={item?.userProfile} alt="" className='w-5 h-5 rounded-full' />
                                     </div>
                                     <div>
-                                        <h4 className='font-bold firstLetterUppercase'><EllipsisText text={item?.discussionTitle} length={"28"} tooltip={discussion?.discussionTitle}
-                                        /></h4>
+                                        <h4 className='font-bold firstLetterUppercase'>
+                                            {item && item.discussionTitle ? (
+                                                <EllipsisText text={item.discussionTitle} length={28} tooltip={discussion?.discussionTitle} />
+                                            ) : (
+                                                <span>No discussion title available</span>
+                                            )}
+                                        </h4>
 
                                     </div>
                                 </div>
@@ -158,10 +179,17 @@ const DiscussionDetails = () => {
                     <div className="flex flex-col space-y-3">
                         {/* User image */}
                         <div className="flex justify-start items-center gap-2">
-                            <img src={discussion?.userProfile} alt="" className="w-10 h-10 rounded-full" />
-                            <div className="space-y-2">
-                                {/* User name */}
-                                <h4 className="text-base">{discussion?.userName}</h4>
+                            <div className="flex items-center gap-3">
+                                <img src={discussion?.userProfile} alt="" className="w-10 h-10 rounded-full" />
+                                <div className="space-y-2">
+                                    {/* User name */}
+                                    <h4 className="text-base">{discussion?.userName}</h4>
+                                </div>
+                            </div>
+                            <div>
+                                {
+                                    discussion?.email === user?.email && <button className="btn btn-sm bg-error" onClick={() => handleDelete(discussion?._id)}>Delete</button>
+                                }
                             </div>
                         </div>
                         {/* discussion contents */}

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 //Course card design
 
-const AvaiableCourseCard = ({ course }) => {
+const AvaiableCourseCard = ({ course,id }) => {
 
     // Distructured available coourse properties
     const { title, thumbnail, instructor, rating, totalStudents, enrollFee, playlistId } = course.courseDetails
@@ -30,7 +30,7 @@ const AvaiableCourseCard = ({ course }) => {
                 <div className='flex flex-col-reverse justify-between pt-2 self-end'>
 
                     {/* redirect to the playlist of the couurse */}
-                    <Link to={`/courseDashboard/${playlistId}`}>
+                    <Link to={`/courseDashboard/${id}/${playlistId}`}>
 
                         <div className='flex justify-end' >
                             <button className='btn btn-xs capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] text-white border-2 border-none'>View course</button>
