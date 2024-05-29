@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { axiosPublic } from '../../../hooks/useAxiosPublic';
 import { useState } from 'react';
-// import shootingBall from '../../../assets/videos/Shooting Ball_201-15-13928.mp4'
 // import { Player } from 'video-react';
 // import 'video-react/dist/video-react.css'; // import css
 import ReactPlayer from 'react-player/lazy'
@@ -62,7 +61,7 @@ const CourseDashboard = () => {
 
     console.log(channelVideos)
 
-    // play the video content on click at the title 
+    // play the video content on click at the title
     const playVideo = (videoId) => {
         setYouTubeVideoId(videoId)
     }
@@ -93,7 +92,7 @@ const CourseDashboard = () => {
                                 } else {
                                     const linkIndex = Math.floor((index+1) / 4) - 1;
                                     console.log(linkIndex)
-                                    const link = course.liveClasses[linkIndex];
+                                    const link = course?.liveClasses?.[linkIndex];
                                     const givenDate = link?.date;
                                     const date = new Date(givenDate);
                                     date.setHours(0, 0, 0, 0);
@@ -198,5 +197,3 @@ const Duration = ({ seconds }) => {
         </time>
     );
 };
-
-

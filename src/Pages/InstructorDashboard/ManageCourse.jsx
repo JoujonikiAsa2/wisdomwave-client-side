@@ -38,7 +38,7 @@ const ManageCourse = () => {
             })
     }
     return (
-       <>
+        <>
             <Toaster
                 position="top-center"
                 reverseOrder={false}
@@ -49,24 +49,30 @@ const ManageCourse = () => {
                     courses ? courses.map(course => <div className='flex justify-center gap-4'>
                         <CourseCard key={course._id} course={course}></CourseCard>
                         <div className='h-full flex flex-col gap-4'>
-                            <div className='w-8 bg-red-700 flex justify-center items-center rounded cursor-pointer' onClick={() => { handleCourseDelete(course._id) }}>
-                                <MdDeleteOutline className='text-2xl text-white'></MdDeleteOutline>
+                            <div className="lg:tooltip" data-tip="Delete">
+                                <div className='w-8 bg-red-700 flex justify-center items-center rounded cursor-pointer' onClick={() => { handleCourseDelete(course._id) }}>
+                                    <MdDeleteOutline className='text-2xl text-white'></MdDeleteOutline>
+                                </div>
                             </div>
                             <Link to={`/instructor/updateCourse/${course._id}`}>
-                                <div className='w-8 bg-slate-700 flex justify-center items-center rounded cursor-pointer'>
-                                    <MdEdit className=' text-2xl text-white'></MdEdit>
+                                <div className="lg:tooltip" data-tip="Edit">
+                                    <div className='w-8 bg-slate-700 flex justify-center items-center rounded cursor-pointer'>
+                                        <MdEdit className=' text-2xl text-white' tooltip='Edit'></MdEdit>
+                                    </div>
                                 </div>
                             </Link>
                             <Link to={`/instructor/createAssignments/${course._id}`}>
-                                <div className='w-8 bg-slate-700 flex justify-center items-center rounded cursor-pointer'>
-                                    <MdAddTask className=' text-2xl text-white'></MdAddTask>
+                                <div className="lg:tooltip" data-tip="Create Quiz">
+                                    <div className='w-8 bg-slate-700 flex justify-center items-center rounded cursor-pointer'>
+                                        <MdAddTask className=' text-2xl text-white'></MdAddTask>
+                                    </div>
                                 </div>
                             </Link>
                         </div>
                     </div>) : null
                 }
             </div>
-       </>
+        </>
     );
 };
 

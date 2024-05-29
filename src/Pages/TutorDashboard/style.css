@@ -1,0 +1,19 @@
+.tuition-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.tuition-card p {
+    margin: 4px 0;
+}
+
+.tuition-card .details {
+    margin-top: 12px;
+}
+
+.popup-shadow{
+    box-shadow: 5px 5px 20px 10px rgba(0, 0, 0, 0.1);
+}

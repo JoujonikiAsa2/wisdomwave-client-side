@@ -12,7 +12,7 @@ const TutorRoute = ({ children }) => {
     useEffect(() => {
         axiosPublic.get(`/api/user/${user?.email}`)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 setUserInfo(res.data.data)
                 return res.data
             })
@@ -21,7 +21,7 @@ const TutorRoute = ({ children }) => {
             })
     })
 
-    if (userInfo.userType === "tutor") {
+    if (userInfo?.userType === "tutor") {
         return children
     }
     else if (isLoading) {

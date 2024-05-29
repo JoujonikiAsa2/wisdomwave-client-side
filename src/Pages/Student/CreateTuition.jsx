@@ -1,112 +1,181 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import useAuth from '../../hooks/useAuth';
 import Container from '../../SharedComponents/Container/Container';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import ReactQuill from 'react-quill';
+import { MultiSelect } from 'react-multi-select-component';
+import { IoAdd } from 'react-icons/io5';
 
 const CreateTuition = () => {
     const axiosPublic = useAxiosPublic()
     const { user } = useAuth()
-    const [text, setText] = useState("");
     const navigate = useNavigate()
+    const [subjects, setSubjects] = useState([""])
+    const [selected, setSelected] = useState([]);
 
+    const options = [
+        { label: "Saturday", value: "saturday" },
+        { label: "Sunday", value: "sunday" },
+        { label: "Monday", value: "monday" },
+        { label: "Tuesday", value: "tuesday" },
+        { label: "Wednesday", value: "wednesday" },
+        { label: "Thursday", value: "thursday" },
+        { label: "Friday", value: "friday" }
+    ];
+
+    // handle new field value 
+    const handdleSubjectOnChange = (index, event) => {
+        const { value } = event.target
+        const newFields = [...subjects]
+        newFields[index] = value
+        setSubjects(newFields)
+        console.log(newFields)
+    }
+    // handle Add field
+    const handleAddField = () => {
+        setSubjects([...subjects, ""])
+    }
+
+
+    const filteredSelectedValue = selected.map(res => { return res.value })
     // handle form submission
     const handleTuitionCreation = (e) => {
         e.preventDefault()
         const form = e.target
-        const userName = form.discussiongerName.value
-        const discussionCategory = form.discussionCategory.value
-        const discussionTitle = form.discussionTitle.value
-        const content = text
+        const classvalue = form.class.value
+        const tuitionData = {
+            userEmail: user?.email,
+            district: form.district.value.toLowerCase(),
+            area: form.area.value,
+            group: form.category.value,
+            medium: form.medium.value,
+            tutoringDays: filteredSelectedValue,
+            salary: form.salary.value,
+            details: { class: classvalue, subjects: [...subjects] }
 
-
-        // discussion data object to pass database
-        const discussionData = {
-            userProfile: user?.photoURL,
-            userName: userName,
-            email: user.email,
-            date: new Date(),
-            discussionCategory: discussionCategory,
-            discussionTitle: discussionTitle,
-            content: content,
-            likes: 0
         }
 
-        console.log(discussionData)
-        // add the the discussionData to the database
-        axiosPublic.post('/api/discussions', discussionData)
+        console.log(tuitionData)
+
+        axiosPublic.post('/api/tuitions', tuitionData)
             .then(res => {
-                console.log(res.data)
-                // show a alert if data added successfully
-                toast.success("Posted successfully")
-                //   remove the form data when successfully added to the database
-                form.reset()
-                navigate('/discussions')
-                
+                if(res.data.status === "success"){
+                    toast.success('Tuition created successfully')
+                }
             })
-            .catch((e) => {
-                console.log(e.message)
-            })
+            .catch(err => toast.error('You can create only one tuition for similar class using your email. Create new tuition for another class'))
     }
 
 
+    const modules = {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'], //text style tool
+
+            // [{ 'header': 1 }, { 'header': 2 }],               
+            [{ 'list': 'ordered' }, { 'list': 'bullet' },  //listing tools
+            { 'script': 'sub' }, { 'script': 'super' },   // subscript and superscript
+            { 'indent': '-1' }, { 'indent': '+1' },      //indent tools      
+            { 'direction': 'rtl' },                    //text direction tools
+            { 'header': [1, 2, 3, 4, 5, 6, false] },   //heading tags
+
+            { 'color': [] }, { 'background': [] },     //text color changer tools
+            { 'align': [] }],                           //aligment tool
+            ['link', 'clean']                    //cleaner
+        ]
+    };
+
+
+
+
     return (
-        // create discussion form
-        <Container>
+        // create tuition form
+        <>
+            <Toaster position='top-center' reverseOrder={false} />
             <div className='py-32 rounded flex justify-center items-center'>
-                <form action="" onSubmit={handleTuitionCreation} className=' px-6 space-y-4 py-6'>
-                    <div>
-                        {/* bogger name */}
-                        <label htmlFor="discussiongerName">
-                            <p className=' text-base text-gray-500'>Your Name<span className='text-red-500'>*</span></p>
-                            <input type="text" name='discussiongerName' defaultValue={user?.name} className='input input-bordered w-full' required />
-                        </label>
+                <form action="" onSubmit={handleTuitionCreation} className='w-full lg:w-1/2 md:w-2/3 px-6 space-y-4 py-6'>
+                    <div className=' w-full flex space-x-4'>
+                        <div className='w-1/2'>
+                            {/* bogger name */}
+                            <label htmlFor="">
+                                <p className=' text-base text-gray-500'>District<span className='text-red-500'>*</span></p>
+                                <input type="text" name='district' className='input input-bordered w-full focus:outline-none lowercase' required />
+                            </label>
+
+                        </div>
+                        <div className='w-1/2'>
+                            {/* bogger name */}
+                            <label htmlFor="">
+                                <p className=' text-base text-gray-500'>Area<span className='text-red-500'>*</span></p>
+                                <input type="text" name='area' className='input input-bordered w-full focus:outline-none lowercase' required />
+                            </label>
+
+                        </div>
+                    </div>
+                    <div className=' w-full flex space-x-4'>
+                        <div className='w-1/2'>
+                            {/* bogger name */}
+                            <label htmlFor="">
+                                <p className=' text-base text-gray-500'>Group<span className='text-red-500'>*</span></p>
+                                <input type="text" name='category' className='input input-bordered w-full focus:outline-none lowercase' required />
+                            </label>
+
+                        </div>
+                        <div className='w-1/2'>
+                            {/* bogger name */}
+                            <label htmlFor="">
+                                <p className=' text-base text-gray-500'>Medium<span className='text-red-500'>*</span></p>
+                                <input type="text" name='medium' className='input input-bordered w-full focus:outline-none lowercase' required />
+                            </label>
+
+                        </div>
+                    </div>
+                    <div className=' w-full flex space-x-4'>
+                        <div className='w-1/2 '>
+                            <label htmlFor="">
+                                <p className='text-base text-gray-500'>Tutoring Days<span className='text-red-500'>*</span> </p>
+                                <MultiSelect
+                                    options={options}
+                                    value={selected}
+                                    onChange={setSelected}
+                                    labelledBy="Select"
+                                />
+                            </label>
+                        </div>
+                        <div className='w-1/2'>
+                            {/* bogger name */}
+                            <label htmlFor="">
+                                <p className=' text-base text-gray-500'>Salary<span className='text-red-500'>*</span></p>
+                                <input type="number" name='salary' className='input input-bordered w-full focus:outline-none lowercase' required />
+                            </label>
+
+                        </div>
 
                     </div>
+                    <div className=' w-full flex space-x-4'>
+                        <div className='w-full'>
+                            {/* bogger name */}
+                            <label htmlFor="">
+                                <p className=' text-base text-gray-500'>Details<span className='text-red-500'>*</span></p>
+                                <div className='flex flex-col gap-4'>
+                                    <input type="text" name='class' className='input input-bordered w-full focus:outline-none lowercase' placeholder='Class' required />
+                                    {
+                                        subjects.map((subject, index) =>
+                                            <input type="text" name='subject' className='input input-bordered w-full focus:outline-none lowercase' placeholder='Subject' onChange={(event) => handdleSubjectOnChange(index, event)} />
+                                        )
+                                    }
+                                </div>
+                                <div className='mt-2'>
+                                    <button onClick={handleAddField} className="mb-6 btn btn-circle border border-gray-400 ">
+                                        <IoAdd className='text-2xl'></IoAdd>
+                                    </button>
+                                </div>
+                            </label>
 
-                    {/* discussion category */}
-                    <div>
-                        <label htmlFor="discussionCategory">
-                            <p className=' text-base text-gray-500'>Discussion Category<span className='text-red-500'>*</span></p>
-                            <select name='discussionCategory' className='input input-bordered w-full ' required>
-                                <option value=""></option>
-                                <option value="web development">Web Development</option>
-                                <option value="programming">Programming</option>
-                                <option value="language">Language</option>
-                                <option value="graphic design">Graphic Design</option>
-                                <option value="artificial intelligence">Artificial Intelligence</option>
-                                <option value="digital marketing">Digital Marketing</option>
-                                <option value="data science">Data Science</option>
-                                <option value="Natural Language Processing">Natural Language Processing</option>
-                                <option value="app development">App Development</option>
-                                <option value="cooking">Cooking</option>
-                                <option value="machine learning">Machine Learning</option>
-                            </select>
-                        </label>
-                    </div>
-                    {/* discussion Title */}
-                    <div>
-                        <label htmlFor="discussionTitle" >
-                            <p className=' text-base text-gray-500'>Discussion Topic<span className='text-red-500'>*</span></p>
-                            <input type="text-base" name='discussionTitle' className='input input-bordered w-full' required />
-                        </label>
+                        </div>
                     </div>
 
-                    {/* discussion content */}
-                    <div className='w-full'>
-                        <label htmlFor="">
-                            <p className=' text-base text-gray-500'>Discussion Content<span className='text-red-500'>*</span></p>
-                            <ReactQuill
-                                theme='snow'
-                                value={text}
-                                modules={modules}
-                                onChange={handleChange}
-                                className='lg:w-[60vw] bg-white rounded'
-                                required
-                            />
-                        </label>
-                    </div>
 
                     {/* submit button */}
                     <div className='flex w-full justify-center items-center'>
@@ -114,7 +183,7 @@ const CreateTuition = () => {
                     </div>
                 </form>
             </div>
-        </Container>
+        </>
     );
 };
 

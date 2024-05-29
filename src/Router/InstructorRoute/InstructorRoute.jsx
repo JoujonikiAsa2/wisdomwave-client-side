@@ -21,7 +21,7 @@ const InstructorRoute = ({ children }) => {
             })
     })
 
-    if (userInfo.userType === "instructor") {
+    if (userInfo?.userType === "instructor") {
         return children
     }
     else if (isLoading) {

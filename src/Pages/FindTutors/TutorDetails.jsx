@@ -31,7 +31,7 @@ const TutorDetails = () => {
                         <div className='flex justify-start p-4'>
                             <img src={tutor?.profile} alt="" className='lg:w-[14.4rem] lg:h-[10.5rem] md:w-[14.4rem] md:h-[10.5rem] w-[10rem] h-[9.7rem] rounded-full object-fit' />
                         </div>
-                        <div className="w-full flex px-4">
+                        <div className="w-full flex px-4 overflow-auto">
                             <table className="w-full my-4" >
                                 <tr>
                                     <td className=''><span className='font-semibold'>Name:</span></td>
@@ -77,7 +77,7 @@ const TutorDetails = () => {
                         </div>
 
                     </div>
-                    <div className='flex gap-10 w-full ' id='education'>
+                    <div className='flex gap-10 w-full overflow-x-auto' id='education'>
                         <table className='w-full'>
                             <th>Name Of Exam</th>
                             <th>Institute</th>

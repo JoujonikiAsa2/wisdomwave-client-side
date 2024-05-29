@@ -46,6 +46,8 @@ import Assignments from "../Pages/InstructorDashboard/Assignments"
 import CreateAssignments from "../Pages/InstructorDashboard/Components/CreateAssignments"
 import CreateQuiz from "../Pages/InstructorDashboard/Components/CreateQuiz"
 import TakeQuiz from "../Pages/Student/Components/TakeQuiz"
+import ViewQuiz from "../Pages/Student/Components/ViewQuiz"
+import Tuitions from "../Pages/TutorDashboard/Tuitions"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -107,6 +109,10 @@ export const router = createBrowserRouter([
             {
                 path: '/courseDashboard/:id/:playlistId',
                 element: <PrivateRoute><CourseDashboard></CourseDashboard></PrivateRoute>
+            },
+            {
+                path: "/viewQuiz/:id/:title",
+                element: <ViewQuiz></ViewQuiz>
             },
             {
                 path: "/takeQuiz/:id/:title",
@@ -218,6 +224,10 @@ export const router = createBrowserRouter([
                 path: "tutorDashboard",
                 element: <TutorRoute><TutorDashboard /></TutorRoute>
             },
+            {
+                path: 'tuitions',
+                element: <Tuitions></Tuitions>
+            }
         ]
     }
     ,

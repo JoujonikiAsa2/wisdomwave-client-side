@@ -136,6 +136,15 @@ const Header = ({ handleSearch }) => {
                 </nav>
 
                 {userInfo?.userType === 'student' && <nav>
+                    <NavLink to="/createTuition" style={({ isActive }) => {
+                        return {
+
+                            color: isActive ? "#0766AD" : "",
+                            borderBottom: isActive ? "1px solid #0766AD" : ""
+                        };
+                    }} className="dark:text-black">Create Tuition</NavLink>
+                </nav>}
+                {userInfo?.userType === 'student' && <nav>
                     <NavLink to="/requestedTuition" style={({ isActive }) => {
                         return {
 

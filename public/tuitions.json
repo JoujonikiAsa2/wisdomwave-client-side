@@ -1,0 +1,101 @@
+[
+    {
+        "_id": "6614ebce5cd96f8062415958",
+        "address": "123 main road, gulshan-1, dhaka",
+        "category": "science",
+        "city": "dhaka",
+        "crea": "gulshan",
+        "details": {
+            "class": "high school",
+            "subject": "physics",
+            "_id": "66530e504db88d3d8b2b827b"
+        },
+        "medium": "english",
+        "salary": "৳1000/hour",
+        "tuitioncode": "tu001",
+        "tutoringdays": [
+            "monday",
+            "wednesday",
+            "friday"
+        ]
+    },
+    {
+        "_id": "6614ebce5cd96f806241595c",
+        "address": "202 maple road, kda avenue, khulna",
+        "area": "kda avenue",
+        "category": "language",
+        "city": "khulna",
+        "details": {
+            "class": "elementary school",
+            "subject": "science",
+            "_id": "66530e504db88d3d8b2b827c"
+        },
+        "medium": "mandarin",
+        "salary": "৳1100/hour",
+        "tuitioncode": "tu005",
+        "tutoringdays": [
+            "wednesday",
+            "saturday",
+            "sunday"
+        ]
+    },
+    {
+        "tutoringdays": [],
+        "_id": "6614ebce5cd96f806241595b",
+        "tuitioncode": "tu004",
+        "location": "rajshahi",
+        "sublocation": "boalia",
+        "medium": "english",
+        "category": "humanities",
+        "address": "101 pine road, boalia, rajshahi",
+        "tutoringdays": [
+            "tuesday",
+            "thursday",
+            "saturday"
+        ],
+        "salary": "৳1500/hour",
+        "details": {
+            "class": "high school",
+            "subject": "history"
+        }
+    },
+    {
+        "tutoringdays": [],
+        "_id": "6614ebce5cd96f8062415959",
+        "tuitioncode": "tu002",
+        "location": "chittagong",
+        "sublocation": "agrabad",
+        "medium": "spanish",
+        "category": "language",
+        "address": "456 elm street, agrabad, chittagong",
+        "tutoringdays": [
+            "tuesday",
+            "thursday"
+        ],
+        "salary": "৳800/hour",
+        "details": {
+            "class": "college",
+            "subject": "literature"
+        }
+    },
+    {
+        "tutoringdays": [],
+        "_id": "6614ebce5cd96f806241595a",
+        "tuitioncode": "tu003",
+        "location": "sylhet",
+        "sublocation": "amberkhana",
+        "medium": "french",
+        "category": "language",
+        "address": "789 oak street, amberkhana, sylhet",
+        "tutoringdays": [
+            "monday",
+            "wednesday",
+            "friday"
+        ],
+        "salary": "৳1200/hour",
+        "details": {
+            "class": "middle school",
+            "subject": "mathematics"
+        }
+    }
+]
