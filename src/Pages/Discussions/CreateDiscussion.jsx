@@ -95,7 +95,7 @@ const CreateDiscussion = () => {
                     <div>
                         <label htmlFor="discussionCategory">
                             <p className=' text-base text-gray-500'>Discussion Category<span className='text-red-500'>*</span></p>
-                            <select name='discussionCategory' className='input input-bordered w-full ' required>
+                            <select name='discussionCategory' className='input input-bordered w-full  round' required>
                                 <option value=""></option>
                                 <option value="web development">Web Development</option>
                                 <option value="programming">Programming</option>

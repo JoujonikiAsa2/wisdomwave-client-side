@@ -145,23 +145,15 @@ const Header = ({ handleSearch }) => {
                     }} className="dark:text-black">Create Tuition</NavLink>
                 </nav>}
                 {userInfo?.userType === 'student' && <nav>
-                    <NavLink to="/requestedTuition" style={({ isActive }) => {
+                    <NavLink to="/$" style={({ isActive }) => {
                         return {
 
                             color: isActive ? "#0766AD" : "",
                             borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
-                    }} className="dark:text-black">Requested Tuitions</NavLink>
+                    }} className="dark:text-black">Requested Tuition</NavLink>
                 </nav>}
-                {/* <nav>
-                    <NavLink to="/notices" style={({ isActive }) => {
-                        return {
-
-                            color: isActive ? "#0766AD" : "",
-                            borderBottom: isActive ? "1px solid #0766AD" : ""
-                        };
-                    }} className="dark:text-black">Notices</NavLink>
-                </nav>
+                {/* 
                 <nav>
                     <NavLink to="/assignments" style={({ isActive }) => {
                         return {

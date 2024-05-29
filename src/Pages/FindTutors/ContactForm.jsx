@@ -1,23 +1,22 @@
-import { FiPhoneCall, FiMail } from "react-icons/fi";
-import { IoLocationOutline } from "react-icons/io5";
-// import ContactCard from "./ContactCard";
-import { useContext, useRef } from "react";
+import {  useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import toast from "react-hot-toast";
 // import Container from "../Container/Container";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAuth from "../../hooks/useAuth";
+import { PiSpinnerGapBold } from "react-icons/pi";
 
 const ContactForm = ({ tutorEmail }) => {
     const form = useRef();
     const { user } = useAuth()
     const axiosPublic = useAxiosPublic();
+    const [isLoading, setIsLoading] = useState(false);
 
     const sendEmail = async (e) => {
         e.preventDefault();
         const formField = e.target;
-
-        const name = user?.name
+        setIsLoading(true)
+        const name = user?.displayName
         const phone = formField.user_phone.value;
         const email = tutorEmail
         const message = formField.message.value;
@@ -32,11 +31,11 @@ const ContactForm = ({ tutorEmail }) => {
                 console.log(res.data)
                 if(res.data.status === 'success'){
                     toast.success(res.data.data)
-                    //   remove the form data when successfully added to the database
+                    setIsLoading(false)
                     formField.reset()
                 }
             })
-            .then(err => {
+            .catch(err => {
                 console.log(err)
             })
 
@@ -77,8 +76,18 @@ const ContactForm = ({ tutorEmail }) => {
                         required
                     ></textarea>
                 </div>
-                <div className='w-full mt-4'>
-                    <input type="submit" value="Send Request" className='w-full border input-bordered rounded focus:outline-none p-2 text-white bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]' />
+                <div className="mt-3">
+                    {isLoading == true ? (
+                        <button
+                            className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize'><PiSpinnerGapBold className='animate-spin text-2xl' ></PiSpinnerGapBold  ></button>
+                    ) : (
+                        <div className=''>
+                            <input
+                                type="submit"
+                                value="Send Request"
+                                className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize' />
+                        </div>
+                    )}
                 </div>
             </form>
         </div>

@@ -48,6 +48,9 @@ import CreateQuiz from "../Pages/InstructorDashboard/Components/CreateQuiz"
 import TakeQuiz from "../Pages/Student/Components/TakeQuiz"
 import ViewQuiz from "../Pages/Student/Components/ViewQuiz"
 import Tuitions from "../Pages/TutorDashboard/Tuitions"
+import TuitionRequest from "../Pages/TutorDashboard/TuitionRequest"
+import CreateProfile from "../Pages/TutorDashboard/CreateProfile"
+import ManageProfile from "../Pages/TutorDashboard/ManageProfile"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -227,6 +230,18 @@ export const router = createBrowserRouter([
             {
                 path: 'tuitions',
                 element: <Tuitions></Tuitions>
+            },
+            {
+                path: 'tuitionRequest',
+                element: <TuitionRequest></TuitionRequest>
+            },
+            {
+                path: 'createProfile',
+                element: <CreateProfile></CreateProfile>
+            },
+            {
+                path: 'manageProfile',
+                element: <ManageProfile></ManageProfile>
             }
         ]
     }

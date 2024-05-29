@@ -6,6 +6,7 @@ import DashboardTitle from '../../SharedComponents/DashboardTitle/DashboardTitle
 import './style.css'
 import ContactStudent from './ContactStudent';
 import { IoClose } from 'react-icons/io5';
+import { Toaster } from 'react-hot-toast';
 
 const Tuitions = () => {
     const axiosPublic = useAxiosPublic();
@@ -68,11 +69,12 @@ const Tuitions = () => {
 
     return (
         <>
+        <Toaster position='top-center' reverseOrder={false} />
             <DashboardTitle title="Tuitions" subTitle="Find all tuitions here" />
             <div className='flex flex-col md:flex-row lg:flex-row gap-4 w-full z-30 '>
                 <div className='mb-6'>
                     <label htmlFor="district">Filter by :</label>
-                    <select id="district" name="district_id" onChange={handleDistrictChange} className='focus:outline-none border rounded p-2 m-2 capitalize'>
+                    <select id="district" name="district_id" onChange={handleDistrictChange} className='focus:outline-none border rounded p-2 m-2 capitalize round'>
                         <option value="">All</option>
                         {
                             districts.map(district => (
@@ -83,7 +85,7 @@ const Tuitions = () => {
                 </div>
                 <div className='mb-6'>
                     <label htmlFor="district">Filter by class: </label>
-                    <select id="district" name="district_id" onChange={handleClassChange} className='focus:outline-none border rounded p-2 m-2 capitalize'>
+                    <select id="district" name="district_id" onChange={handleClassChange} className='focus:outline-none border rounded p-2 m-2 capitalize round'>
                         <option value="">All</option>
                         {
                             ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"].map((classNo, index) => (
@@ -95,7 +97,7 @@ const Tuitions = () => {
             </div>
             <div className={` fixed  w-[310xpx] lg:w-[300px] md:w-[300px] h-[350px] md:h-[500px] lg:h-[500px] top-[30%] md:top-[20%] lg:top-[20%]  lg:bottom-40 left-[15%] md:left-[25%] lg:left-[35%]  flex justify-center items-center ${openForm === true ? '' : 'hidden'}`}>
                 <div className={`popup-shadow  w-[280px] lg:w-[300px] md:w-[300px] h-[330px] bg-[#b3cfa6] z-40 ${openForm === true ? 'block p-4 shadow-2xl rounded-lg' : 'hidden'}`}>
-                    <ContactStudent studentEmail={email} openForm={openForm} setOpenForm={setOpenForm}></ContactStudent>
+                    <ContactStudent email={email} openForm={openForm} setOpenForm={setOpenForm}></ContactStudent>
                 </div>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-10 justify-center justify-items-center items-center lg:ml-[1.3rem]'>

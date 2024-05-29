@@ -95,7 +95,6 @@ const CreateCourse = () => {
         setText(value);
     };
 
-    // react hook form built in function desctructuring
     const {
         register,
         handleSubmit,
@@ -104,7 +103,6 @@ const CreateCourse = () => {
         reset
     } = useForm()
 
-    // Help to execute all function after submit the form
     const onSubmit = async (data) => {
         // console.log(data)
         const imageFile = { image: data.thumbnail[0] }

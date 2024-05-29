@@ -19,12 +19,12 @@ const navLinks = [
     {
         nav: "Create Profile",
         icon: MdOutlineAddCircleOutline,
-        link: "/tutor/createTutorProfile",
+        link: "/tutor/createProfile",
     },
     {
         nav: "Manage Profile",
         icon: MdOutlineManageAccounts,
-        link: "/tutor/manageTutor",
+        link: "/tutor/manageProfile",
     },
     {
         nav: "Tuitons",
@@ -32,15 +32,10 @@ const navLinks = [
         link: "/tutor/tuitions",
     },
     {
-        nav: "Tuition Request",
+        nav: "Tuition Requests",
         icon: CiSquareQuestion,
         link: "/tutor/tuitionRequest",
-    },
-    // {
-    //     nav: "My tuitions",
-    //     icon: MdFormatListBulleted,
-    //     link: "/tutor/myTuitons/",
-    // }
+    }
 ];
 
 
@@ -113,11 +108,10 @@ const TutorLayout = () => {
                             </div>
                             <div className="nav-links w-full"
                             >
-                                <div
-                                    className={
-                                        "flex  w-full py-1 px-2 rounded-full justify-start items-center gap-3"
-                                    }
-                                >
+                                <div className="flex  w-full py-1 px-2 rounded-full justify-start items-center gap-3 cursor-pointer" onClick={() => {
+                                    userSignOut()
+                                    navigate("/")
+                                }} >
                                     <MdLogout className="lg:text-xl text-lg" />
                                     <span className="navlink ">
                                         Log Out
