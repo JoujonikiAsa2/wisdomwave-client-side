@@ -26,7 +26,6 @@ import TutorSignup from "../Pages/TutorSignup/TutorSignup"
 import InstructorSignup from "../Pages/InstructorSignup/InstructorSignup"
 import InstructorLayout from "../Layout/InstructorLayout"
 import InstructorDashboard from "../Pages/InstructorDashboard/InstructorDashboard"
-import TutorLayout from "../Layout/tutorLayout"
 import TutorDashboard from "../Pages/TutorDashboard/TutorDashboard"
 import LandingPage from "../Pages/LandingPage/LandingPage"
 import AdminLayout from "../Layout/AdminLayout"
@@ -40,10 +39,7 @@ import Announcement from "../Pages/InstructorDashboard/Announcement"
 import PrivateRoute from "./PrivateRoute/PrivateRoute"
 import InstructorRoute from "./InstructorRoute/InstructorRoute"
 import TutorRoute from "./TutorRoute/TutorRoute"
-import AdminRoute from "./AdminRoute/AdminRoute"
-import InstructorCourseDetails from "../Pages/InstructorDashboard/Components/InstructorCourseDetails"
 import Assignments from "../Pages/InstructorDashboard/Assignments"
-import CreateAssignments from "../Pages/InstructorDashboard/Components/CreateAssignments"
 import CreateQuiz from "../Pages/InstructorDashboard/Components/CreateQuiz"
 import TakeQuiz from "../Pages/Student/Components/TakeQuiz"
 import ViewQuiz from "../Pages/Student/Components/ViewQuiz"
@@ -51,10 +47,20 @@ import Tuitions from "../Pages/TutorDashboard/Tuitions"
 import TuitionRequest from "../Pages/TutorDashboard/TuitionRequest"
 import CreateProfile from "../Pages/TutorDashboard/CreateProfile"
 import ManageProfile from "../Pages/TutorDashboard/ManageProfile"
+import UpdateProfile from "../Pages/TutorDashboard/UpdateProfile"
+import SendingRequests from "../Pages/TutorDashboard/SendingRequests"
+import TutorLayout from "../Layout/TutorLayout"
+import HomeRoute from "./HomeRoute/HomeRoute"
+import PaymentDashboard from "../Pages/AdminDashboard/PaymentDashboard"
+import ManageCourses from "../Pages/AdminDashboard/ManageCourses"
+import ManageUsers from "../Pages/AdminDashboard/ManageUsers"
+import ManageTutorProfiles from "../Pages/AdminDashboard/ManageTutorProfiles"
+import ManageTuitions from "../Pages/AdminDashboard/ManageTuitions"
+import UpdateCourseAdmin from "../Pages/AdminDashboard/UpdateCourseAdmin"
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Root />,
+        element: <HomeRoute><Root /></HomeRoute>,
         errorElement: <PageNotFound/>,
         children: [
             {
@@ -102,16 +108,12 @@ export const router = createBrowserRouter([
                 element: <PrivateRoute><TutorDetails></TutorDetails></PrivateRoute>
             },
             {
-                path: '/requestedTuition',
+                path: '/requestedTuitions',
                 element: <PrivateRoute><RequestedTuition></RequestedTuition></PrivateRoute>
             },
             {
                 path: '/createTuition',
                 element: <PrivateRoute><CreateTuition></CreateTuition></PrivateRoute>
-            },
-            {
-                path: '/courseDashboard/:id/:playlistId',
-                element: <PrivateRoute><CourseDashboard></CourseDashboard></PrivateRoute>
             },
             {
                 path: "/viewQuiz/:id/:title",
@@ -120,6 +122,10 @@ export const router = createBrowserRouter([
             {
                 path: "/takeQuiz/:id/:title",
                 element: <TakeQuiz />,
+            },
+            {
+                path: '/courseDashboard/:id/:playlistId',
+                element: <PrivateRoute><CourseDashboard></CourseDashboard></PrivateRoute>
             },
             
         ]
@@ -196,10 +202,6 @@ export const router = createBrowserRouter([
                 path: "assignments",
                 element: <InstructorRoute><Assignments /></InstructorRoute>
             },
-            // {
-            //     path: "createAssignments",
-            //     element: <CreateAssignments />
-            // },
             {
                 path: "manageClasses",
                 element: <InstructorRoute><ManageClasses /></InstructorRoute>
@@ -209,12 +211,12 @@ export const router = createBrowserRouter([
                 element: <InstructorRoute><StudentInformation /></InstructorRoute>
             },
             {
-                path: "viewCourse/:id",
-                element: <InstructorCourseDetails></InstructorCourseDetails>
-            },
-            {
                 path: "createAssignments/:id",
                 element: <CreateQuiz />
+            },
+            {
+                path: 'courseDashboard/:id/:playlistId',
+                element: <CourseDashboard></CourseDashboard>
             },
             
         ]
@@ -236,25 +238,64 @@ export const router = createBrowserRouter([
                 element: <TuitionRequest></TuitionRequest>
             },
             {
+                path: 'sendingRequests',
+                element: <SendingRequests></SendingRequests>
+            },
+            {
                 path: 'createProfile',
                 element: <CreateProfile></CreateProfile>
             },
             {
-                path: 'manageProfile',
+                path: 'manageProfile/:email',
                 element: <ManageProfile></ManageProfile>
-            }
+            },
+            {
+                path: 'edit-profile/:email',
+                element: <UpdateProfile></UpdateProfile>
+            },
         ]
     }
     ,
     {
         path: 'admin',
-        element: <AdminRoute><AdminLayout></AdminLayout></AdminRoute>,
+        element: <AdminLayout></AdminLayout>,
         children:[
             {
                 path: "adminDashboard",
-                element: <AdminRoute><AdminDashboard /></AdminRoute>
+                element: <AdminDashboard />
             },
-            
+            {
+                path: "paymentDashboard",
+                element: <PaymentDashboard />
+            },
+            {
+                path: "manageCourses",
+                element: <ManageCourses />
+            },
+            {
+                path: "manageUsers",
+                element: <ManageUsers />
+            },
+            {
+                path: "manageTutorProfiles",
+                element: <ManageTutorProfiles />
+            },
+            {
+                path: "manageTuitions",
+                element: <ManageTuitions />
+            },
+            {
+                path: "updateCourse/:id",
+                element: <UpdateCourse></UpdateCourse>
+            },
+            {
+                path: 'manageProfile/:email',
+                element: <ManageProfile></ManageProfile>
+            },
+            {
+                path: 'edit-profile/:email',
+                element: <UpdateProfile></UpdateProfile>
+            },
         ]
     }
 ])

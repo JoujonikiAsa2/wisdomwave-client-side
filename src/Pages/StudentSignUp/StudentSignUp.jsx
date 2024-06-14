@@ -55,9 +55,8 @@ const StudentSignUp = () => {
             }
         })
 
-        // console.log(phone, name, res.data.data.display_url)
         const image = res.data.data.display_url
-        console.log(phoneNumber)
+        console.log(imageFile, image)
 
         const user = {
             name: name,
@@ -66,11 +65,12 @@ const StudentSignUp = () => {
             userType: 'student',
             profilePicture: image,
             verified: false,
+            date: new Date().toLocaleDateString()
         }
         console.log(user)
         signUp(data.email, data.password)
             .then(result => {
-                // console.log(result.user)
+                console.log(result.user)
 
                 // updating user information
                 updateUserInfo(name, phoneNumber, image)
@@ -78,7 +78,7 @@ const StudentSignUp = () => {
                         console.log("updated")
                         // console.log(response.data)
                     })
-                    .catch(error => console.log(error))
+                    .catch(error => console.log("Can't update", error))
 
                 // Sending a verification link
                 sendEmailVerification(result.user)
@@ -307,8 +307,10 @@ const StudentSignUp = () => {
                             {/* submit button */}
                             <div className='flex w-full '>
                                     {click == true ? (
+                                        <div className='w-full mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
                                         <button
                                             className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize'><PiSpinnerGapBold className='animate-spin text-2xl' ></PiSpinnerGapBold  ></button>
+                                        </div>
                                     ) : (
                                         <div className='w-full mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
                                             <input

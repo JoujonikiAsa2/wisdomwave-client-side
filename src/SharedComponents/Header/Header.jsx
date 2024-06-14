@@ -37,16 +37,17 @@ const Header = ({ handleSearch }) => {
 
     // Handle user roles and routing
     useEffect(() => {
-        const fetchUserRoles = async () => {
-            try {
-                const response = await axiosPublic.get(`/api/user/${user?.email}`);
-                setUserInfo(response.data.data)
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchUserRoles();
+        try {
+            axiosPublic.get(`/api/user/${user?.email}`)
+                .then(response => {
+                    setUserInfo(response.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        } catch (error) {
+            console.error(error);
+        }
     }, [user?.email]);
 
     // Helps to show the search bar on click( Small device )
@@ -117,6 +118,14 @@ const Header = ({ handleSearch }) => {
                         };
                     }} className="dark:text-black">All Courses</NavLink>
                 </nav>}
+                {user === null && <nav className="">
+                    <NavLink to="/allCourses" style={({ isActive }) => {
+                        return {
+                            color: isActive ? "#0766AD" : "",
+                            borderBottom: isActive ? "1px solid #0766AD" : ""
+                        };
+                    }} className="dark:text-black">All Courses</NavLink>
+                </nav>}
                 {userInfo?.userType === 'admin' && <nav className="">
                     <NavLink to="/allCourses" style={({ isActive }) => {
                         return {
@@ -125,7 +134,7 @@ const Header = ({ handleSearch }) => {
                         };
                     }} className="dark:text-black">All Courses</NavLink>
                 </nav>}
-                <nav>
+                {userInfo?.userType === 'student' && <nav>
                     <NavLink to="/createDiscussion" style={({ isActive }) => {
                         return {
 
@@ -133,7 +142,7 @@ const Header = ({ handleSearch }) => {
                             borderBottom: isActive ? "1px solid #0766AD" : ""
                         };
                     }} className="dark:text-black">Create Discussion</NavLink>
-                </nav>
+                </nav>}
 
                 {userInfo?.userType === 'student' && <nav>
                     <NavLink to="/createTuition" style={({ isActive }) => {
@@ -145,7 +154,7 @@ const Header = ({ handleSearch }) => {
                     }} className="dark:text-black">Create Tuition</NavLink>
                 </nav>}
                 {userInfo?.userType === 'student' && <nav>
-                    <NavLink to="/$" style={({ isActive }) => {
+                    <NavLink to="/requestedTuitions" style={({ isActive }) => {
                         return {
 
                             color: isActive ? "#0766AD" : "",
@@ -153,6 +162,18 @@ const Header = ({ handleSearch }) => {
                         };
                     }} className="dark:text-black">Requested Tuition</NavLink>
                 </nav>}
+
+                {
+                    userInfo?.userType === "admin" && <nav>
+                        <NavLink to="/tuitions" style={({ isActive }) => {
+                            return {
+
+                                color: isActive ? "#0766AD" : "",
+                                borderBottom: isActive ? "1px solid #0766AD" : ""
+                            };
+                        }} className="dark:text-black">Find Tuition</NavLink>
+                    </nav>
+                }
                 {/* 
                 <nav>
                     <NavLink to="/assignments" style={({ isActive }) => {
@@ -204,8 +225,28 @@ const Header = ({ handleSearch }) => {
             </nav>
         }
         {
+            userInfo?.userType === "admin" && <nav>
+                <NavLink to="/findTutors" style={({ isActive }) => {
+                    return {
+
+                        color: isActive ? "#0766AD" : "",
+                        borderBottom: isActive ? "1px solid #0766AD" : ""
+                    };
+                }} className="dark:text-black">Find Tutors</NavLink>
+            </nav>
+        }
+        {user === null && <nav>
+            <NavLink to="/findTutors" style={({ isActive }) => {
+                return {
+
+                    color: isActive ? "#0766AD" : "",
+                    borderBottom: isActive ? "1px solid #0766AD" : ""
+                };
+            }} className="dark:text-black">Find Tutors</NavLink>
+        </nav>}
+        {
             userInfo?.userType === "tutor" && <nav>
-                <NavLink to="/findTuition" style={({ isActive }) => {
+                <NavLink to="/tuitions" style={({ isActive }) => {
                     return {
 
                         color: isActive ? "#0766AD" : "",
@@ -214,14 +255,30 @@ const Header = ({ handleSearch }) => {
                 }} className="dark:text-black">Find Tuition</NavLink>
             </nav>
         }
-        <nav className="">
+        {userInfo?.userType === "student" && <nav className="">
             <NavLink to="/discussions" style={({ isActive }) => {
                 return {
                     color: isActive ? "#0766AD" : "",
                     borderBottom: isActive ? "1px solid #0766AD" : ""
                 };
             }} className="dark:text-black">Discussions Forum</NavLink>
-        </nav>
+        </nav>}
+        {user === null && <nav className="">
+            <NavLink to="/discussions" style={({ isActive }) => {
+                return {
+                    color: isActive ? "#0766AD" : "",
+                    borderBottom: isActive ? "1px solid #0766AD" : ""
+                };
+            }} className="dark:text-black">Discussions Forum</NavLink>
+        </nav>}
+        {userInfo?.userType === "admin" && <nav className="">
+            <NavLink to="/discussions" style={({ isActive }) => {
+                return {
+                    color: isActive ? "#0766AD" : "",
+                    borderBottom: isActive ? "1px solid #0766AD" : ""
+                };
+            }} className="dark:text-black">Discussions Forum</NavLink>
+        </nav>}
         {
             userInfo?.userType === "student" && <nav className="">
                 <NavLink to="/myCourses" style={({ isActive }) => {
@@ -408,11 +465,11 @@ const Header = ({ handleSearch }) => {
                         {/* Navlinks for large device */}
                         {sNavLinks}
                         {
-                                user &&
-                                <div className="flex justify-center items-center gap-4 ">
-                                     <Notifications handleClicked={handleClicked} clicked={clicked} ></Notifications>
-                                </div>
-                            }
+                            user &&
+                            <div className="flex justify-center items-center gap-4 ">
+                                <Notifications handleClicked={handleClicked} clicked={clicked} ></Notifications>
+                            </div>
+                        }
 
                         {/* Join dropdown for large device */}
                         {join}

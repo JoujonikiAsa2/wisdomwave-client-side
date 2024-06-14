@@ -12,7 +12,7 @@ const AdminRoute = ({ children }) => {
     useEffect(() => {
         axiosPublic.get(`/api/user/${user?.email}`)
             .then(res => {
-                console.log(res.data);
+            console.log(res.data)
                 setUserInfo(res.data.data)
                 return res.data
             })

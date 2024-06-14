@@ -4,6 +4,7 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import CourseCard from './CourseCard';
 import { useQuery } from '@tanstack/react-query';
+import Card from '../../SharedComponents/Card/Card';
 
 const InstructorDashboard = () => {
     const { user } = useAuth()
@@ -32,7 +33,7 @@ const InstructorDashboard = () => {
 
 
     useEffect(() => {
-        axiosPublic.get(`/api/totalEarning/${user?.email}`)
+        axiosPublic.get(`/api/totalEarningByInstructor/${user?.email}`)
             .then(res => {
                 console.log(res.data[0].totalEnrollFee)
                 setEarning(res.data[0].totalEnrollFee)
@@ -42,28 +43,22 @@ const InstructorDashboard = () => {
             })
     }, [user?.email])
 
+    const totalEarning = earning/1000
+
 
     console.log("Instructorer courses", courses)
     return (
         <div className='w-[90vw] flex flex-col'>
 
             <div className='pr-4'>
-                <DashboardTitle title="Dasboard details"></DashboardTitle>
+                <DashboardTitle title="Overview" subTitle="Here is the small overview of your courses, student and payments"></DashboardTitle>
             </div>
             <div className='flex lg:flex-row md:flex-row flex-col gap-8'>
 
-                <div className='lg:w-56 md:w-64 w-[80vw] border bg-[#29ADB2] h-32 flex flex-col gap-2 justify-center items-center text-white text-xl rounded-xl'>
-                    <p>Total Students</p>
-                    <span className='w-32 h-12 bg-white rounded-xl text-center text-[#29ADB2] flex justify-center items-center'>{students?.length}</span>
-                </div>
-                <div className='lg:w-56 md:w-64 w-[80vw] border bg-[#29ADB2] h-32 flex flex-col gap-2 justify-center items-center text-white text-xl rounded-xl'>
-                    <p>Total Courses</p>
-                    <span className='w-32 h-12 bg-white rounded-xl text-center text-[#29ADB2] flex justify-center items-center'>{courses?.length}</span>
-                </div>
-                <div className='lg:w-56 md:w-64 w-[80vw] border bg-[#29ADB2] h-32 flex flex-col gap-2 justify-center items-center text-white text-xl rounded-xl'>
-                    <p>Total Earning</p>
-                    <span className='w-32 h-12 bg-white rounded-xl text-center text-[#29ADB2] flex justify-center items-center'>{earning / 1000}k Taka</span>
-                </div>
+                <Card title="Total student" count={students?.length > 10000 ? students?.length / 1000 + "k" : students?.length }></Card>
+                <Card title="Total Courses" count={courses?.length > 10000 ? courses?.length / 1000 + "k": courses?.length}></Card>
+                <Card title="Total Earning" count={totalEarning.toFixed(1) + "k"}></Card>
+                
             </div>
             <div className='w-64 pt-10'>
                 <DashboardTitle title="Courses" subTitle={`There are total ${courses?.length} courses.`}></DashboardTitle>

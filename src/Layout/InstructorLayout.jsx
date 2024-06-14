@@ -127,7 +127,7 @@ const InstructorLayout = () => {
                     </div>
                 </div>
                 <div className="flex flex-col" id="content">
-                    <div className="w-full flex justify-end items-center h-16 fixed z-30  bg-white">
+                    <div className="w-full flex justify-end items-center h-16 fixed z-30  bg-white shadow">
                         <div className={`${user && "mr-4 w-10 h-10 rounded-full flex justify-center items-center bg-[#0766AD] text-white"}`}>
                             {user?.displayName && user.displayName.length > 0 ? (
                                 <>

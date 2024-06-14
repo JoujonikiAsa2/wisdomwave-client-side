@@ -5,8 +5,9 @@ import SectionTitle from '../../../SharedComponents/SectionTitle/SectionTitle';
 import { useEffect, useState } from 'react';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import useAuth from "../../../hooks/useAuth";
+import toast from "react-hot-toast";
 
-const Courses = ({ courses, setCourses }) => {
+const Courses = ({ courses, setCourses, clickStatus }) => {
 
     const [total, setTotal] = useState([])
     const { user } = useAuth()
@@ -24,6 +25,61 @@ const Courses = ({ courses, setCourses }) => {
                 console.log(e)
             })
     }, [total])
+
+
+    if (clickStatus === true && courses?.length === 0) {
+        return <div className=' -z-0' >
+            <SectionTitle title="Courses" total={total.length} subtitle="Find your favorite courses here"></SectionTitle>
+            <Carousel
+                // arrows
+                autoPlaySpeed={3000}
+                className="w-full h-full rounded-lg"
+                draggable={true}
+                infinite={false}
+                responsive={{
+                    superLargeDesktopp: {
+                        // the naming can be any, depends on you.
+                        breakpoint: { max: 4000, min: 1400 },
+                        items: 5,
+                    },
+                    superSmallMobile: {
+                        // the naming can be any, depends on you.
+                        breakpoint: { max: 550, min: 0 },
+                        items: 1,
+                    },
+                    desktop: {
+                        breakpoint: {
+                            max: 1400,
+                            min: 1024
+                        },
+                        items: 4,
+                    },
+                    mobile: {
+                        breakpoint: {
+                            max: 800,
+                            min: 560
+                        },
+                        items: 2,
+                    },
+                    tablet: {
+                        breakpoint: {
+                            max: 1024,
+                            min: 800
+                        },
+                        items: 3,
+                    },
+                }}
+            >
+
+                {/* show all courses in card format with slider */}
+                {
+                    <div className='rounded-lg'>
+                        <p>No course available</p>
+                    </div >
+                }
+            </Carousel>
+        </div>
+    }
 
     return (
         <div className=' -z-0' >
@@ -72,11 +128,11 @@ const Courses = ({ courses, setCourses }) => {
 
                 {/* show all courses in card format with slider */}
                 {
-                    courses.length == 0 ? total.map(course => <div className='rounded-lg' key={course._id}>
-                        <Course  course={course} btnText="Enroll Now">
+                    clickStatus === false && courses.length === 0 ? total.map(course => <div className='rounded-lg' key={course._id}>
+                        <Course course={course} btnText="Enroll Now">
                         </Course>
                     </div >) : courses.map(course => <div className='rounded-lg' key={course._id}>
-                        <Course  course={course} btnText="Enroll Now">
+                        <Course course={course} btnText="Enroll Now">
                         </Course>
                     </div >)
                 }

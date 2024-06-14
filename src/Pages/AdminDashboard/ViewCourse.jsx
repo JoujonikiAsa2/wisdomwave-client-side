@@ -13,11 +13,12 @@ import { useQuery } from '@tanstack/react-query';
 import '@smastrom/react-rating/style.css'
 import { Rating } from '@smastrom/react-rating';
 import { FaCheck } from 'react-icons/fa';
-import useAuth from '../../../hooks/useAuth';
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import useAuth from '../../hooks/useAuth';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import { useEffect, useState } from 'react';
 
 
-const InstructorCourseDetails = () => {
+const ViewCourse = () => {
     const navigate = useNavigate()
     const { user } = useAuth()
 
@@ -26,18 +27,19 @@ const InstructorCourseDetails = () => {
     const axiosPublic = useAxiosPublic()
     console.log("Id", id)
 
-    // get the stored data from the localstorage
-    const storedCourses = JSON.parse(localStorage.getItem('courses'))
+    const [courseDetails, setCourseDetails] = useState(null)
 
     // fetch the data when window get open
-    const { data: courseDetails = [] } = useQuery({
-        queryKey: ['course'],
-        queryFn: async () => {
-            const res = await axiosPublic.get(`/api/instructorUpdateCourses/${id}`)
-            return res.data.data.courseDetails
-        }
-    })
-    console.log("Course details: ", courseDetails)
+    useEffect(() => {
+        axiosPublic.get(`/api/courses/${id}`)
+            .then(res => {
+                console.log(res.data.data)
+                setCourseDetails(res.data.data.courseDetails)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [id])
 
     // date formating
     const start = new Date(courseDetails?.enrollmentDates?.enrollStart)
@@ -52,29 +54,6 @@ const InstructorCourseDetails = () => {
     const enrollWillEnd = end.toLocaleString(locales, options);
     const classWillStart = classStart.toLocaleString(locales, options);
 
-    // payment handling function
-    const handlePayment = (id) => {
-
-        const finalPurchase = {
-            userEmail: user.email,
-            courseTitle: courseDetails.title,
-            courseFee: courseDetails.enrollFee,
-            transactionId: null,
-            paidStatus: false
-        };
-
-        console.log(finalPurchase)
-        axiosPublic.post(`/api/payment/${id}`, finalPurchase)
-            .then(res => {
-                console.log(res.data);
-                window.location.replace(res.data.url);
-                console.log(res.data)
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    };
-
     return (
         <div className='flex justify-center items-center text-lgp-3 mx-0 mb-8'>
             <div className='flex flex-col justify-center gap-6'>
@@ -85,7 +64,7 @@ const InstructorCourseDetails = () => {
                             <h3 className='text-xl font-bold py-4'>{courseDetails?.title}</h3>
                             {/* introductory video */}
                             <iframe
-                                src={`https://www.youtube.com/embed/${courseDetails?.introductoryVideo?.split("=")[1] || 'XlvsJLer_No'}`} title="YouTube video player"
+                                src={`https://www.youtube.com/embed/${courseDetails?.introductoryVideo?.split("=")[1]}`} title="YouTube video player"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen
@@ -108,7 +87,7 @@ const InstructorCourseDetails = () => {
                                     <p><span className=' font-bold text-[#29ADB2]'>Enrollment Start:</span> &nbsp;{enrollWillStart}</p>
                                     <p><span className=' font-bold text-[#29ADB2]'>Enrollment End:</span> &nbsp;{enrollWillEnd}</p>
                                     <p><span className=' font-bold text-[#29ADB2]'>Class Start:</span> &nbsp;{classWillStart}</p>
-                                    <p><span className=' font-bold text-[#29ADB2]'>Created By: </span> &nbsp;{courseDetails.instructor}</p>
+                                    <p><span className=' font-bold text-[#29ADB2]'>Created By: </span> &nbsp;{courseDetails?.instructor}</p>
                                     <p><span className=' font-bold text-[#29ADB2]'>Language: </span>&nbsp; {courseDetails?.languages}</p>
                                     <p className="text-sm flex gap-3"><Rating style={{ maxWidth: 90 }} readOnly value={courseDetails?.rating}></Rating>({courseDetails?.rating})</p>
                                     <p><span className=' font-bold text-[#29ADB2]'>Price:</span> &nbsp;{courseDetails?.enrollFee} Tk</p>
@@ -118,20 +97,20 @@ const InstructorCourseDetails = () => {
                     </div>
 
                     {/* Buttons */}
-                            <div className='py-4 flex justify-start items-center gap-2 text-white'>
-                                <Link to={`/courseDashboard/${courseDetails.playlistId}`}>
-                                    <button
-                                        className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
-                                    > Go to Course
-                                    </button>
-                                </Link>
-                            </div>
+                    <div className='py-4 flex justify-start items-center gap-2 text-white'>
+                        <Link to={`/courseDashboard/${id}/${courseDetails?.playlistId.split("=")[1]}`}>
+                            <button
+                                className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
+                            > Go to Course
+                            </button>
+                        </Link>
+                    </div>
 
                     {/* Course contents accordion*/}
                     <div>
                         <h2 className='text-lg font-bold pb-4'>Course Ouline</h2>
                         <Accordion allowZeroExpanded>
-                            {courseDetails.courseContents ? courseDetails.courseContents.map((chapter, index) => (
+                            {courseDetails?.courseContents ? courseDetails?.courseContents?.map((chapter, index) => (
 
                                 <AccordionItem key={index}>
                                     <AccordionItemHeading >
@@ -166,7 +145,7 @@ const InstructorCourseDetails = () => {
                     <div>
                         <h4 className='text-lg font-bold pb-4'>Course Details</h4>
                         <div className='text-sm'>
-                           <div dangerouslySetInnerHTML={{__html: courseDetails?.courseDescription}}></div>
+                            <div dangerouslySetInnerHTML={{ __html: courseDetails?.courseDescription }}></div>
                         </div>
                     </div>
                     <div>
@@ -175,7 +154,7 @@ const InstructorCourseDetails = () => {
                             <h2 className='text-lg font-bold py-4'>What You Will Learn</h2>
                             <div className='text-sm'>
                                 <ul className='list-disc pl-8 py02'>
-                                    {courseDetails.whatYouWillLearn ? courseDetails.whatYouWillLearn.map((item, index) => (
+                                    {courseDetails?.whatYouWillLearn ? courseDetails?.whatYouWillLearn.map((item, index) => (
                                         <li key={index}>{item}</li>
                                     )) : null}
                                 </ul>
@@ -187,7 +166,7 @@ const InstructorCourseDetails = () => {
                     <div>
                         <h4 className='text-lg font-bold pt-4 pb-2'>Requirements</h4>
                         <div className='pl-6 text-sm'>
-                            {courseDetails?.requirements ? courseDetails.requirements.map((item, index) => (
+                            {courseDetails?.requirements ? courseDetails?.requirements.map((item, index) => (
                                 <li key={index}>{item}</li>
                             )) : null}
                         </div>
@@ -199,4 +178,4 @@ const InstructorCourseDetails = () => {
     );
 };
 
-export default InstructorCourseDetails;
+export default ViewCourse;

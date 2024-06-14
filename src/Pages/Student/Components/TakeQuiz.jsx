@@ -141,18 +141,18 @@ const TakeQuiz = () => {
                     </form>
                 </div>
                 :
-                takenQuiz.score > 5 ?
-                    <div className='w-[90%] lg:w-[400px] md:w-[400px] h-[300px] border card flex flex-col justify-center items-center'>
-                        <div className='w-20 h-20 rounded-full border-[#29ADB2] border-2 flex justify-center items-center'><p className='text-xl font bold'>{takenQuiz.score}/{task.marks}</p></div>
+                takenQuiz.score === task.marks ?
+                    <div className='w-[90%] lg:w-[400px] md:w-[400px] h-[300px] border card flex flex-col justify-center items-center space-y-2'>
+                        <div className='w-20 h-20 rounded-full border-[#29ADB2] border-2 flex justify-center items-center'><p className='text-xl font bold'>{takenQuiz?.score}/{task?.marks}</p></div>
                         <h4 className='text-xl font-bold text-[#0766AD]'>Great Job!</h4>
-                        <p> You have completed the Quiz and got <span className='font-bold'>{takenQuiz.score} marks</span></p>
+                        <p> You have completed the Quiz and got <span className='font-bold'>{takenQuiz?.score} marks</span></p>
                         <Link to={`/viewQuiz/${id}/${title}`}>
                             <button className='btn btn-sm text-white w-40 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2'>View Result</button>
                         </Link>
                     </div>
                     :
                     <div className='w-[90%] lg:w-[400px] md:w-[400px] h-[300px] border card flex flex-col justify-center items-center'>
-                        <div className='w-20 h-20 rounded-full border-[#29ADB2] border-2 flex justify-center items-center'><p className='text-xl font bold'>{takenQuiz.score}/{task.marks}</p></div>
+                        <div className='w-20 h-20 rounded-full border-[#29ADB2] border-2 flex justify-center items-center'><p className='text-xl font bold'>{takenQuiz?.score}/{task?.marks}</p></div>
                         <h2 className='text-lg font-bold py-2 capitalize'>Quiz title: {task?.title}</h2>
                         <p> You have completed the Quiz and got <span className='font-bold'>{takenQuiz.score} marks</span></p>
                         <Link to={`/viewQuiz/${id}/${title}`}>

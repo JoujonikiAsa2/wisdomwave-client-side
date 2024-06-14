@@ -43,16 +43,16 @@ const Login = () => {
                             toast.success('Successfully Logged In!', { duration: 1000 });
                             setClick(false)
                             setTimeout(() => {
-                                if (res.data.data.userType === "student") {
+                                if (res.data.data?.userType === "student") {
                                     navigate(location.state || '/')
                                 }
-                                else if (res.data.data.userType === "instructor") {
+                                else if (res.data.data?.userType === "instructor") {
                                     navigate(location.state || '/instructor/instructorDashboard')
                                 }
-                                else if (res.data.data.userType === "tutor") {
+                                else if (res.data.data?.userType === "tutor") {
                                     navigate(location.state || '/tutor/tutorDashboard')
                                 }
-                                else if (res.data.data.userType === "admin") {
+                                else if (res.data.data?.userType === "admin") {
                                     navigate(location.state || '/admin/adminDashboard')
                                 }
                             }, 1200);

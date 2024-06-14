@@ -85,7 +85,7 @@ const Tuitions = () => {
                 </div>
                 <div className='mb-6'>
                     <label htmlFor="district">Filter by class: </label>
-                    <select id="district" name="district_id" onChange={handleClassChange} className='focus:outline-none border rounded p-2 m-2 capitalize round'>
+                    <select id="district" name="district_id" onChange={handleClassChange} className='w-32 focus:outline-none border rounded p-2 m-2 capitalize round'>
                         <option value="">All</option>
                         {
                             ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"].map((classNo, index) => (

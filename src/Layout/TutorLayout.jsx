@@ -8,43 +8,47 @@ import { CiSquareQuestion } from "react-icons/ci";
 import useAuth from "../hooks/useAuth";
 import { FiEdit } from "react-icons/fi";
 import './styles.css'
-
-
-const navLinks = [
-    {
-        nav: "Dashboard",
-        icon: MdDashboard,
-        link: "/tutor/tutorDashboard",
-    },
-    {
-        nav: "Create Profile",
-        icon: MdOutlineAddCircleOutline,
-        link: "/tutor/createProfile",
-    },
-    {
-        nav: "Manage Profile",
-        icon: MdOutlineManageAccounts,
-        link: "/tutor/manageProfile",
-    },
-    {
-        nav: "Tuitons",
-        icon: FiEdit,
-        link: "/tutor/tuitions",
-    },
-    {
-        nav: "Tuition Requests",
-        icon: CiSquareQuestion,
-        link: "/tutor/tuitionRequest",
-    }
-];
-
-
+import { IoIosSend } from "react-icons/io";
 
 const TutorLayout = () => {
 
     const { userSignOut, user } = useAuth()
     const navigate = useNavigate()
     const [activeIndex, setActiveIndex] = useState(0);
+
+
+    const navLinks = [
+        {
+            nav: "Dashboard",
+            icon: MdDashboard,
+            link: "/tutor/tutorDashboard",
+        },
+        {
+            nav: "Create Profile",
+            icon: MdOutlineAddCircleOutline,
+            link: "/tutor/createProfile",
+        },
+        {
+            nav: "Manage Profile",
+            icon: MdOutlineManageAccounts,
+            link: `/tutor/manageProfile/${user?.email}`,
+        },
+        {
+            nav: "Tuitons",
+            icon: FiEdit,
+            link: "/tutor/tuitions",
+        },
+        {
+            nav: "Tuition Requests",
+            icon: CiSquareQuestion,
+            link: "/tutor/tuitionRequest",
+        },
+        {
+            nav: "Sending Requests",
+            icon: IoIosSend,
+            link: "/tutor/sendingRequests",
+        }
+    ];
 
     console.log(user)
 
@@ -88,24 +92,6 @@ const TutorLayout = () => {
 
                         {/* others link */}
                         <div className="pt-6 flex flex-col justify-start items-start gap-2">
-
-                            <div>
-                                <Link to="/">
-                                    <div className="nav-links w-full"
-                                    >
-                                        <div
-                                            className={
-                                                "flex  w-full py-1 px-2 rounded-full gap-3"
-                                            }
-                                        >
-                                            <IoHome className="lg:text-xl text-lg" />
-                                            <span className="navlink ">
-                                                Home
-                                            </span>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </div>
                             <div className="nav-links w-full"
                             >
                                 <div className="flex  w-full py-1 px-2 rounded-full justify-start items-center gap-3 cursor-pointer" onClick={() => {
@@ -121,15 +107,22 @@ const TutorLayout = () => {
                         </div>
                     </div>
                 </div>
+
                 <div className="flex flex-col" id="content">
-                    <div className="w-full flex justify-end items-center h-16 fixed z-30  bg-white">
-                        <div className={`${user && "mr-4 w-10 h-10 rounded-full flex justify-center items-center bg-[#0766AD] text-white"}`}>
-                            {user?.displayName && user.displayName.length > 0 ? (
-                                <>
-                                    {user.displayName.charAt(0)}
-                                    {user.displayName.split(" ")[1] && user.displayName.split(" ")[1].charAt(0)}
-                                </>
-                            ) : null}
+                    <div className="w-full flex justify-end items-center h-16 fixed z-30  bg-white shadow">
+                        <div className="dropdown dropdown-end">
+                            <div className={`${user && "dropdown mr-4 w-10 h-10 rounded-full flex justify-center items-center bg-[#0766AD] text-white"}`} tabIndex={0} role="button">
+                                {user?.displayName && user.displayName.length > 0 ? (
+                                    <>
+                                        {user.displayName.charAt(0)}
+                                        {user.displayName.split(" ")[1] && user.displayName.split(" ")[1].charAt(0)}
+                                    </>
+                                ) : null}
+                            </div>
+                            <ul tabIndex={0} className="mt-3 z-[1] p-2 mr-6 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                                <li><p>{user?.displayName}</p></li>
+                                <li><p>{user?.email}</p></li>
+                            </ul>
                         </div>
                     </div>
                     <div className="w-full flex flex-col ml-[3rem] mt-[4rem] h-screen px-4">

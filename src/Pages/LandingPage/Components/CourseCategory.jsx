@@ -4,23 +4,31 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-
 // All course categoories will appear
 const CourseCategory = ({ handleCategorySearch }) => {
 
-    const axiosPublic = useAxiosPublic()
 
-    const { refetch, data: categories = [] } = useQuery({
-        queryKey: "categories",
-        queryFn: async () => {
-            const categories = await axiosPublic.get('/api/categories')
-            return categories.data.data
-        }
-    })
-    console.log(categories)
+    const categories = [
+        { label: 'Development', value: 'development' },
+        { label: 'Business', value: 'business' },
+        { label: 'Finance & Accounting', value: 'finance_accounting' },
+        { label: 'IT & Software', value: 'it_software' },
+        { label: 'Office Productivity', value: 'office_productivity' },
+        { label: 'Personal Development', value: 'personal_development' },
+        { label: 'Design', value: 'design' },
+        { label: 'Marketing', value: 'marketing' },
+        { label: 'Lifestyle', value: 'lifestyle' },
+        { label: 'Photography & Video', value: 'photography_video' },
+        { label: 'Health & Fitness', value: 'health_fitness' },
+        { label: 'Music', value: 'music' },
+        { label: 'Teaching & Academics', value: '' }
+    ];
+
+    console.log(categories.length)
 
     const handleLocalSearch = (category) => {
         handleCategorySearch(category)
+
     }
 
     return (
@@ -64,10 +72,13 @@ const CourseCategory = ({ handleCategorySearch }) => {
                         items: 3,
                     },
                 }}>
+                <div onClick={() => handleLocalSearch('all')} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer  h-[4.2rem] mr-2">
+                    <h2 className="capitalize">All</h2>
+                </div>
                 {
                     categories.map((category, index) => <div className='mr-2  h-[4.2rem]' key={index}>
-                        <div onClick={() => handleLocalSearch(category)}  className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer  h-[4.2rem]">
-                            <h2 className="capitalize">{category}</h2>
+                        <div onClick={() => handleLocalSearch(category.value)} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer  h-[4.2rem]">
+                            <h2 className="capitalize">{category.label}</h2>
                         </div>
                     </div>)
                 }

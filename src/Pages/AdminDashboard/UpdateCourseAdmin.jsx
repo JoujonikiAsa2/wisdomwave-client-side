@@ -1,10 +1,8 @@
 import DashboardTitle from '../../SharedComponents/DashboardTitle/DashboardTitle';
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import "react-datepicker/dist/react-datepicker.css";
 import toast, { Toaster } from 'react-hot-toast';
-import { sendEmailVerification } from 'firebase/auth';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
 '../../hooks/useAxiosPublic';
 const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_API}`
@@ -17,8 +15,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { MultiSelect } from 'react-multi-select-component';
 import { IoAdd } from 'react-icons/io5';
 import useAuth from '../../hooks/useAuth';
-import { BiMinus } from 'react-icons/bi';
-const UpdateCourse = () => {
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import { BiMinus, BiMinusCircle } from 'react-icons/bi';
+
+
+const UpdateCourseAdmin = () => {
 
     // react hook form built in function desctructuring
     const {
@@ -37,15 +38,18 @@ const UpdateCourse = () => {
 
     // State for handling the content field
     const [text, setText] = useState("");
+
     // State for handling the outline new field
     const [outlines, setOutlines] = useState([]);
+
     // State for handling the outcome new field
     const [outcomeFields, setOutcomeFields] = useState([]);
+
     // State for handling the requirements
     const [requirements, setRequirements] = useState([]);
+
     // State for storing selected languages
     const [selected, setSelected] = useState([]);
-
     const [playListId, setPlayListId] = useState("")
 
     useEffect(() => {
@@ -71,6 +75,13 @@ const UpdateCourse = () => {
             })
     }, [id])
 
+
+    console.log(outcomeFields, selected, playListId)
+
+
+    const playList = `https://www.youtube.com/playlist?list=${playListId}`
+    console.log(playList)
+
     // Define options for language selection
     const options = [
         { label: "english", value: "english" },
@@ -78,7 +89,6 @@ const UpdateCourse = () => {
     ];
 
     // Handle adding a new outcome field
-
     const handleOutcomeFieldAdd = (event) => {
         event.preventDefault();
         setOutcomeFields([...outcomeFields, '']);
@@ -152,9 +162,7 @@ const UpdateCourse = () => {
 
 
     const totalCourseContent = courseDetails?.courseContents?.length
-    const totalRequirement = courseDetails?.requirements?.length
-    const totalOutcome = courseDetails?.whatYouWillLearn?.length
-    const mapSelect = selected.map(res => { return res.value })
+    const mapSelect = selected?.map(res => { return res.value })
     console.log(mapSelect)
 
 
@@ -167,6 +175,19 @@ const UpdateCourse = () => {
             ['link', 'clean']
         ]
     };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const month = date.getMonth() + 1; // Adding 1 since getMonth() returns zero-based month (0-11)
+        const day = date.getDate();
+        const year = date.getFullYear();
+        return `${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${year}`;
+    };
+
+    console.log(new Date("2023-10-01T00:00:00.000Z").toLocaleDateString())
+    console.log("2023-10-01T00:00:00.000Z".slice(0, 10))
+
+
 
     // Help to execute all function after submit the form
     const onSubmit = async (data) => {
@@ -208,9 +229,9 @@ const UpdateCourse = () => {
                 classStart: data.classStart !== "" ? data.classStart : courseDetails.classStart,
                 subtitle: data.courseSubTitle !== "" ? data.courseSubTitle : courseDetails.subtitle,
                 totalStudents: courseDetails?.totalStudents,
-                playlistId: data.playlistLink === "" ? courseDetails?.playlistId : data.playlistLink,
+                playlistId: data.playlistLink === "https://www.youtube.com/playlist?list=undefined" ? courseDetails?.playlistId : data.playlistLink.split("=")[1],
                 courseDescription: text.length > 0 ? text : courseDetails.courseDescription
-            } 
+            }
         }
         console.log(courseData)
 
@@ -219,7 +240,12 @@ const UpdateCourse = () => {
             console.log(res.data);
             if (res, data) {
                 toast.success("Course updated successfully")
+                setTimeout(() => {
+                    navigate('/admin/manageCourses')
+                }, 1500)
+                    
             }
+
         } catch (err) {
             console.log(err);
             toast.success("Course updated failed. Please try again")
@@ -264,6 +290,9 @@ const UpdateCourse = () => {
                                         defaultValue={courseDetails?.instructor}
                                         {...register("yourName")} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' de />
                                 </label>
+                                <div>
+                                    {errors.yourName && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="category">
@@ -272,6 +301,9 @@ const UpdateCourse = () => {
                                         defaultValue={courseDetails?.category}
                                         {...register("category")} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
                                 </label>
+                                <div>
+                                    {errors.category && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="courseTitle">
@@ -280,6 +312,9 @@ const UpdateCourse = () => {
                                         defaultValue={courseDetails?.title}
                                         {...register("courseTitle")} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
                                 </label>
+                                <div>
+                                    {errors.courseTitle && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="courseSubTitle">
@@ -288,6 +323,9 @@ const UpdateCourse = () => {
                                         defaultValue={courseDetails?.subtitle}
                                         {...register("courseSubTitle")} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
                                 </label>
+                                <div>
+                                    {errors.courseSubTitle && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full '>
                                 <label htmlFor="thumbnail">
@@ -302,6 +340,9 @@ const UpdateCourse = () => {
                                         />
                                     </div>
                                 </label>
+                                <div>
+                                    {errors.thumbnail && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full '>
                                 <label htmlFor="language">
@@ -313,6 +354,9 @@ const UpdateCourse = () => {
                                         labelledBy="Select"
                                     />
                                 </label>
+                                <div>
+                                    {errors.language && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] flex justify-between items-center'>
                                 <div className='w-full flex flex-col gap-2 justify-center items-start'>
@@ -351,6 +395,9 @@ const UpdateCourse = () => {
                                         defaultValue={courseDetails?.introductoryVideo}
                                         {...register("introductoryVideo")} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
                                 </label>
+                                <div>
+                                    {errors.introductoryVideo && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="playlistLink">
@@ -361,6 +408,9 @@ const UpdateCourse = () => {
                                         {...register("playlistLink")}
                                         className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
                                 </label>
+                                <div>
+                                    {errors.introductoryVideo && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="enrollStart">
@@ -373,6 +423,11 @@ const UpdateCourse = () => {
                                         className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase text-gray-500'
                                     />
                                 </label>
+                                <div>
+                                    <div>
+                                        {errors.enrollStart && <span className='text-base text-red-500'>This field is required</span>}
+                                    </div>
+                                </div>
                             </div>
 
                             <div className='w-full lg:w-[80%] h-full'>
@@ -386,6 +441,9 @@ const UpdateCourse = () => {
                                         className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase text-gray-500'
                                     />
                                 </label>
+                                <div>
+                                    {errors.enrollEnd && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="classStart">
@@ -398,6 +456,9 @@ const UpdateCourse = () => {
                                         className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase text-gray-500'
                                     />
                                 </label>
+                                <div>
+                                    {errors.classStart && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="duration">
@@ -408,6 +469,9 @@ const UpdateCourse = () => {
                                         {...register("duration")}
                                         className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase  text-gray-500' />
                                 </label>
+                                <div>
+                                    {errors.duration && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="courseFee">
@@ -417,6 +481,9 @@ const UpdateCourse = () => {
                                         {...register("courseFee")}
                                         className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
                                 </label>
+                                <div>
+                                    {errors.courseFee && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full '>
                                 <label htmlFor="totalVideo"><p className='text-base text-gray-500'>Total recorded video<span className='text-red-500'>*</span> </p>
@@ -428,6 +495,9 @@ const UpdateCourse = () => {
                                         className='input input-bordered border-gray-300 w-full h-9 focus:outline-none text-base'
                                     />
                                 </label>
+                                <div>
+                                    {errors.totalVideo && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%] h-full '>
                                 <label htmlFor="totalLiveClass"><p className='text-base text-gray-500'>Total live class<span className='text-red-500'>*</span> </p>
@@ -439,6 +509,9 @@ const UpdateCourse = () => {
                                         className='input input-bordered border-gray-300 w-full h-9 focus:outline-none text-base'
                                     />
                                 </label>
+                                <div>
+                                    {errors.totalLiveClass && <span className='text-base text-red-500'>This field is required</span>}
+                                </div>
                             </div>
                             <div className='w-full lg:w-[80%]  flex justify-between items-center'>
                                 <div className='w-full  flex flex-col justify-center items-start gap-2'>
@@ -522,10 +595,12 @@ const UpdateCourse = () => {
                                     <p className='text-base text-gray-500'>Short Description about your course<span className='text-red-500'>*</span> </p>
                                     <ReactQuill
                                         theme='snow'
+                                        defaultValue={courseDetails?.courseDescription}
                                         value={text}
                                         modules={modules}
                                         onChange={handleChange}
-                                        className='w-full lg:w-[80%]  bg-white'
+                                        className='w-full bg-white'
+                                        required
                                     />
                                 </label>
                             </div>
@@ -541,4 +616,4 @@ const UpdateCourse = () => {
     );
 };
 
-export default UpdateCourse;
+export default UpdateCourseAdmin;

@@ -1,13 +1,7 @@
 import DashboardTitle from '../../SharedComponents/DashboardTitle/DashboardTitle';
-import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast, { Toaster } from 'react-hot-toast';
-import { sendEmailVerification } from 'firebase/auth';
-import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 '../../hooks/useAxiosPublic';
 const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
@@ -17,6 +11,8 @@ import 'react-quill/dist/quill.snow.css';
 import '../../Layout/styles.css'
 import { IoAdd } from 'react-icons/io5';
 import { MultiSelect } from "react-multi-select-component";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 const CreateCourse = () => {
     const { user } = useAuth()
@@ -35,6 +31,23 @@ const CreateCourse = () => {
 
     // for multi selector
     const [selected, setSelected] = useState([]);
+
+    const categories = [
+        { label: 'Development', value: 'development' },
+        { label: 'Business', value: 'business' },
+        { label: 'Finance & Accounting', value: 'finance_accounting' },
+        { label: 'IT & Software', value: 'it_software' },
+        { label: 'Office Productivity', value: 'office_productivity' },
+        { label: 'Personal Development', value: 'personal_development' },
+        { label: 'Design', value: 'design' },
+        { label: 'Marketing', value: 'marketing' },
+        { label: 'Lifestyle', value: 'lifestyle' },
+        { label: 'Photography & Video', value: 'photography_video' },
+        { label: 'Health & Fitness', value: 'health_fitness' },
+        { label: 'Music', value: 'music' },
+        { label: 'Teaching & Academics', value: 'teaching_academics' }
+    ];
+
 
     const options = [
         { label: "English", value: "english" },
@@ -147,6 +160,8 @@ const CreateCourse = () => {
 
         try {
             const res = await axiosPublic.post('/api/courses', courseData);
+            toast.success('Course Added Successfully!', { duration: 1000 });
+            reset();
             console.log(res.data);
         } catch (err) {
             console.log(err);
@@ -229,8 +244,12 @@ const CreateCourse = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="category">
                                     <p className='text-base text-gray-500'>Course category<span className='text-red-500'>*</span> </p>
-                                    <input type="text" name='category' {...register("category", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
-                                </label>
+                                    <select name='category' className='capitalize input input-bordered border-gray-300 w-full  h-10 focus:outline-none round' {...register("category", { required: true })}>
+                                        <option value="">Select</option>
+                                        {
+                                            categories.map(cat => <option value={cat.value} >{cat.label}</option>)
+                                        }
+                                    </select>                               </label>
                                 <div>
                                     {errors.category && <span className='text-base text-red-500'>This field is required</span>}
                                 </div>

@@ -6,19 +6,17 @@ import { useForm } from 'react-hook-form';
 import { MultiSelect } from 'react-multi-select-component';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import toast, { Toaster } from 'react-hot-toast';
-import useAuth from '../../hooks/useAuth';
 import { PiSpinnerGapBold } from 'react-icons/pi';
-const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_API}`
+import { useParams } from 'react-router-dom';
 
-
-const CreateProfile = () => {
-    const { user } = useAuth()
+const UpdateProfile = () => {
+    const { email } = useParams()
     const axiosPublic = useAxiosPublic()
     const [isLoading, setIsLoading] = useState(false)
     const [selected, setSelected] = useState([]);
     const [subSelected, setSubSelected] = useState([]);
     const [text, setText] = useState("");
+    const [userInfo, setUserInfo] = useState(null)
     const [districts, setDistricts] = useState([])
     const [upazilas, setUpazilas] = useState([])
     const [institutes, setInstitutes] = useState()
@@ -29,12 +27,11 @@ const CreateProfile = () => {
     const [subjects, setSubjects] = useState([""])
     const [preferableClasses, setPreferableClasses] = useState([""])
 
-
-
     useEffect(() => {
         const fetchInitialData = async () => {
             try {
-                const [institutesRes, subjectsRes, eduLevelsRes, districtsRes, upazilasRes] = await Promise.all([
+                const [tutorInfo, institutesRes, subjectsRes, eduLevelsRes, districtsRes, upazilasRes] = await Promise.all([
+                    axiosPublic.get(`/api/tutors/${email}`),
                     axiosPublic.get("/api/institutes"),
                     axiosPublic.get("/api/subjects"),
                     axiosPublic.get("/api/educationLevels"),
@@ -42,12 +39,31 @@ const CreateProfile = () => {
                     axiosPublic.get("/api/upazilas")
                 ]);
 
+                console.log('Tutor Profile Response:', tutorInfo.data.data);
                 console.log('Institutes Response:', institutesRes.data);
                 console.log('Subjects Response:', subjectsRes.data);
                 console.log('Education Levels Response:', eduLevelsRes.data);
                 console.log('Districts Response:', districtsRes.data);
                 console.log('Upazilas Response:', upazilasRes.data);
 
+                if (tutorInfo?.data) {
+                    setUserInfo(tutorInfo.data.data);
+                    const newLocationOptions = tutorInfo.data.data.preferableLocation.map(district => ({
+                        label: district,
+                        value: district,
+                    }))
+                    const newUpazilaOptions = tutorInfo.data.data.subLocation.map(upazila => ({
+                        label: upazila,
+                        value: upazila,
+                    }))
+                    setSelected(newLocationOptions)
+                    setSubSelected(newUpazilaOptions)
+                    setText(tutorInfo.data.data.about)
+                    setPreferableClasses(tutorInfo.data.data.preferableClass)
+                    setSubjects(tutorInfo.data.data.preferableSubject)
+                } else {
+                    console.error('Institutes data is undefined or invalid');
+                }
                 if (institutesRes?.data) {
                     setInstitutes(...institutesRes.data);
                 } else {
@@ -97,8 +113,6 @@ const CreateProfile = () => {
     }, []);
 
 
-
-
     const filteredSelectedValue = selected.map(res => { return res.value })
     const filteredSubLocationValue = subSelected.map(res => { return res.value })
 
@@ -112,52 +126,43 @@ const CreateProfile = () => {
 
     const onSubmit = async (data) => {
         try {
-
-            const imageFile = { image: data.profile[0] }
-            const imageRes = await axiosPublic.post(image_hosting_api, imageFile, {
-                headers: { 'content-type': 'multipart/form-data' }
-            });
-            const image = imageRes.data.data.display_url;
-
             // Prepare tutor profile data
             const tutorProfile = {
-                tutorId: Math.floor(Math.random() * 10000) + data.yourName.slice(0, 2),
-                name: data.yourName,
-                age: data.age,
-                currentStatus: data.status,
-                profile: image,
+                name: data.yourName === "" ? userInfo.name : data.yourName,
+                age: data.age === "" ? userInfo.age : data.age,
+                currentStatus: data.status === null ? userInfo.currentStatus : data.status,
                 educationalQualication: {
-                    eudName: data.eduLevel,
-                    subject: data.academicLevel,
-                    institute: data.institute,
-                    cgpa: data.cgpa
+                    eduName: data.eduLevel === "" ? userInfo.educationalQualication.eduName : data.eduLevel ,
+                    subject: data.academicLevel === "" ? userInfo.educationalQualication.subject : data.academicLevel ,
+                    institute: data.institute === "" ? userInfo.educationalQualication.institute : data.institute,
+                    cgpa: data.cgpa === "" ? userInfo.educationalQualication.cgpa : data.cgpa
                 },
-                medium: data.medium,
+                medium: data.medium === false ? userInfo.medium : data.medium,
                 preferableLocation: filteredSelectedValue,
                 subLocation: filteredSubLocationValue,
                 preferableClass: preferableClasses,
                 preferableSubject: subjects,
-                experience: data.experiences,
-                expectedSalary: data.salary,
+                experience: data.experiences === "" ? userInfo.experience : data.experiences,
+                expectedSalary: data.salary === "" ? userInfo.expectedSalary : data.salary,
                 profileCreationDate: new Date(),
-                about: text,
-                tuitionType: data.type,
-                tuitionDays: data.tutoringDays,
-                email: data.email
+                about: text === "" ? userInfo.about : text,
+                tuitionType: data.type === false ? userInfo.tuitionType : data.type,
+                tuitionDays: data.tutoringDays === "" ? userInfo.tuitionDays : data.tutoringDays,
+                email: data.email === "" ? userInfo.email : data.email
             };
 
             setIsLoading(true);
             // Create tutor profile
-            const profileRes = await axiosPublic.post(`/api/tutors/${user?.email}`, tutorProfile);
+            const profileRes = await axiosPublic.patch(`/api/tutors/info/${email}`, tutorProfile);
 
             if (profileRes.data.status === "success") {
-                toast.success('Profile created successfully');
+                toast.success('Profile updated successfully');
                 reset();
                 setText("")
                 setSelected("")
                 setSubSelected("")
             }
-            else if (profileRes.data.status === "fail"){
+            else if (profileRes.data.status === "fail") {
                 toast.error(profileRes.data.message);
             } else {
                 toast.error(profileRes.data.message);
@@ -224,14 +229,19 @@ const CreateProfile = () => {
         <>
             <Toaster position='top-center' reverseOrder={false} />
             <div>
-                <DashboardTitle title="Create Tutor Profile" subTitle="Create your tutor profile to get started" />
+                <DashboardTitle title="Edit Tutor Profile" subTitle="Edit your tutor profile for better experience" />
                 <div className='w-full pb-8 text-gray-500'>
                     <form action="" className='w-full ' onSubmit={handleSubmit(onSubmit)}>
                         <div className='w-full flex flex-col justify-center items-center gap-4' >
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="yourName">
                                     <p className='text-base '>Yout name<span className='text-red-500'>*</span> </p>
-                                    <input type="text" name='yourName' {...register("yourName", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
+                                    <input type="text"
+                                        name='yourName'
+                                        value={userInfo?.name}
+                                        defaultValue={userInfo?.name}
+                                        {...register("yourName")}
+                                        className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
                                 </label>
                                 <div>
                                     {errors.yourName && <span className='text-base text-red-500'>This field is required</span>}
@@ -240,29 +250,24 @@ const CreateProfile = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="email">
                                     <p className='text-base '>Your email<span className='text-red-500'>*</span> </p>
-                                    <input type="email" name='email'  {...register("email", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
+                                    <input type="email"
+                                        name='email'
+                                        defaultValue={userInfo?.email}
+                                        {...register("email")}
+                                        className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
                                 </label>
                                 <div>
                                     {errors.email && <span className='text-base text-red-500'>This field is required</span>}
                                 </div>
                             </div>
-                            <div className='w-full lg:w-[80%] h-full '>
-                                <label htmlFor="profile"><p className='text-base '>Your profile<span className='text-red-500'>*</span> </p>
-                                    <input
-                                        type='file'
-                                        name="profile"
-                                        {...register("profile", { required: true })}
-                                        className='input input-bordered border-gray-300 w-full h-9 focus:outline-none text-sm pt-[0.2rem]'
-                                    />
-                                </label>
-                                <div>
-                                    {errors.profile && <span className='text-base text-red-500'>This field is required</span>}
-                                </div>
-                            </div>
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="age">
                                     <p className='text-base '>Your age<span className='text-red-500'>*</span> </p>
-                                    <input type="number" name='age' {...register("age", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
+                                    <input type="number"
+                                        name='age'
+                                        defaultValue={userInfo?.age}
+                                        {...register("age")}
+                                        className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
                                 </label>
                                 <div>
                                     {errors.age && <span className='text-base text-red-500'>This field is required</span>}
@@ -273,8 +278,10 @@ const CreateProfile = () => {
                                     <p className='text-base '>Educational Background<span className='text-red-500'>*</span> </p>
                                     <label htmlFor="">
                                         <p className='py-2'>Education Level</p>
-                                        <select className='capitalize input input-bordered border-gray-300 w-full  h-10 focus:outline-none round' {...register("eduLevel", { required: true })}>
-                                            <option value="">Select</option>
+                                        <select
+                                            className='input input-bordered border-gray-300 w-full  h-10 focus:outline-none round lowercase'
+                                            {...register("eduLevel")}>
+                                            <option value={userInfo?.educationalQualication?.eduName}>{userInfo?.educationalQualication?.eduName}</option>
                                             {
                                                 eduLevels?.eduLevels.map(eduLevel => <option value={eduLevel} >{eduLevel}</option>)
                                             }
@@ -282,8 +289,10 @@ const CreateProfile = () => {
                                     </label>
                                     <label htmlFor="">
                                         <p className='py-2'>Subject</p>
-                                        <select className='capitalize input input-bordered border-gray-300 w-full  h-10 focus:outline-none round' {...register("academicLevel", { required: true })}>
-                                            <option value="">Select</option>
+                                        <select
+                                            className=' input input-bordered border-gray-300 w-full  h-10 focus:outline-none round'
+                                            {...register("academicLevel")}>
+                                            <option value={userInfo?.educationalQualication?.subject}>{userInfo?.educationalQualication?.subject}</option>
                                             {
                                                 academicLevels?.subjects.map(sub => <option value={sub} >{sub}</option>)
                                             }
@@ -291,8 +300,10 @@ const CreateProfile = () => {
                                     </label>
                                     <label htmlFor="">
                                         <p className='py-2'>Institute</p>
-                                        <select className='capitalize input input-bordered border-gray-300 w-full  h-10 focus:outline-none round' {...register("institute", { required: true })}>
-                                            <option value="">Select</option>
+                                        <select
+                                            className=' input input-bordered border-gray-300 w-full  h-10 focus:outline-none round'
+                                            {...register("institute")}>
+                                            <option value={userInfo?.educationalQualication?.institute}>{userInfo?.educationalQualication?.institute}</option>
                                             {
                                                 institutes?.institutes.map(institute => <option value={institute} >{institute}</option>)
                                             }
@@ -300,7 +311,11 @@ const CreateProfile = () => {
                                     </label>
                                     <label htmlFor="">
                                         <p className='py-2'>CGPA</p>
-                                        <input type="text" name='cgpa' className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' {...register("cgpa", { required: true })} />
+                                        <input type="text"
+                                            name='cgpa'
+                                            defaultValue={userInfo?.educationalQualication?.cgpa}
+                                            className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase'
+                                            {...register("cgpa")} />
                                     </label>
                                 </label>
                             </div>
@@ -309,11 +324,17 @@ const CreateProfile = () => {
                                     <p className='text-base '>Current Status<span className='text-red-500'>*</span> </p>
 
                                     <div>
-                                        <input type="radio" name="status" value="available" {...register("status", { required: true })} />
+                                        <input type="radio" name="status"
+                                            value="available"
+                                            {...userInfo?.currentStatus == "available" ? { checked: true } : null}
+                                            {...register("status")} />
                                         <label> Available</label>
                                     </div>
                                     <div>
-                                        <input type="radio" name="status" value="unavailable"  {...register("status", { required: true })} />
+                                        <input type="radio" name="status"
+                                            value="unavailable"
+                                            {...userInfo?.currentStatus == "unavailable" ? { checked: true } : null}
+                                            {...register("status")} />
                                         <label> Unavailable</label>
                                     </div>                            </label>
                             </div>
@@ -326,7 +347,10 @@ const CreateProfile = () => {
                                         <div className='flex flex-col gap-4'>
                                             {
                                                 preferableClasses.map((pc, index) =>
-                                                    <input type="text" name={pc} className='input input-bordered w-full focus:outline-none lowercase' placeholder='Class' onChange={(event) => handdleClassOnChange(index, event)} />
+                                                    <input type="text"
+                                                        defaultValue={pc}
+                                                        name={pc}
+                                                        className='input input-bordered w-full focus:outline-none lowercase' placeholder='Class' onChange={(event) => handdleClassOnChange(index, event)} />
                                                 )
                                             }
                                         </div>
@@ -347,7 +371,12 @@ const CreateProfile = () => {
                                         <div className='flex flex-col gap-4'>
                                             {
                                                 subjects.map((subject, index) =>
-                                                    <input type="text" name='subject' className='input input-bordered w-full focus:outline-none lowercase' placeholder='Subject' onChange={(event) => handdleSubjectOnChange(index, event)} />
+                                                    <input type="text"
+                                                        name='subject'
+                                                        defaultValue={subject}
+                                                        className='input input-bordered w-full focus:outline-none lowercase'
+                                                        placeholder='Subject'
+                                                        onChange={(event) => handdleSubjectOnChange(index, event)} />
                                                 )
                                             }
                                         </div>
@@ -364,11 +393,15 @@ const CreateProfile = () => {
                                 <label htmlFor="">
                                     <p className='text-base '>Medium<span className='text-red-500'>*</span> </p>
                                     <div>
-                                        <input type="checkbox" name="medium" value="bengali" {...register("medium", { required: true })} />
+                                        <input type="checkbox" name="medium" value="bengali"
+                                            {...userInfo?.medium == "bengali" ? { checked: true } : null}
+                                            {...register("medium")} />
                                         <label> Bengali</label>
                                     </div>
                                     <div>
-                                        <input type="checkbox" name="medium" value="english"  {...register("medium", { required: true })} />
+                                        <input type="checkbox" name="medium" value="english"
+                                            {...userInfo?.medium == "english" ? { checked: true } : null}
+                                            {...register("medium")} />
                                         <label> English</label>
                                     </div>
                                 </label>
@@ -400,7 +433,11 @@ const CreateProfile = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="experiences">
                                     <p className='text-base '>Experiences<span className='text-red-500'>*</span> </p>
-                                    <input type="number" name='experiences' {...register("experiences", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
+                                    <input type="number"
+                                        name='experiences'
+                                        defaultValue={userInfo?.experience}
+                                        {...register("experiences")}
+                                        className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
                                 </label>
                                 <div>
                                     {errors.experiences && <span className='text-base text-red-500'>This field is required</span>}
@@ -409,7 +446,11 @@ const CreateProfile = () => {
                             <div className='w-full lg:w-[80%] h-full'>
                                 <label htmlFor="tutoringDays">
                                     <p className='text-base '>Tutoring Days<span className='text-red-500'>*</span> </p>
-                                    <input type="number" name='tutoringDays' {...register("tutoringDays", { required: true })} className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
+                                    <input type="number"
+                                        name='tutoringDays'
+                                        defaultValue={userInfo?.tuitionDays}
+                                        {...register("tutoringDays")}
+                                        className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase' />
                                 </label>
                                 <div>
                                     {errors.tutoringDays && <span className='text-base text-red-500'>This field is required</span>}
@@ -421,7 +462,8 @@ const CreateProfile = () => {
                                     <input
                                         type="number"
                                         name='salary'
-                                        {...register("salary", { required: true })}
+                                        defaultValue={userInfo?.expectedSalary}
+                                        {...register("salary")}
                                         className='input input-bordered border-gray-300 w-full  h-9 focus:outline-none lowercase '
                                     />
                                 </label>
@@ -436,11 +478,11 @@ const CreateProfile = () => {
                                 <label htmlFor="">
                                     <p className='text-base '>Tuition Type<span className='text-red-500'>*</span> </p>
                                     <div>
-                                        <input type="checkbox" name="type" value="online" {...register("type", { required: true })} />
+                                        <input type="checkbox" name="type" value="online" {...userInfo?.tuitionType == "online" ? { checked: true } : null} {...register("type")} />
                                         <label> Online</label>
                                     </div>
                                     <div>
-                                        <input type="checkbox" name="type" value="in-person"  {...register("type", { required: true })} />
+                                        <input type="checkbox" name="type" value="in-person"  {...userInfo?.tuitionType == "in-person" ? { checked: true } : null} {...register("type")} />
                                         <label> In-Person</label>
                                     </div>
                                 </label>
@@ -481,4 +523,4 @@ const CreateProfile = () => {
     );
 };
 
-export default CreateProfile;
+export default UpdateProfile;

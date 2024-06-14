@@ -32,7 +32,6 @@ const RequestedTuition = () => {
             })
     }, [user?.email])
 
-    console.log(requestedTuitions)
     return (
         <div className='pt-20 mx-[5vw]'>
             <SectionTitle title="Requested Tuitions" subtitle="The tutors details are given here, whom you requested."></SectionTitle>
@@ -53,11 +52,13 @@ const RequestedTuition = () => {
                 
             </div>
             <p className='mt-8'>No. of requested Tuitions you get from the tutor: {tuitionRequests.length}</p>
-            <div className=' grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-center items-center justify-items-center gap-6'>
+            <div className=' grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-center items-center justify-items-center gap-6 mb-10'>
                 {
-                    tuitionRequests.length !== 0 ? tuitionRequests.map(request => <div className='card border p-4 lg:w-80 md:w-80 w-[90%] h-28 m-4 space-y-1'>
+                    tuitionRequests.length !== 0 ? tuitionRequests.map(request => <div className='card border p-4 lg:w-80 md:w-80 w-[90%] h-full m-4 space-y-1'>
                         <p className='text-gray-500'>Tutor Email: <span className='text-gray-400'>{request.tutorEmail}</span></p>
                         {/* #0766AD */}
+                        <p className='text-gray-500'>Phone Number: <span className='text-gray-400'>{request.phoneNumber}</span></p>                        
+
                         <p className='text-gray-500'>Tutor Message: <span className='text-gray-400'>{request.message}</span></p>
                         {/* <p className='text-gray-500'>Response Status: &nbsp; {request.responseStatus === 'pending' ? <span className='border rounded-md text-red-400 p-[2px]'>{request.responseStatus}</span> : <span className='border rounded-md text-[#0766AD] p-1'>{request.responseStatus}</span>}</p> */}
                     </div>) : <div className='w-full h-full col-span-3 flex justify-center items-center'>

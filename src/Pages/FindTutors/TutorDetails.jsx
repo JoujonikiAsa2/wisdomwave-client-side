@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import './style.css'
+import "../../Pages/Discussions/upStyle.css"
 import ContactForm from './ContactForm';
 
 const TutorDetails = () => {
@@ -20,10 +21,12 @@ const TutorDetails = () => {
                 console.log(e)
             })
     }, [id])
+
+    console.log(tutor)
     return (
         <div className='py-20 mx-[5vw]'>
             <h2 className='text-xl pt-4 '>Tutor Profile</h2>
-            <div className='flex flex-col lg:flex-row md:flex-col lg:gap-10'>
+            <div className='flex flex-col lg:flex-row md:flex-col lg:gap-10 text-[0.75rem'>
 
                 <div className='lg:w-[60%] md:w-full flex flex-col rounded py-4 gap-10'>
 
@@ -84,17 +87,17 @@ const TutorDetails = () => {
                             <th>Subject</th>
                             <th>CGPA</th>
                             <tr>
-                                <td>B.Sc</td>
-                                <td className='capitalize'>{tutor?.institute}</td>
-                                <td>Computer science and Engineering</td>
-                                <td>3.43</td>
+                                <td className='capitalize'>{tutor?.educationalQualication?.eduName}</td>
+                                <td className='capitalize'>{tutor?.educationalQualication?.institute}</td>
+                                <td className='capitalize'>{tutor?.educationalQualication?.subject}</td>
+                                <td className='capitalize'>{tutor?.educationalQualication?.cgpa}</td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div className='lg:w-[35%] md:w-2/4 w-full rounded mt-4 p-4 ' style={{ border: "0.5px solid #c9cdd4" }}>
                     <h3 className='text-xl pb-4 text-center'>Contact Here</h3>
-                    <ContactForm tutorEmail = {tutor?.email}></ContactForm>
+                    <ContactForm tutorEmail={tutor?.email}></ContactForm>
                 </div>
             </div>
         </div>

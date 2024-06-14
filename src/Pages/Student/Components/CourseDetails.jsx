@@ -40,6 +40,9 @@ const CourseDetails = () => {
     console.log("Course details: ", courseDetails)
     console.log(courseDetails.playlistId)
 
+    const introductoryVideoId = courseDetails?.introductoryVideo?.split("/")[4]
+    console.log(introductoryVideoId)
+
     // date formating
     const start = new Date(courseDetails?.enrollmentDates?.enrollStart)
     const end = new Date(courseDetails?.enrollmentDates?.enrollEnd)
@@ -211,7 +214,7 @@ const CourseDetails = () => {
 
         //     </div>
         // </div>
-        <div className='flex justify-center items-center text-lgp-3 mx-0 mb-8'>
+        <div className='flex justify-center items-center text-lgp-3 mx-5 pt-8 mb-8'>
             <div className='flex flex-col justify-center gap-6 pt-12'>
                 <div className=' w-full'>
                     <div className='flex flex-col lg:flex-row md:flex-row gap-10 w-full'>
@@ -220,7 +223,7 @@ const CourseDetails = () => {
                             <h3 className='text-xl font-bold py-4'>{courseDetails?.title}</h3>
                             {/* introductory video */}
                             <iframe
-                                src={`https://www.youtube.com/embed/${courseDetails?.introductoryVideo?.split("=")[1] || 'XlvsJLer_No'}`} title="YouTube video player"
+                                src={`https://www.youtube.com/embed/${introductoryVideoId}`} title="YouTube video player"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen
@@ -253,14 +256,29 @@ const CourseDetails = () => {
                     </div>
 
                     {/* Buttons */}
-                    <div className='py-4 flex justify-start items-center gap-2 text-white'>
-                        <Link to={`/courseDashboard/${id}/${courseDetails.playlistId}`}>
-                            <button
-                                className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
-                            > Go to Course
-                            </button>
-                        </Link>
-                    </div>
+                    {
+                                    // compared the id with local storage's id
+                                    storedCourses != null && storedCourses?.includes(id) ?
+                                        <div className='py-4 flex justify-start items-center gap-2 text-white'>
+                                            <Link to={`/courseDashboard/${id}/${courseDetails.playlistId}`}>
+                                                <button
+                                                    className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
+                                                > Go to Course
+                                                </button>
+                                            </Link>
+                                        </div>
+                                        :
+                                        <div className='py-4 flex justify-start items-center gap-2 text-white'>
+
+                                            <button onClick={() => handlePayment(id)}
+                                                className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
+                                            > Buy now
+                                            </button>
+                                            <button
+                                                className='btn btn-sm text-white  capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '>Add to cart</button>
+                                        </div>
+                                }
+
 
                     {/* Course contents accordion*/}
                     <div>

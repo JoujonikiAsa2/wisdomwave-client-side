@@ -51,7 +51,7 @@ const CourseDashboard = () => {
         }
     })
 
-    console.log(id, course.liveClasses)
+    console.log(id, course?.liveClasses)
 
     //function to update direction by click at the course title
     const handleDuration = duration => {
