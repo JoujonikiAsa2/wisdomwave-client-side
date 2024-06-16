@@ -16,7 +16,7 @@ const Profile = ({ handleClicked, clicked, profileLinks }) => {
 
             {/* this part will be defferent for different types of user */}
 
-            <div tabIndex={1} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-6 z-[1] bg-base-100 shadow rounded-box w-48 text-base text-black gap-2"}`}>
+            <div tabIndex={1} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-[1.2rem] z-[1] bg-base-100 shadow rounded-box w-48 text-base text-black gap-2"}`}>
                 <div className='p-2'>
                     <h4 className=" text-sm text-[#0766AD] font-bold capitalize">{user?.displayName}</h4>
                     <hr className='my-2 h-1 bg-[#0766AD]' />

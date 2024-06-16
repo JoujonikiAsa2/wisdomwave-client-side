@@ -20,7 +20,7 @@ const AdminDashboard = () => {
             .catch(err => {
                 console.log(err);
             })
-    }, [])
+    }, [userInfo])
 
 
     // filterd by user type

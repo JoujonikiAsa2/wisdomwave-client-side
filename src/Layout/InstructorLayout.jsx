@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Logo from "../assets/Photos/LandingPage/logo_wave.png";
 import { TbCoinTaka } from "react-icons/tb";
 import { IoHome, IoLogOut } from "react-icons/io5";
-import { MdOutlineCreateNewFolder, MdOutlineManageAccounts, MdDashboard, MdOutlineAssignment, MdPeople, MdLogout } from "react-icons/md";
+import { MdOutlineCreateNewFolder, MdOutlineManageAccounts, MdDashboard, MdOutlineAssignment, MdPeople, MdLogout, MdOutlineAssignmentInd } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { SiGoogleclassroom } from "react-icons/si";
 
@@ -27,6 +27,11 @@ const navLinks = [
         nav: "Manage Courses",
         icon: MdOutlineManageAccounts,
         link: "/instructor/manageCourses",
+    },
+    {
+        nav: "Manage Certification",
+        icon: MdOutlineAssignmentInd,
+        link: "/instructor/manageCertification",
     },
     {
         nav: "Announcements ",

@@ -17,7 +17,7 @@ const ManageUsers = () => {
             .catch(error => {
                 console.log(error)
             })
-    })
+    },[users])
 
     const handleDelete = (email) => {
         Swal.fire({

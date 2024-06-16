@@ -15,6 +15,8 @@ const ManageClasses = () => {
     const [classes, setClasses] = useState([]);
     const [students, setStudents] = useState([]);
 
+    console.log("The class id is" , classId)
+
     const { data: courses = [], refetch } = useQuery({
         queryKey: "courses",
         queryFn: async () => {
@@ -55,6 +57,8 @@ const ManageClasses = () => {
         );
     };
 
+    console.log(courses)
+
     return (
         <>
             <Toaster position="top-center" reverseOrder={false} />
@@ -66,7 +70,7 @@ const ManageClasses = () => {
                             {clicked ? <IoClose></IoClose> : ""}
                         </button>
                     </div>
-                    <form action="" className={`${clicked === true ? "lg:w-1/2 md:w-2/3 w-[80%] flex flex-col justify-center items-center gap-3 border p-4" : "hidden"}`} onSubmit={(e) => handleSubmit(e, setClassId)}>
+                    <form action="" className={`${clicked === true ? "lg:w-1/2 md:w-2/3 w-[80%] flex flex-col justify-center items-center gap-3 border p-4" : "hidden"}`} onSubmit={(e) => handleSubmit(e, classId)}>
                         <div className='w-full lg:w-[80%] h-full'>
                             <label htmlFor="duration" className='w-full'>
                                 <p className='text-base text-gray-500'>Class date<span className='text-red-500'>*</span> </p>

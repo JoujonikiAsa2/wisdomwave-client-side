@@ -1,16 +1,35 @@
 import { Rating } from '@smastrom/react-rating'
 
 import '@smastrom/react-rating/style.css'
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
 
 //Course card design
 
 const AvaiableCourseCard = ({ course,id }) => {
 
+    const axiosPublic = useAxiosPublic()
+    const [ratings, setRatings] = useState([])
+
     // Distructured available coourse properties
     const { title, thumbnail, instructor, rating, totalStudents, enrollFee, playlistId } = course.courseDetails
 
-    console.log(playlistId)
+   const playListId = playlistId.split('=')[1]
+
+    useEffect(() => {
+        axiosPublic.get(`/api/ratings`)
+            .then(res => {
+                setRatings(res.data.data)
+            })
+            .catch(e => {
+                console.log(e); // Ensure the rating is set to 0 on error
+            });
+    }, [id])
+
+
+    const filteredRatings = ratings.length > 0 && ratings.filter(rating => rating.courseId === id)
+    const avgRating = filteredRatings.length > 0 && filteredRatings.reduce((acc, curr) => acc + curr.rating, 0) / filteredRatings.length
 
     // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
     return (
@@ -30,7 +49,7 @@ const AvaiableCourseCard = ({ course,id }) => {
                 <div className='flex flex-col-reverse justify-between pt-2 self-end'>
 
                     {/* redirect to the playlist of the couurse */}
-                    <Link to={`/courseDashboard/${id}/${playlistId}`}>
+                    <Link to={`/courseDashboard/${id}/${playListId}/${title}`}>
 
                         <div className='flex justify-end' >
                             <button className='btn btn-xs capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] text-white border-2 border-none'>View course</button>
@@ -38,7 +57,7 @@ const AvaiableCourseCard = ({ course,id }) => {
                     </Link>
 
                     <div>
-                        <p className="text-sm flex gap-3"><Rating style={{ maxWidth: 70 }} readOnly value={rating}></Rating>({rating})</p>
+                        <p className="text-sm flex gap-3"><Rating style={{ maxWidth: 70 }} readOnly value={avgRating}></Rating>({rating})</p>
                         <p className="text-sm font-bold">Total Student: <span className='font-normal'>{totalStudents}</span></p>
                     </div>
                 </div>

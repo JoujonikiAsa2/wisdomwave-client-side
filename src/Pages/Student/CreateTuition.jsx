@@ -45,6 +45,7 @@ const CreateTuition = () => {
         e.preventDefault()
         const form = e.target
         const classvalue = form.class.value
+
         const tuitionData = {
             userEmail: user?.email,
             district: form.district.value.toLowerCase(),
@@ -94,13 +95,13 @@ const CreateTuition = () => {
         <>
             <Toaster position='top-center' reverseOrder={false} />
             <div className='py-32 rounded flex justify-center items-center'>
-                <form action="" onSubmit={handleTuitionCreation} className='w-full lg:w-1/2 md:w-2/3 px-6 space-y-4 py-6'>
+                <form action="" onSubmit={handleTuitionCreation} className='w-full lg:w-1/2 md:w-2/3 px-6 space-y-4 pt-6'>
                     <div className=' w-full flex space-x-4'>
                         <div className='w-1/2'>
                             {/* bogger name */}
                             <label htmlFor="">
                                 <p className=' text-base text-gray-500'>District<span className='text-red-500'>*</span></p>
-                                <input type="text" name='district' className='input input-bordered w-full focus:outline-none lowercase' required />
+                                <input type="text" name='district' className='input input-sm input-bordered w-full focus:outline-none lowercase' required />
                             </label>
 
                         </div>
@@ -108,7 +109,7 @@ const CreateTuition = () => {
                             {/* bogger name */}
                             <label htmlFor="">
                                 <p className=' text-base text-gray-500'>Area<span className='text-red-500'>*</span></p>
-                                <input type="text" name='area' className='input input-bordered w-full focus:outline-none lowercase' required />
+                                <input type="text" name='area' className='input input-sm input-bordered w-full focus:outline-none lowercase' required />
                             </label>
 
                         </div>
@@ -118,7 +119,7 @@ const CreateTuition = () => {
                             {/* bogger name */}
                             <label htmlFor="">
                                 <p className=' text-base text-gray-500'>Group<span className='text-red-500'>*</span></p>
-                                <input type="text" name='category' className='input input-bordered w-full focus:outline-none lowercase' required />
+                                <input type="text" name='category' className='input input-sm input-bordered w-full focus:outline-none lowercase' required />
                             </label>
 
                         </div>
@@ -126,7 +127,7 @@ const CreateTuition = () => {
                             {/* bogger name */}
                             <label htmlFor="">
                                 <p className=' text-base text-gray-500'>Medium<span className='text-red-500'>*</span></p>
-                                <input type="text" name='medium' className='input input-bordered w-full focus:outline-none lowercase' required />
+                                <input type="text" name='medium' className='input input-sm input-bordered w-full focus:outline-none lowercase' required />
                             </label>
 
                         </div>
@@ -147,7 +148,7 @@ const CreateTuition = () => {
                             {/* bogger name */}
                             <label htmlFor="">
                                 <p className=' text-base text-gray-500'>Salary<span className='text-red-500'>*</span></p>
-                                <input type="number" name='salary' className='input input-bordered w-full focus:outline-none lowercase' required />
+                                <input type="number" name='salary' className='input input-sm input-bordered w-full focus:outline-none lowercase' required />
                             </label>
 
                         </div>
@@ -159,10 +160,10 @@ const CreateTuition = () => {
                             <label htmlFor="">
                                 <p className=' text-base text-gray-500'>Details<span className='text-red-500'>*</span></p>
                                 <div className='flex flex-col gap-4'>
-                                    <input type="text" name='class' className='input input-bordered w-full focus:outline-none lowercase' placeholder='Class' required />
+                                    <input type="text" name='class' className='input input-sm input-bordered w-full focus:outline-none lowercase' placeholder='Class' required />
                                     {
                                         subjects.map((subject, index) =>
-                                            <input type="text" name='subject' className='input input-bordered w-full focus:outline-none lowercase' placeholder='Subject' onChange={(event) => handdleSubjectOnChange(index, event)} />
+                                            <input type="text" name='subject' className='input input-sm input-bordered w-full focus:outline-none lowercase' placeholder='Subject' onChange={(event) => handdleSubjectOnChange(index, event)} />
                                         )
                                     }
                                 </div>
@@ -179,7 +180,7 @@ const CreateTuition = () => {
 
                     {/* submit button */}
                     <div className='flex w-full justify-center items-center'>
-                        <input type="submit" value="Publish" className='btn text-white w-40 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2' />
+                        <input type="submit" value="Publish" className='btn btn-sm text-white w-40 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2' />
                     </div>
                 </form>
             </div>

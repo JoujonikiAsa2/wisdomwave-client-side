@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import toast from 'react-hot-toast';
 import { FcViewDetails } from 'react-icons/fc';
+import { useEffect, useState } from 'react';
 
 const CourseCardAdmin = ({ course }) => {
     const axiosPublic = useAxiosPublic()
-    const { _id, title, thumbnail, instructor, rating, totalStudents, enrollFee } = course.courseDetails
+    const [ratings,setRatings] = useState([])
+    const id = course._id
+    const {  title, thumbnail, instructor, rating, totalStudents, enrollFee } = course.courseDetails
 
     const handleCourseDelete = (id) => {
         axiosPublic.delete(`/api/courses/id/${id}`)
@@ -19,6 +22,20 @@ const CourseCardAdmin = ({ course }) => {
                 console.log(error)
             })
     }
+
+    useEffect(() => {
+        axiosPublic.get(`/api/ratings`)
+            .then(res => {
+                setRatings(res.data.data)
+            })
+            .catch(e => {
+                console.log(e); // Ensure the rating is set to 0 on error
+            });
+    }, [id])
+
+
+    const filteredRatings = ratings.length > 0 && ratings.filter(rating => rating.courseId === id)
+    const avgRating = filteredRatings.length > 0 && filteredRatings.reduce((acc, curr) => acc + curr.rating, 0) / filteredRatings.length
 
     return (
 
@@ -38,7 +55,7 @@ const CourseCardAdmin = ({ course }) => {
 
                     <div className=''>
                         <div className='space-y-1 flex flex-col-reverse justify-between self-end pt-8'>
-                            <p className="text-sm flex gap-3"><Rating style={{ maxWidth: 70 }} readOnly value={rating}></Rating>({rating})</p>
+                            <p className="text-sm flex gap-3"><Rating style={{ maxWidth: 70 }} readOnly value={avgRating}></Rating>({rating})</p>
                             <p className="text-sm font-bold">Total Student: <span className='font-normal'>{totalStudents}</span></p>
                         </div>
                     </div>

@@ -18,7 +18,7 @@ const PaymentDashboard = () => {
             .catch(error => {
                 console.log(error)
             })
-    }, [])
+    }, [earning])
 
     useEffect(() => {
         axiosPublic.get(`/api/earningByMonth`)
@@ -29,7 +29,7 @@ const PaymentDashboard = () => {
             .catch(error => {
                 console.log(error)
             })
-    }, [])
+    }, [transactions])
 
     const profit = earning.twentyPercentTotal / 1000
 

@@ -39,12 +39,7 @@ const HomeRoute = ({children}) => {
     else if (userInfo?.userType === "instructor") {
         return children
     }
-
-    return (
-        <div>
-            <PageNotFound></PageNotFound>
-        </div>
-    );
+    
 };
 
 export default HomeRoute;

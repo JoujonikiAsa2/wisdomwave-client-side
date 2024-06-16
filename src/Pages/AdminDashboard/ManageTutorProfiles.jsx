@@ -4,6 +4,7 @@ import useAxiosPublic from '../../hooks/useAxiosPublic';
 import { Link } from 'react-router-dom';
 import { BiEdit } from 'react-icons/bi';
 import { MdDeleteOutline, MdEdit } from 'react-icons/md';
+import toast, { Toaster } from 'react-hot-toast';
 
 const ManageTutorProfiles = () => {
 
@@ -55,14 +56,25 @@ const ManageTutorProfiles = () => {
         });
         setDates(newDates);
     }, [tutorProfiles]);
+    
     // console.log(dates)
 
     console.log(dates)
 
     const handleDeleteTutor =  (email) => {
         try {
-            axiosPublic.delete(`/api/tutors/${email}`);
-            setTutorProfiles(tutorProfiles.filter(tutor => tutor.email !== email))
+            axiosPublic.delete(`/api/tutors/${email}`)
+            .then(res => {
+                console.log(res.data.data)
+                if(res.data.status === "success"){
+                    toast.success("Tutor Profile Deleted Successfully")
+                    const filteredProfile =  tutorProfiles.filter(tutor => tutor.email !== email)
+                    setTutorProfiles(filteredProfile)
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
         } catch (error) {
             console.log(error);
         }
@@ -70,9 +82,10 @@ const ManageTutorProfiles = () => {
 
     return (
         <div>
+            <Toaster position='top-center' reverseOrder={false} />
             <DashboardTitle title="Manage Tutor Profiles" subTitle="Manage Tutor Profiles as Admin " />
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center items-center justify-items-center'>
-                {tutorProfiles != null && tutorProfiles.map(tutor => (
+                {tutorProfiles.length > 0 ? tutorProfiles.map(tutor => (
                     <div className='w-[90%] lg:w-80  flex flex-col md:flex-col justify-start items-start md:p-4 lg:pt-4 border rounded-xl gap-4 relative p-4 pt-10 text-xs' key={tutor._id} >
                         <div className='lg:w-56 w-full flex lg:justify-start md:justify-start justify-center lg:items-start md:items-start items-center'>
                             <img src={tutor?.profile} alt="" className='w-32 h-32 rounded-full' />
@@ -122,7 +135,9 @@ const ManageTutorProfiles = () => {
                             </Link>
                         </div>
                     </div>
-                ))}
+                )) : <div className='w-full col-span-3 h-[50vh] flex justify-center items-center'>
+                        <p className='text-center text-xl'>No Tutor Profiles Found</p>
+                    </div>}
             </div>
         </div>
     );

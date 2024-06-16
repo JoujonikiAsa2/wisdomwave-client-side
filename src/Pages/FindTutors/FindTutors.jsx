@@ -107,21 +107,24 @@ const FindTutors = () => {
                     </div>
                 ))}
             </div>
-            <div className={`flex justify-center py-4`} >
-                <div className="flex gap-2 justify-center items-center">
-                    <div>
-                        <button className="btn btn-sm capitalize text-white bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2" onClick={handlePrev}>Prev</button>
+            {
+                numberOfPages === 1 ? <div className={`flex justify-center py-4`} >
+                    <div className="flex gap-2 justify-center items-center">
+                        <div>
+                            <button className="btn btn-sm capitalize text-white bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2" onClick={handlePrev}>Prev</button>
+                        </div>
+                        <div className='flex justify-center items-center gap-2'>
+                            {
+                                pages.map(page => <button className={`btn btn-sm btn-circle hover:bg-slate-400 ${currentPage === page && "selected border-1 bg-slate-400 text-white"}`} key={page} onClick={() => setCurrentPage(page)}>{page + 1}</button>)
+                            }
+                        </div>
+                        <div>
+                            <button className="btn btn-sm capitalize text-white bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2" onClick={handleNext}>Next</button>
+                        </div>
                     </div>
-                    <div className='flex justify-center items-center gap-2'>
-                        {
-                            pages.map(page => <button className={`btn btn-sm btn-circle hover:bg-slate-400 ${currentPage === page && "selected border-1 bg-slate-400 text-white"}`} key={page} onClick={() => setCurrentPage(page)}>{page + 1}</button>)
-                        }
-                    </div>
-                    <div>
-                        <button className="btn btn-sm capitalize text-white bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2" onClick={handleNext}>Next</button>
-                    </div>
-                </div>
-            </div>
+                </div> : <div className='w-full h-[50vh] flex justify-center items-center'>
+                        <h2 className="text-lg text-center ">No Tutors Found</h2>
+                </div>}
         </div>
     );
 };

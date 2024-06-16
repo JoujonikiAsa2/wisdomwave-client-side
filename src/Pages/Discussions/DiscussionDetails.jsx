@@ -15,8 +15,6 @@ import toast from "react-hot-toast";
 
 const DiscussionDetails = () => {
     const { user } = useAuth()
-    localStorage.setItem('totalClicked', false)
-    const localItem = JSON.parse(localStorage.getItem('totalClicked'))
     const axiosPublic = useAxiosPublic()
     const { id } = useParams()
     const { discussions } = useDiscussions()
@@ -25,8 +23,22 @@ const DiscussionDetails = () => {
     const ref = useRef()
     const [divRef, setDivRef] = useState()
     const [clicked, setClicked] = useState(false)
-    const [totalClicked, setTotalClicked] = useState(localItem)
+    const [totalClicked, setTotalClicked] = useState(null)
+    const [likes, setLikes] = useState(0)
     const navigate = useNavigate()
+
+    useEffect(() => {
+        axiosPublic.get(`/api/likes/${id}/${user?.email}`)
+            .then(res => {
+                if (res.data.status === "success") {
+                    setTotalClicked(true)
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                setTotalClicked(false)
+            })
+    }, [id, user?.email])
 
     // console.log(id)
     // handle content field text changes
@@ -57,27 +69,32 @@ const DiscussionDetails = () => {
 
 
     const handleLikes = () => {
-
-        const likes = {
-            userId: user.email
-        };
-        axiosPublic.get("/api/discussions/likes/user", likes)
+        const userId = user?.email
+        axiosPublic.patch(`/api/likes/${id}`, { userId: userId })
             .then(res => {
-                console.log("updated decreased successfully", res.data);
+                console.log(res.data)
+                if (res.data.status === "success") {
+                    setTotalClicked(true)
+                }
+                else {
+                    setTotalClicked(false)
+                }
+                refetch()
             })
-            .catch((e) => {
-                console.log(e.message);
-            });
+            .catch(e => {
+                console.log(e)
+
+            })
     }
 
 
     // Handle post reply
-    const handleReply = (e) => {
+    const handleComment = (e) => {
         e.preventDefault()
         const comment = text
         console.log(comment)
         const commentData = {
-            commenterName: user?.name,
+            commenterName: user?.displayName,
             commenterEmail: user?.email,
             replydate: new Date(),
             comment: comment,
@@ -91,6 +108,7 @@ const DiscussionDetails = () => {
                 // console.log(res.data)
                 refetch()
                 console.log(ref.current.ref)
+                refetch()
                 setDivHidden(!divHidden)
                 setText("")
             })
@@ -101,30 +119,31 @@ const DiscussionDetails = () => {
     }
 
     // Handle to send reply
-    const handleReplies = (e) => {
-        e.preventDefault()
-        const replyData = {
-            replierName: user?.name,
-            replierEmail: user?.email,
-            replydate: new Date(),
-            isReply: true,
-            reply: e.target.reply.value,
-            profile: user?.photoURL
-        }
+    // const handleReplies = (e) => {
+    //     e.preventDefault()
+    //     const replyData = {
+    //         replierName: user?.name,
+    //         replierEmail: user?.email,
+    //         replydate: new Date(),
+    //         isReply: true,
+    //         ref: ref.current.ref,
+    //         reply: e.target.replyToReplier.value,
+    //         profile: user?.photoURL
+    //     }
 
-        // send the post reply to the backend
-        axiosPublic.post(`/api/discussions/${id}`, replyData)
-            .then(res => {
-                // console.log(res.data)
-                refetch()
-                console.log(ref.current.ref)
-                e.target.reset()
-            })
-            .catch((e) => {
-                console.log(e.message)
-            })
-        console.log("Your successfully submited the reply", e.target.replyToReplier.value)
-    }
+    //     // send the post reply to the backend
+    //     axiosPublic.post(`/api/discussions/${id}`, replyData)
+    //         .then(res => {
+    //             // console.log(res.data)
+    //             refetch()
+    //             console.log(ref.current.ref)
+    //             e.target.reset()
+    //         })
+    //         .catch((e) => {
+    //             console.log(e.message)
+    //         })
+    //     console.log("Your successfully submited the reply", e.target.replyToReplier.value)
+    // }
 
     const handleDelete = (id) => {
         axiosPublic.delete(`/api/discussions/${id}/${user.email}`)
@@ -142,12 +161,14 @@ const DiscussionDetails = () => {
 
     // console.log("totalClicked",totalClicked)
 
+    
+
     return (
         <div className="flex lg:flex-row md:flex-col-reverse flex-col-reverse justify-center lg:gap-8 px-[2vw] pt-24 min-h-screen max-w-[2300px]">
             <div className="flex flex-col gap-2 p-4 rounded bg-[#F3F3F3] mb-10">
                 <h2 className="text-lg pb-2 border-b-2 font-bold">All Blogs</h2>
                 {
-                    discussions.map((item,index) =>
+                    discussions.map((item, index) =>
                         <Link to={`/discussions/${item._id}`} key={index}>
                             {/* discussion card */}
                             <div key={item._id} className={`w-[250px] bg-white ${id == item._id && 'border-[0.2px] border-[#29ADB2]'}`}>
@@ -201,12 +222,12 @@ const DiscussionDetails = () => {
                                 <FaComment></FaComment> <span>({discussion?.comments?.length})</span>
                             </div>
                             <div className="flex gap-1 items-center">
-                                <button onClick={handleLikes}><BiSolidLike className={`text-lg ${totalClicked === 1 ? "text-blue-400" : "text-black "}`}></BiSolidLike></button> <span>({discussion.likes})</span>
+                                <button onClick={handleLikes}><BiSolidLike className={`text-lg ${totalClicked === true ? "text-blue-400" : "text-black "}`}></BiSolidLike></button> <span>({discussion.likes})</span>
                             </div>
                         </div>
 
                         {/* Post comment form */}
-                        <form action="" className="flex flex-col items-startgap-2" onSubmit={(e) => handleReply(e)}>
+                        <form action="" className="flex flex-col items-startgap-2" onSubmit={(e) => handleComment(e)}>
                             <div className='lg:w-2/3'>
                                 <label htmlFor="">
                                     <ReactQuill
@@ -228,22 +249,26 @@ const DiscussionDetails = () => {
                 </div>
 
                 {/* Comments section */}
-                <div className={`${discussion?.comments.length !== 0 ? "border-[1px] border-gray-400  p-4 flex flex-col gap-4 justify-start items-start my-10" : "hidden"}`}>
+                <div className={`${discussion?.comments.length !== 0 ? " border-gray-400  p-4 flex flex-col gap-4 justify-start items-start my-10" : "hidden"}`}>
                     <h4 className="text-lg">Comments: </h4>
                     {
                         discussion?.comments.map((comment, index) => <div key={index} className="flex flex-col  gap-4 justify-start items-start w-full h-full">
                             <div className="flex gap-20 items-centertext-sm">
-                                <div className="flex gap-2">
-                                    <img src={comment?.profile} alt="" className="h-6 w-6 rounded-full" />
-                                    <div className="">
-                                        <h4>{comment?.commenterName}</h4>
+                                <div className="flex flex-col gap-2">
+                                   <div className="flex gap-2">
+                                        <img src={comment?.profile} alt="" className="h-6 w-6 rounded-full" />
+                                        <div className="">
+                                            <h4>{comment?.commenterName}</h4>
+                                        </div>
+                                   </div>
+                                    <div dangerouslySetInnerHTML={{ __html: comment?.comment }} className="text-gray-500 ml-8">
                                     </div>
                                 </div>
                             </div>
+{/* 
+                            <div className="w-full firstLetterUppercase p-2 text-base overflow-ellipsis max-h-72 overflow-y-auto   border-gray-400 text-gray-500 rounded" dangerouslySetInnerHTML={{ __html: comment?.comment }} />
 
-                            <div className="w-full firstLetterUppercase p-2 text-base overflow-ellipsis max-h-72 overflow-y-auto  border-[1px] border-gray-400 text-gray-500 rounded" dangerouslySetInnerHTML={{ __html: comment?.comment }} />
-
-                            {/* reply button */}
+                            reply button
                             <h2
                                 className="lg:ml-8 hover:cursor-pointer flex items-center gap-1"
                                 onClick={() => {
@@ -252,17 +277,17 @@ const DiscussionDetails = () => {
                                 }} >
 
                                 <FaReply className="text-xs"></FaReply>Reply ({discussion?.replies
-                                    .filter((reply) => reply.replierEmail === comment.commenterEmail).length})
+                                    .filter((reply) => reply.ref === ref.current.ref).length})
                             </h2>
 
-                            {/* all replies to a individual user */}
-                            <div className={`lg:ml-10 border-[1px] border-gray-400 w-[90%] p-4 ${discussion?.replies.length !== 0 ? "flex flex-col gap-4" : "hidden"}`}>
+                            all replies to a individual user
+                            <div className={`lg:ml-10  border-gray-400 w-[90%] p-4 ${discussion?.replies.length !== 0 ? "flex flex-col gap-4" : "hidden"}`}>
                                 {
                                     discussion?.replies
-                                        .filter((reply) => reply.replierEmail === comment.commenterEmail)
+                                        .filter((reply) => reply.ref === ref.current.ref)
                                         .map((reply, replyIndex) => (
                                             <div key={replyIndex} className="flex flex-col gap-2">
-                                                {/* Render individual reply content here */}
+                                                Render individual reply content here 
                                                 <div className="flex gap-2">
                                                     <img src={comment?.profile} alt="" className="h-6 w-6 rounded-full" />
                                                     <div className="">
@@ -277,15 +302,16 @@ const DiscussionDetails = () => {
                                 }
                             </div>
 
-                            {/* reply form for reply to the replier */}
-                            <form onSubmit={(e) => handleReplies(e)}>
+                            {onSubmit = {(e) => handleReplies(e)}}
+                            reply form for reply to the replier
+                            <form >
                                 <div className={`gap-2 ${index == divRef && clicked == true ? "flex" : "hidden"}`} ref={ref}>
                                     <div id={index} className="lg:ml-10">
-                                        <textarea type="text" name="reply" className="input input-bordered border-[1px] border-gray-400 lg:w-80 w-full focus:outline-none" placeholder="Reply here..." />
+                                        <textarea type="text" name="replyToReplier" className="input input-bordered  border-gray-400 lg:w-80 w-full focus:outline-none" placeholder="Reply here..." />
                                     </div>
-                                    <input type="submit" value="Send" className="input input-bordered border-[1px] hover:cursor-pointer border-gray-400 w-20 focus:outline-none bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] text-white" />
+                                    <input type="submit" value="Send" className="input input-bordered  hover:cursor-pointer border-gray-400 w-20 focus:outline-none bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] text-white" />
                                 </div>
-                            </form>
+                            </form> */}
                         </div>)
                     }
 

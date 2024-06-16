@@ -18,7 +18,7 @@ const AllCourses = () => {
     const page = Math.ceil(count/itemsPerPage)
     const pages =  [...Array(page).keys()]
 
-    console.log(allCourses, searchKey)
+    console.log(courses, searchKey)
 
     useEffect(() => {
         axiosPublic.get('/api/totalCourse')

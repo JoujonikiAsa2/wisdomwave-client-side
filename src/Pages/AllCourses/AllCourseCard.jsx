@@ -1,11 +1,30 @@
 import { Rating } from '@smastrom/react-rating';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const AllCourseCard = ({course, btnText}) => {
 
+    const axiosPublic = useAxiosPublic()
+    const [ratings, setRatings] = useState(0)
+    const id = course._id
     const { title, thumbnail, instructor, rating, totalStudents, enrollFee } = course.courseDetails
     // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
+
+    useEffect(() => {
+        axiosPublic.get(`/api/ratings`)
+            .then(res => {
+                setRatings(res.data.data)
+            })
+            .catch(e => {
+                console.log(e); // Ensure the rating is set to 0 on error
+            });
+    }, [id])
+
+
+    const filteredRatings = ratings.length > 0 && ratings.filter(rating => rating.courseId === id)
+    const avgRating = filteredRatings.length > 0 && filteredRatings.reduce((acc, curr) => acc + curr.rating, 0) / filteredRatings.length
+
     return (
         <Link to={`/courseDetails/${course._id}`}>
             <div className="h-[13rem] hover:shadow hover:cursor-pointer relative w-full border bg-white flex items-center rounded-lg">
@@ -24,7 +43,7 @@ const AllCourseCard = ({course, btnText}) => {
 
                         <div className='flex flex-col-reverse justify-between self-end'>
                             <div className='space-y-2'>
-                                <p className="text-sm flex gap-3"><Rating style={{ maxWidth: 70 }} readOnly value={rating}></Rating>({rating})</p>
+                                <p className="text-sm flex gap-3"><Rating style={{ maxWidth: 70 }} readOnly value={avgRating}></Rating>({rating})</p>
                                 <p className="text-sm font-bold">Total Student: <span className='font-normal'>{totalStudents}</span></p>
                             </div>
                         </div>

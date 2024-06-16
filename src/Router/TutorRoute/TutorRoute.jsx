@@ -27,9 +27,6 @@ const TutorRoute = ({ children }) => {
     else if (isLoading) {
         return <Loader />
     }
-    return (
-        <Navigate to='/'></Navigate>
-    );
 };
 
 export default TutorRoute;

@@ -24,9 +24,6 @@ const AdminRoute = ({ children }) => {
     if (userInfo?.userType === "admin") {
         return children
     }
-    return (
-        <Navigate to='/'></Navigate>
-    );
 };
 
 export default AdminRoute;

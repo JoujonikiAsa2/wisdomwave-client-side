@@ -57,6 +57,8 @@ import ManageUsers from "../Pages/AdminDashboard/ManageUsers"
 import ManageTutorProfiles from "../Pages/AdminDashboard/ManageTutorProfiles"
 import ManageTuitions from "../Pages/AdminDashboard/ManageTuitions"
 import UpdateCourseAdmin from "../Pages/AdminDashboard/UpdateCourseAdmin"
+import ManageCertification from "../Pages/InstructorDashboard/ManageCertification"
+import GetCertificate from "../Pages/Student/Components/GetCertificate"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -124,8 +126,12 @@ export const router = createBrowserRouter([
                 element: <TakeQuiz />,
             },
             {
-                path: '/courseDashboard/:id/:playlistId',
+                path: '/courseDashboard/:id/:playlistId/:title',
                 element: <PrivateRoute><CourseDashboard></CourseDashboard></PrivateRoute>
+            },
+            {
+                path: '/getCertificate/:id/:title/:instructor/:duration', 
+                element: <GetCertificate/>
             },
             
         ]
@@ -216,8 +222,12 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'courseDashboard/:id/:playlistId',
-                element: <CourseDashboard></CourseDashboard>
+                element: <CourseDashboard></CourseDashboard>,
             },
+            {
+                path: 'manageCertification',
+                element: <ManageCertification/>
+            }
             
         ]
     },

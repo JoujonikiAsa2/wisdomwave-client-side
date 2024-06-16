@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 const Courses = ({ courses, setCourses, clickStatus }) => {
 
     const [total, setTotal] = useState([])
+    const [ratings, setRatings] = useState([])
     const { user } = useAuth()
     const axiosPublic = useAxiosPublic()
     // console.log(user.email)
@@ -26,7 +27,18 @@ const Courses = ({ courses, setCourses, clickStatus }) => {
             })
     }, [total])
 
+    useEffect(() => {
+        axiosPublic.get('/api/ratings')
+            .then(res => {
+                console.log(res.data.data)
+                setRatings(res.data.data)
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }, [])
 
+ 
     if (clickStatus === true && courses?.length === 0) {
         return <div className=' -z-0' >
             <SectionTitle title="Courses" total={total.length} subtitle="Find your favorite courses here"></SectionTitle>

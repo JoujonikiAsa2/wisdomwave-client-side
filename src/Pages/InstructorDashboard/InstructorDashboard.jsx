@@ -35,8 +35,8 @@ const InstructorDashboard = () => {
     useEffect(() => {
         axiosPublic.get(`/api/totalEarningByInstructor/${user?.email}`)
             .then(res => {
-                console.log(res.data[0].totalEnrollFee)
-                setEarning(res.data[0].totalEnrollFee)
+                console.log(res.data[0].eightyTotal)
+                setEarning(res.data[0].eightyTotal)
             })
             .catch(error => {
                 console.log(error)

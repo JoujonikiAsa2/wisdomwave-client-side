@@ -18,7 +18,7 @@ const Header = ({ handleSearch }) => {
     const [clicked, setClicked] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false);
     const navigate = useNavigate()
-    console.log(userInfo)
+    // console.log(userInfo)
 
     // Handle the navbar color
     useEffect(() => {
@@ -48,7 +48,7 @@ const Header = ({ handleSearch }) => {
         } catch (error) {
             console.error(error);
         }
-    }, [user?.email]);
+    }, [user?.email, userInfo]);
 
     // Helps to show the search bar on click( Small device )
     const handleShow = () => {

@@ -19,7 +19,7 @@ const RequestedTuition = () => {
             .catch(error => {
                 console.log(error)
             })
-    }, [user?.email])
+    }, [user?.email, requestedTuitions])
 
     useEffect(() => {
         axiosPublic.get(`/api/student/tuitionRequest/${user?.email}`)
@@ -30,7 +30,7 @@ const RequestedTuition = () => {
             .catch(error => {
                 console.log(error)
             })
-    }, [user?.email])
+    }, [user?.email, tuitionRequests])
 
     return (
         <div className='pt-20 mx-[5vw]'>

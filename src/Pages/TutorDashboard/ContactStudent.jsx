@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { PiSpinnerGapBold } from "react-icons/pi";
 
-const ContactStudent = ({ email, openForm , setOpenForm}) => {
+const ContactStudent = ({ email }) => {
     const form = useRef();
     const { user } = useAuth()
     const axiosPublic = useAxiosPublic();
@@ -30,6 +30,8 @@ const ContactStudent = ({ email, openForm , setOpenForm}) => {
                 if (res.data.status === 'success') {
                     toast.success(res.data.data)
                     setIsLoading(false)
+                    setTimeout(() => {
+                    }, 2000)
                     formField.reset()
                 }
             })
@@ -42,9 +44,6 @@ const ContactStudent = ({ email, openForm , setOpenForm}) => {
 
     return (
         <div className="w-full flex justify-center items-center">
-            <div className='absolute  top-0 right-0 lg:top-[4.3rem] md:top-[4.3rem] lg:-right-[1rem] md:-right-[1rem]  justify-center items-center'>
-                <button className={`${openForm === true ? "btn btn-sm te capitalize text-white bg-slate-500" : 'hidden'}`} onClick={() => setOpenForm(false)}>{openForm ? <IoClose></IoClose> : ""}</button>
-            </div>
             <form
                 ref={form}
                 onSubmit={sendEmail}

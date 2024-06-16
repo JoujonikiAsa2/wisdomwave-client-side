@@ -19,7 +19,7 @@ const Announcement = () => {
         axiosPublic.get(`/api/enrolledStudents/instructor/${user?.email}`)
             .then((res) => {
                 // Extract userEmails from the response data and update state
-                const userEmails = res.data.data.map(student => student.userEmail);
+                const userEmails = res.data.data.map(student => {return {email: student.userEmail, isRead: false}});
                 setStudents(prevStudents => [...new Set([...prevStudents, ...userEmails])]);
                 console.log(res.data.data);
             })
@@ -29,10 +29,10 @@ const Announcement = () => {
     }, [user?.email]);
 
 
-    const {data: announcements = [], refetch} = useQuery({
+    const { data: announcements = [], refetch } = useQuery({
         queryKey: ['announcements'],
         queryFn: async () => {
-            const res = await axiosPublic.get(`/api/announcements`)
+            const res = await axiosPublic.get(`/api/announcements/email/${user?.email}`)
             console.log(res.data.data)
             return res.data.data
         }
@@ -48,7 +48,10 @@ const Announcement = () => {
         const details = form.details.value
         console.log(title, details)
 
-        axiosPublic.post('/api/announcements', { title, details, email: user?.email, studentEmails: [...students] })
+        console.log(students)
+
+
+        axiosPublic.post('/api/announcements', { title, details, email: user?.email, studentEmails: students })
             .then(res => {
                 console.log(res.data)
                 if (res.data.status === "success") {
@@ -75,7 +78,7 @@ const Announcement = () => {
 
                 <div className={`${clicked === true ? "relative w-full flex flex-col justify-center items-center " : "hidden"} relative`} >
                     <div className='absolute  bottom-80 left-64 md:left-72 lg:left-80 justify-center items-center'><button className={`${clicked === true ? "btn btn-sm bg-gray-300 te capitalize" : 'hidden'}`} onClick={() => setClicked(false)}>{clicked ? <IoClose></IoClose> : ""}</button></div>
-                    <form action="" className={`${clicked === true ? "lg:w-1/2 md:w-2/3 w-[80%] flex flex-col justify-center items-center gap-3 border p-4" : "hidden"}`}    onSubmit={(e) => handleSubmit(e)}>
+                    <form action="" className={`${clicked === true ? "lg:w-1/2 md:w-2/3 w-[80%] flex flex-col justify-center items-center gap-3 border p-4" : "hidden"}`} onSubmit={(e) => handleSubmit(e)}>
                         <div className='w-full lg:w-[80%] h-full'>
                             <label htmlFor="duration" className='w-full'>
                                 <p className='text-base text-gray-500'>Announcement Title<span className='text-red-500'>*</span> </p>
@@ -95,7 +98,7 @@ const Announcement = () => {
 
                 </div>
                 <div className='w-full flex justify-center items-center overflow-auto'>
-                    
+
                     <table className='table lg:w-1/2 md:w-2/3 w-[80%] my-12 '>
                         <thead>
                             <tr>
