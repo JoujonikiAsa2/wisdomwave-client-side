@@ -82,49 +82,7 @@ const Login = () => {
             });
 
     }
-
-    // const handleGoogleLogin = () => {
-    //     googleLogin()
-    //         .then(res => {
-    //             {
-    //                 if (res.user) {
-    //                     axiosPublic.get(`/api/user/${data.email}`)
-    //                         .then(res => {
-    //                             console.log(res.data);
-    //                             toast.success('Successfully Logged In!', { duration: 1000 });
-    //                             setTimeout(() => {
-    //                                 if (res.data.data.userType === "student") {
-    //                                     navigate(location.state || '/')
-    //                                 }
-    //                                 else if (res.data.data.userType === "instructor") {
-    //                                     navigate(location.state || '/instructor/instructorDashboard')
-    //                                 }
-    //                                 else if (res.data.data.userType === "tutor") {
-    //                                     navigate(location.state || '/tutor/tutorDashboard')
-    //                                 }
-    //                                 else if (res.data.data.userType === "admin") {
-    //                                     navigate(location.state || '/admin/adminDashboard')
-    //                                 }
-    //                             }, 1200);
-    //                             reset();
-    //                             // })
-    //                             // .catch(error => {
-    //                             //     console.log(error);
-    //                             //     toast.error('Failed to update user!');
-    //                         })
-    //                         .catch(error => {
-    //                             console.log(error);
-    //                         })
-    //                 }
-    //             }
-    //         })
-    //         .catch(error => {
-
-    //             // console if any error
-    //             toast.error('Failed to Log In!')
-    //         })
-    // }
-
+    
     return (
         <>
 
@@ -133,12 +91,12 @@ const Login = () => {
                 reverseOrder={false}
 
             />
-            <div className='flex justify-center items-center  max-w-[96rem] mx-auto '>
-                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[60rem] h-[450px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl mt-10'>
+            <div className='flex justify-center items-center  lg:max-w-[96rem] mx-auto h-screen'>
+                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl mt-10'>
 
                     {/* Loign animation */}
-                    <div className='flex-1 flex justify-end '>
-                        <Lottie animationData={loginAnimation} className="max-w-[500px] h-[350px]"></Lottie>
+                    <div className='flex-1 flex justify-center items-center h-full '>
+                        <Lottie animationData={loginAnimation} className="w-[300px] h-[300px]"></Lottie>
                     </div>
                     <div className='flex justify-center items-center'>
                         <div className='divider divider-neutral divider-vertical md:divider-horizontal lg:divider-horizontal h-0 md:h-96 lg:h-96'></div>
@@ -210,7 +168,7 @@ const Login = () => {
                             <div className='w-full flex justify-center items-center flex-col mt-10'>
                                 <div className='flex flex-row gap-2 justify-center items-center'>
                                     <p className='text-base text-center'>New at WisdomWave? </p>
-                                    <div className="dropdown dropdown-right">
+                                    <div className="dropdown lg:dropdown-right dropdown-top dropdown-left">
                                         <label tabIndex={1} className="hover:cursor-pointer">
                                             <nav>
                                                 <a className='active:underline text-[#0766AD] text-base'>Join</a>
@@ -219,7 +177,7 @@ const Login = () => {
 
                                         {/* this part will be defferent for different types of user */}
 
-                                        <div tabIndex={1} className="dropdown-content ml-4 z-[1] text-black bg-none shadow-lg p-3  border-gray-300 card border-t-[1px]">
+                                        <div tabIndex={1} className="dropdown-content lg:ml-4 text-black bg-none shadow-lg p-3  border-gray-300 border-t-[1px] w-[200px] z-50  bg-white">
                                             <div className='flex flex-col gap-2'>
                                                 <Link to="/studentSignUp"><button className="capitalize hover:underline text-[#0766AD]">Student</button></Link>
                                                 <Link to="/instructorSignup"><button className="capitalize hover:underline text-[#0766AD]">Instructor</button></Link>

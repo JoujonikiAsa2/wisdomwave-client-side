@@ -20,7 +20,7 @@ const StudentInformation = () => {
     return (
         <div className='w-full'>
             <DashboardTitle title="Students Information" subTitle="View your student list"></DashboardTitle>
-            <div className='w-full'>
+            <div className='w-full overflow-auto'>
                 <table className='table w-[80%]'>
                     <thead>
                         <tr>

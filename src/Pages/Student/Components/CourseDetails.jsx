@@ -20,16 +20,28 @@ import { useEffect, useState } from 'react';
 const CourseDetails = () => {
     const navigate = useNavigate()
     const { user } = useAuth()
-
-
     // get the id from params
     const { id } = useParams()
     const axiosPublic = useAxiosPublic()
-    const [ratings, setRatings] = useState(0) // Initial value
+    const [ratings, setRatings] = useState(0) 
+    const [userInfo, setUserInfo] = useState(null)
     console.log("Id", id)
 
     // get the stored data from the localstorage
     const storedCourses = JSON.parse(localStorage.getItem('courses'))
+    useEffect(() => {
+        try {
+            axiosPublic.get(`/api/user/${user?.email}`)
+                .then(response => {
+                    setUserInfo(response.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        } catch (error) {
+            console.error(error);
+        }
+    }, [user?.email, userInfo]);
 
     // fetch the data when window get open
     const { data: courseDetails = [] } = useQuery({
@@ -96,7 +108,7 @@ const CourseDetails = () => {
     const avgRating = filteredRatings.length > 0 && filteredRatings.reduce((acc, curr) => acc + curr.rating, 0) / filteredRatings.length
 
     return (
-        
+
         <div className='flex justify-center items-center text-lgp-3 mx-5 pt-8 mb-8'>
             <div className='flex flex-col justify-center gap-6 pt-12'>
                 <div className=' w-full'>
@@ -139,29 +151,40 @@ const CourseDetails = () => {
                     </div>
 
                     {/* Buttons */}
+                    
                     {
-                                    // compared the id with local storage's id
-                                    storedCourses != null && storedCourses?.includes(id) ?
-                                        <div className='py-4 flex justify-start items-center gap-2 text-white'>
-                                            <Link to={`/courseDashboard/${id}/${courseDetails.playlistId.split("=")[1]}/${courseDetails.title}`}>
-                                                <button
-                                                    className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
-                                                > Go to Course
-                                                </button>
-                                            </Link>
-                                        </div>
-                                        :
-                                        <div className='py-4 flex justify-start items-center gap-2 text-white'>
+                        // compared the id with local storage's id
+                        storedCourses != null && storedCourses?.includes(id) ?
+                            <div className='py-4 flex justify-start items-center gap-2 text-white'>
+                                <Link to={`/courseDashboard/${id}/${courseDetails.playlistId.split("=")[1]}/${courseDetails.title}`}>
+                                    <button
+                                        className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
+                                    > Go to Course
+                                    </button>
+                                </Link>
+                            </div>
+                            
+                            
+                            :
+                            <div className='py-4 flex justify-start items-center gap-2 text-white'>
 
-                                            <button onClick={() => handlePayment(id)}
-                                                className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
-                                            > Buy now
-                                            </button>
+                                <button onClick={() => handlePayment(id)}
+                                    className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
+                                > Buy now
+                                </button>
+                                {
+                                    userInfo?.userType == "instructor" && <div className='py-4 flex justify-start items-center gap-2 text-white'>
+                                        <Link to={`/courseDashboard/${id}/${courseDetails.playlistId.split("=")[1]}/${courseDetails.title}`}>
                                             <button
-                                                className='btn btn-sm text-white  capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '>Add to cart</button>
-                                        </div>
+                                                className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
+                                            > Go to Course
+                                            </button>
+                                        </Link>
+                                    </div>
                                 }
-
+                            </div>
+                    }
+                   
 
                     {/* Course contents accordion*/}
                     <div>

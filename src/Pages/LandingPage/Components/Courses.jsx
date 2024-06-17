@@ -40,12 +40,12 @@ const Courses = ({ courses, setCourses, clickStatus }) => {
 
  
     if (clickStatus === true && courses?.length === 0) {
-        return <div className=' -z-0' >
+        return <div className='' >
             <SectionTitle title="Courses" total={total.length} subtitle="Find your favorite courses here"></SectionTitle>
             <Carousel
                 // arrows
                 autoPlaySpeed={3000}
-                className="w-full h-full rounded-lg"
+                className="w-full h-full rounded-lg "
                 draggable={true}
                 infinite={false}
                 responsive={{
@@ -94,13 +94,13 @@ const Courses = ({ courses, setCourses, clickStatus }) => {
     }
 
     return (
-        <div className=' -z-0' >
+        <div className='' >
             <SectionTitle title="Courses" total={total.length} subtitle="Find your favorite courses here"></SectionTitle>
 
             <Carousel
                 // arrows
                 autoPlaySpeed={3000}
-                className="w-full h-full rounded-lg"
+                className="w-full h-full rounded-lg -z-0"
                 draggable={true}
                 infinite={false}
                 responsive={{

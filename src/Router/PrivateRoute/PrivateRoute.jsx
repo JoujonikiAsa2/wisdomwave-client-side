@@ -5,22 +5,24 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 const PrivateRoute = ({ children }) => {
     const { user } = useAuth()
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState()
     const location = useLocation()
 
     useEffect(() => {
         if (user !== null) {
             setIsLoading(false)
         }
+        else(
+            setIsLoading(true))
 
     }, [user])
 
-    if (user !== null) {
-        return children
+    if (isLoading == true) {
+        return <Loader></Loader>
     }
 
-    else if (isLoading == true) {
-        return <Loader></Loader>
+    else if (user !== null) {
+        return children
     }
 
     return (

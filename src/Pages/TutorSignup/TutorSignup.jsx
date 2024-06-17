@@ -126,11 +126,10 @@ const TutorSignup = () => {
                 position="top-center"
                 reverseOrder={false}
             />
-            <div className='flex flex-col justify-center items-center h-[80vh] max-w-[96rem] mx-auto mt-4'>
+            <div className='flex flex-col justify-center items-center h-screen max-w-[96rem] mx-auto mt-4'>
                 <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl'>
-                    <div className='flex-1 flex-col justify-end'>
-                        {/* side animation */}
-                        <Lottie animationData={signUpAnimation} className="max-w-[400px] h-[300px]"></Lottie>
+                    <div className='flex-1 flex justify-center items-center h-full'>
+                        <Lottie animationData={signUpAnimation} className="w-[300px] h-[300px]"></Lottie>
                     </div>
                     <div className='flex justify-center items-center'>
                         {/* vertical line */}

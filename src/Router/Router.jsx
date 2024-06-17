@@ -59,6 +59,7 @@ import ManageTuitions from "../Pages/AdminDashboard/ManageTuitions"
 import UpdateCourseAdmin from "../Pages/AdminDashboard/UpdateCourseAdmin"
 import ManageCertification from "../Pages/InstructorDashboard/ManageCertification"
 import GetCertificate from "../Pages/Student/Components/GetCertificate"
+import AdminRoute from "./AdminRoute/AdminRoute"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -119,11 +120,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/viewQuiz/:id/:title",
-                element: <ViewQuiz></ViewQuiz>
+                element: <PrivateRoute><ViewQuiz /></PrivateRoute>
             },
             {
                 path: "/takeQuiz/:id/:title",
-                element: <TakeQuiz />,
+                element: <PrivateRoute><TakeQuiz /></PrivateRoute>,
             },
             {
                 path: '/courseDashboard/:id/:playlistId/:title',
@@ -131,7 +132,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/getCertificate/:id/:title/:instructor/:duration', 
-                element: <GetCertificate/>
+                element: <PrivateRoute><GetCertificate></GetCertificate></PrivateRoute>
             },
             
         ]
@@ -186,35 +187,35 @@ export const router = createBrowserRouter([
         children:[
             {
                 path: "instructorDashboard",
-                element: <InstructorRoute><InstructorDashboard /></InstructorRoute>
+                element: <InstructorDashboard />
             },
             {
                 path: "createCourse",
-                element: <InstructorRoute><CreateCourse /></InstructorRoute>
+                element: <CreateCourse />
             },
             {
                 path: "manageCourses",
-                element: <InstructorRoute><ManageCourse /></InstructorRoute>
+                element: <ManageCourse />
             },
             {
                 path: "updateCourse/:id",
-                element: <InstructorRoute><UpdateCourse /></InstructorRoute>
+                element: <UpdateCourse />
             },
             {
                 path: "announcements",
-                element: <InstructorRoute><Announcement /></InstructorRoute>
+                element: <Announcement />
             },
             {
                 path: "assignments",
-                element: <InstructorRoute><Assignments /></InstructorRoute>
+                element: <Assignments />
             },
             {
                 path: "manageClasses",
-                element: <InstructorRoute><ManageClasses /></InstructorRoute>
+                element: <ManageClasses />
             },
             {
                 path: "studentInfo",
-                element: <InstructorRoute><StudentInformation /></InstructorRoute>
+                element: <StudentInformation />
             },
             {
                 path: "createAssignments/:id",
@@ -222,7 +223,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'courseDashboard/:id/:playlistId',
-                element: <CourseDashboard></CourseDashboard>,
+                element: <CourseDashboard></CourseDashboard>
             },
             {
                 path: 'manageCertification',
@@ -237,7 +238,7 @@ export const router = createBrowserRouter([
         children:[
             {
                 path: "tutorDashboard",
-                element: <TutorRoute><TutorDashboard /></TutorRoute>
+                element: <TutorDashboard />
             },
             {
                 path: 'tuitions',
@@ -268,7 +269,7 @@ export const router = createBrowserRouter([
     ,
     {
         path: 'admin',
-        element: <AdminLayout></AdminLayout>,
+        element: <AdminRoute><AdminLayout></AdminLayout></AdminRoute>,
         children:[
             {
                 path: "adminDashboard",

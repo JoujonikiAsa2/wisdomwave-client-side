@@ -3,6 +3,7 @@ import Loader from '../../SharedComponents/Loader/Loader';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import { Navigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import PageNotFound from '../../SharedComponents/404_page/PageNotFound';
 
 const InstructorRoute = ({ children }) => {
     const { user,isLoading } = useAuth();
@@ -25,7 +26,7 @@ const InstructorRoute = ({ children }) => {
         return children
     }
     else if (isLoading) {
-        return <Loader></Loader>
+        return <PageNotFound></PageNotFound>
     }
 };
 

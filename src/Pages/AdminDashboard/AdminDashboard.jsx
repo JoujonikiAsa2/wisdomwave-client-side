@@ -90,7 +90,7 @@ const AdminDashboard = () => {
 
                 <div className='flex flex-wrap gap-8'>
                     <AdminCard title="Users" count={userInfo?.length} userData={userData}></AdminCard>
-                    <div className='lg:w-[60%] md:w-full w-full h-[200px] p-6 rounded-lg shadow-md bg-info-gradient'>
+                    <div className='w-[90%] lg:w-[350px] md:w-[350px] h-[200px] p-6 rounded-lg shadow-md bg-info-gradient'>
                         <p className='text-lg font-medium'>{allCourses?.length > 1000 ? `${allCourses?.length / 1000}k` : allCourses?.length}</p>
                         <span>Courses by category</span>
                         <div className=' my-3'></div>

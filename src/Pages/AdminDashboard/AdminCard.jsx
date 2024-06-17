@@ -19,7 +19,7 @@ const AdminCard = ({title, count, userData}) => {
     };
 
     return (
-        <div className='w-[350px] h-[200px] p-6 rounded-lg shadow-md bg-info-gradient'>
+        <div className='w-[90%] lg:w-[350px] md:w-[350px] h-[200px] p-6 rounded-lg shadow-md bg-info-gradient' >
             <p className='text-lg font-medium'>{count > 1000 ? `${count/1000}k` : count}</p>
             <span>{title}</span>
             <div className=' my-3'></div>

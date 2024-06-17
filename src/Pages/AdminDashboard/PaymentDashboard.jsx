@@ -51,7 +51,7 @@ const PaymentDashboard = () => {
         <div>
             <DashboardTitle title={"Payment Dashboard"} subTitle={"Here is the payment dashboard"} />
             <div className='flex flex-wrap gap-8'>
-                <div className='lg:w-[40%] md:w-full w-full h-[200px] p-6 rounded-lg shadow-md bg-info-gradient'>
+                <div className='w-[90%] lg:w-[350px] md:w-[350px] h-[200px] p-6 rounded-lg shadow-md bg-info-gradient '>
                     {/* <p className='text-lg font-medium'>{.toFixed(1)}k</p> */}
                     <span>Transactions</span>
                     <div className=' my-3'></div>
@@ -66,7 +66,7 @@ const PaymentDashboard = () => {
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
-                <div className='lg:w-[350px] md:w-full w-full h-[200px] p-6 rounded-lg shadow-md bg-info-gradient'>
+                <div className='w-[90%] lg:w-[350px] md:w-[350px] h-[200px] p-6 rounded-lg shadow-md bg-info-gradient'>
                     <p className='text-lg font-medium'>{profit.toFixed(1)}k</p>
                     <span>Profit</span>
                     <div className=' my-3'></div>

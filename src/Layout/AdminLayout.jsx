@@ -64,10 +64,10 @@ const AdminLayout = () => {
         <div className="w-full">
             <div className="flex w-full">
                 <div
-                    className="py-10 h-full flex flex-col border border-r-1 fixed overflow-y-auto lg:overflow-y-hidden overflow-x-hidden z-50 bg-gray-400 w-[3rem] " id="sidebar"
+                    className="py-10 h-full flex flex-col  border-r-1 fixed overflow-y-auto lg:overflow-y-hidden overflow-x-hidden z-50 bg-[#b8e7a1] w-[4rem] " id="sidebar"
                 >
 
-                    <div className="logo-div flex space-x-4 w-full">
+                    <div className="logo-div flex space-x-4 w-full p-2">
                         <img src={Logo} className="md:w-10 w-8 lg:w-10 " />
                         <h2 className="logo"><span className="text-[#5c802d] lato">Wisdom</span><span className="text-[#0766AD] lato">Wave</span></h2>
                     </div>
@@ -75,12 +75,12 @@ const AdminLayout = () => {
                     <div className="flex flex-col justify-start items-start space-y-2 mt-8 w-full ">
                         {navLinks.map((item, index) => (
                             <Link to={`${item.link}`} key={index}>
-                                <div className="nav-links w-full"
+                                <div className="nav-links w-full mx-[0.4rem] "
                                 >
                                     <div
                                         onClick={() => setActiveIndex(index)}
                                         className={
-                                            "flex  w-full py-1 px-2 ml-[0.1rem] rounded-full justify-center items-center gap-2 " +
+                                            "flex  w-full py-1 px-2  hover:scale-95 rounded-full justify-center items-center gap-2 " +
                                             (activeIndex === index
                                                 ? "bg-[#94d476] text-white duration-500"
                                                 : " text-black")
@@ -98,31 +98,40 @@ const AdminLayout = () => {
                         <div className="divider"></div>
 
                         {/* others link */}
-                        <div className="pt-6 flex flex-col justify-start items-start gap-2">
-
-                            <div>
-                                <Link to="/">
-                                    <div className="nav-links w-full"
+                        <div className="flex flex-col justify-start items-start space-y-2 mt-8 w-full ">
+                            <Link to="/">
+                                <div className="nav-links w-full mx-[0.4rem] "
+                                >
+                                    <div
+                                        className={
+                                            "flex  w-full py-1 px-2  hover:scale-95 rounded-full justify-center items-center gap-2 "
+                                        }
                                     >
-                                        <div className="flex  w-full py-1 px-2 rounded-full gap-3 ">
-                                            <IoHome className="lg:text-xl text-lg" />
-                                            <span className="navlink ">
-                                                Home
-                                            </span>
-                                        </div>
+
+                                        <IoHome className="lg:text-2xl text-lg " />
+                                        <span className="navlink">
+                                            Home
+                                        </span>
                                     </div>
-                                </Link>
-                            </div>
-                            <div className="nav-links w-full"
-                            >
-                                <div className="flex  w-full py-1 px-2 rounded-full justify-start items-center gap-3 cursor-pointer" onClick={() => {
-                                    userSignOut()
-                                    navigate("/")
-                                }} >
-                                    <MdLogout className="lg:text-xl text-lg" />
-                                    <span className="navlink ">
-                                        Log Out
-                                    </span>
+                                </div>
+                            </Link>
+                            <div onClick={() => {
+                                userSignOut()
+                                navigate("/")
+                            }}>
+                                <div className="nav-links w-full mx-[0.4rem]"
+                                >
+                                    <div
+                                        className={
+                                            "flex  w-full py-1 px-2  hover:scale-95 rounded-full justify-center items-center gap-2 "
+                                        }
+                                    >
+
+                                        <MdLogout className="lg:text-2xl text-lg " />
+                                        <span className="navlink">
+                                            Log Out
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -131,8 +140,8 @@ const AdminLayout = () => {
 
                 <div className="flex flex-col" id="content">
                     <div className="w-full flex justify-end items-center h-16 fixed z-30  bg-white shadow">
-                        <div className="dropdown dropdown-end">
-                            <div className={`${user && "dropdown mr-4 w-10 h-10 rounded-full flex justify-center items-center bg-[#0766AD] text-white"}`} tabIndex={0} role="button">
+                        <div className="dropdown dropdown-end pr-4">
+                            <div className={`${user && "dropdown  w-10 h-10 rounded-full flex justify-center items-center bg-[#0766AD] text-white"}`} tabIndex={0} role="button">
                                 {user?.displayName && user.displayName.length > 0 ? (
                                     <>
                                         {user.displayName.charAt(0)}
@@ -140,13 +149,13 @@ const AdminLayout = () => {
                                     </>
                                 ) : null}
                             </div>
-                            <ul tabIndex={0} className="mt-3 z-[1] p-2 mr-6 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                            <ul tabIndex={0} className="mt-4 z-[1] p-2 mr-6 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-72">
                                 <li><p>{user?.displayName}</p></li>
                                 <li><p>{user?.email}</p></li>
                             </ul>
                         </div>
                     </div>
-                    <div className="w-full flex flex-col ml-[3rem] mt-[4rem] h-screen px-4">
+                    <div className="flex flex-col ml-[2.8rem] mt-[4rem] h-screen px-8 w-[95%]">
                         <div>
                             <Outlet />
                         </div>

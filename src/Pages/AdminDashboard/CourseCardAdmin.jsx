@@ -39,7 +39,7 @@ const CourseCardAdmin = ({ course }) => {
 
     return (
 
-        <div className="h-[13rem] hover:shadow hover:cursor-pointer relative lg:w-[35vw] md:w-[40vw] w-[70vw] border bg-white flex items-start rounded-lg">
+        <div className="h-[13rem] hover:shadow hover:cursor-pointer relative w-full border bg-white flex items-start rounded-lg">
             <div className='lg:w-64 md:w-42 w-32 flex justify-between items-center h-full rounded-lg'>
                 <img src={thumbnail} alt="" className="w-full md:w-56 lg:w-56 h-full rounded-lg rounded-r-none object-fill" />
             </div>
@@ -62,13 +62,13 @@ const CourseCardAdmin = ({ course }) => {
                 </div>
             </div>
             <div className=' absolute z-50 -right-3 top-12 h-28 w-8 flex flex-col justify-center items-center bg-slate-300 rounded-xl gap-3'>
-                <div className="lg:tooltip mb-1" data-tip="Delete">
+                <div className="lg:tooltip mb-1" data-tip="Delete Course">
                     <div className='w-6 bg-red-700 flex justify-center items-center rounded cursor-pointer' onClick={() => { handleCourseDelete(course._id) }}>
                         <MdDeleteOutline className='text-xl text-white'></MdDeleteOutline>
                     </div>
                 </div>
                 <Link to={`/admin/updateCourse/${course._id}`}>
-                    <div className="lg:tooltip" data-tip="Edit">
+                    <div className="lg:tooltip" data-tip="Edit Course">
                         <div className='w-6 bg-slate-700 flex justify-center items-center rounded cursor-pointer'>
                             <MdEdit className=' text-xl text-white' tooltip='Edit'></MdEdit>
                         </div>

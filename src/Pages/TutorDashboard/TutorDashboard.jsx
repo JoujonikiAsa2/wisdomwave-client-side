@@ -34,7 +34,7 @@ const TutorDashboard = () => {
             })
     }, [user?.email])
     return (
-        <div>
+        <div className=''>
             <DashboardTitle title="Tutor Dashboard" subTitle="Find all details here"></DashboardTitle>
             <div className='w-full flex  gap-10'>
                 <Card title="Requested Tuitions" count={requestedTuition?.length > 10000 ? requestedTuition?.length / 1000 + "k" : requestedTuition?.length}></Card>

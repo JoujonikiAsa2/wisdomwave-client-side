@@ -48,7 +48,7 @@ const InstructorDashboard = () => {
 
     console.log("Instructorer courses", courses)
     return (
-        <div className='w-[90vw] flex flex-col'>
+        <div className='flex flex-col'>
 
             <div className='pr-4'>
                 <DashboardTitle title="Overview" subTitle="Here is the small overview of your courses, student and payments"></DashboardTitle>

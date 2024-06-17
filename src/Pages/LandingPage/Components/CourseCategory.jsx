@@ -34,55 +34,57 @@ const CourseCategory = ({ handleCategorySearch }) => {
     return (
         <div>
             <SectionTitle title="Categories" subtitle="Find course by clicking on the following category name" total={categories.length}></SectionTitle>
-            <Carousel
-                autoPlaySpeed={0}
-                className=" h-full rounded-lg"
-                draggable={true}
-                infinite={false}
-                responsive={{
-                    superLargeDesktopp: {
-                        // the naming can be any, depends on you.
-                        breakpoint: { max: 4000, min: 1400 },
-                        items: 5,
-                    },
-                    superSmallMobile: {
-                        // the naming can be any, depends on you.
-                        breakpoint: { max: 550, min: 0 },
-                        items: 1,
-                    },
-                    desktop: {
-                        breakpoint: {
-                            max: 1400,
-                            min: 1024
+            <div className=" h-24 flex justify-center items-center">
+                <Carousel
+                    autoPlaySpeed={0}
+                    className=" h-16  rounded-lg -z-0 "
+                    draggable={true}
+                    infinite={false}
+                    responsive={{
+                        superLargeDesktopp: {
+                            // the naming can be any, depends on you.
+                            breakpoint: { max: 4000, min: 1400 },
+                            items: 5,
                         },
-                        items: 4,
-                    },
-                    mobile: {
-                        breakpoint: {
-                            max: 800,
-                            min: 560
+                        superSmallMobile: {
+                            // the naming can be any, depends on you.
+                            breakpoint: { max: 550, min: 0 },
+                            items: 1,
                         },
-                        items: 2,
-                    },
-                    tablet: {
-                        breakpoint: {
-                            max: 1024,
-                            min: 800
+                        desktop: {
+                            breakpoint: {
+                                max: 1400,
+                                min: 1024
+                            },
+                            items: 4,
                         },
-                        items: 3,
-                    },
-                }}>
-                <div onClick={() => handleLocalSearch('all')} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer  h-[4.2rem] mr-2">
-                    <h2 className="capitalize">All</h2>
-                </div>
-                {
-                    categories.map((category, index) => <div className='mr-2  h-[4.2rem]' key={index}>
-                        <div onClick={() => handleLocalSearch(category.value)} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer  h-[4.2rem]">
-                            <h2 className="capitalize">{category.label}</h2>
-                        </div>
-                    </div>)
-                }
-            </Carousel>
+                        mobile: {
+                            breakpoint: {
+                                max: 800,
+                                min: 560
+                            },
+                            items: 2,
+                        },
+                        tablet: {
+                            breakpoint: {
+                                max: 1024,
+                                min: 800
+                            },
+                            items: 3,
+                        },
+                    }}>
+                    <div onClick={() => handleLocalSearch('all')} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer  h-full mr-2">
+                        <h2 className="capitalize">All</h2>
+                    </div>
+                    {
+                        categories.map((category, index) => <div className='mr-2  h-full' key={index}>
+                            <div onClick={() => handleLocalSearch(category.value)} className="border-[1px] hover:border-[2px] p-2 rounded mb-4 flex justify-center items-center hover:cursor-pointer  h-full">
+                                <h2 className="capitalize">{category.label}</h2>
+                            </div>
+                        </div>)
+                    }
+                </Carousel>
+            </div>
         </div>
     );
 };

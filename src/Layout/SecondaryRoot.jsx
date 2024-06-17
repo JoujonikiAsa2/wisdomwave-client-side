@@ -4,7 +4,7 @@ import logo from '../assets/Photos/LandingPage/logo_wave.png'
 
 const SecondaryRoot = () => {
     return (
-        <div className='w-full justify-start items-center px-[5vw] py-6'>
+        <div className='w-full justify-start items-center  py-6 px-[5vw]'>
             <Link
                 to="/">
                 <div className="flex justify-center items-center gap-2 lg:text-2xl md:text-2xl xl:text-2xl 2xl:text-2xl text-lg w-52">

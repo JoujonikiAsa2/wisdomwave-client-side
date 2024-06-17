@@ -17,7 +17,27 @@ const ManageUsers = () => {
             .catch(error => {
                 console.log(error)
             })
-    },[users])
+    },[])
+
+    const localHandleSearch = (e) => {
+        e.preventDefault()
+        const searchString = e.target.search.value
+        console.log("String", searchString)
+
+        axiosPublic.get(`/api/user/${searchString}`)
+            .then(res => {
+                console.log(res.data.data)
+                if(res.data.data !== undefined || res.data.data !== null){
+                    setUsers(res.data.data)
+                }
+                else{
+                    setUsers([])
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
 
     const handleDelete = (email) => {
         Swal.fire({
@@ -84,8 +104,18 @@ const ManageUsers = () => {
     return (
         <div>
             <DashboardTitle title="Manage Users" subTitle="Manage all users available on this platform" />
-            <div>
-                <table className='table overflow-auto'>
+            <div className="w-full flex justify-center items-center pb-8">
+                <form action="" onSubmit={(e) => localHandleSearch(e)} className='lg:w-[40%] md:w-[50%] w-[60%] flex justify-center items-center mr-2'>
+                    <div className="join w-full ">
+                        <input type="email" name="search" className="input input-bordered join-item w-full input-sm bg-[#F3F3F3] focus:outline-none placeholder:text-[#cac9c9] focus:placeholder:text-[#949292] text-black" 
+                        placeholder="Search user by email" />
+                        <button type="submit" className=" py-[0.2rem] px-2 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] border-2 border-none text-white text-thin rounded-none rounded-r-lg text-sm">Search</button>
+                    </div>
+                </form>
+                <button onClick={() => setUsers(users)} className='btn btn-sm bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] capitalize text-white'>All</button>
+            </div>
+            <div className="overflow-x-auto">
+                <table className='table '>
                     <thead>
                         <tr>
                             <th className='text-base'>Name</th>
@@ -96,7 +126,7 @@ const ManageUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            users.map(user => <tr>
+                            users !== null ? users.map(user => <tr>
                                 <td className='capitalize'>{user?.name}</td>
                                 <td >{user?.email}</td>
                                 <td className='capitalize'>{user?.userType}</td>
@@ -108,7 +138,9 @@ const ManageUsers = () => {
                                         onClick={() => handleMakeAdmin(user?.email)}>Make admin</button> }
                                     </div>
                                 </td>
-                            </tr>)
+                            </tr>) : <tr>
+                                <td colSpan={4} className='text-center text-lg'>No users found</td>
+                            </tr>
                         }
                     </tbody>
                 </table>

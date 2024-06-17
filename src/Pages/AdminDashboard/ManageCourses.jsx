@@ -34,29 +34,30 @@ const ManageCourses = () => {
             .catch(error => {
                 console.log(error)
             })
-        form.reset()
     }
 
     return (
         <>
         <Toaster position='top-center'></Toaster>
             <DashboardTitle title="Manage Courses" subTitle="Here is the manage courses dashboard" />
-            <div className="flex justify-center items-center pb-8 gap-4">
-                <form action="" onSubmit={(e) => localHandleSearch(e)}>
-                    <div className="join">
-                        <input type="text" name="search" className="input input-bordered join-item w-80 input-sm bg-[#F3F3F3] focus:outline-none placeholder:text-[#cac9c9] focus:placeholder:text-[#949292] text-black" placeholder="Search Course by email" />
+            <div className="w-full flex justify-center items-center pb-8">
+                <form action="" onSubmit={(e) => localHandleSearch(e)} className='lg:w-[40%] md:w-[50%] w-[60%] flex justify-center items-center mr-2'>
+                    <div className="join w-full ">
+                        <input type="email" name="search" className="input input-bordered join-item w-full input-sm bg-[#F3F3F3] focus:outline-none placeholder:text-[#cac9c9] focus:placeholder:text-[#949292] text-black" placeholder="Search Course by email" />
                         <button type="submit" className=" py-[0.2rem] px-2 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] border-2 border-none text-white text-thin rounded-none rounded-r-lg text-sm">Search</button>
                     </div>
                 </form>
                 <button onClick={() => setCourses(allCourses)} className='btn btn-sm bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] capitalize text-white'>All</button>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-8'>
+            {courses.length > 0 ? <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-8 justify-center items-center justify-items-center'>
                 {
-                    courses?.map(course => <div className='flex justify-center '>
+                    courses?.map(course => <div className='lg:w-[35vw] md:w-[40vw] w-[75vw] '>
                         <CourseCardAdmin key={course._id} course={course} ></CourseCardAdmin>
-                    </div>)
+                   </div>)
                 }
-            </div>
+            </div> : <div className='flex justify-center items-center h-full'>
+                <p className='text-xl'>No courses found for the given email</p>
+            </div>}
         </>
     );
 };
