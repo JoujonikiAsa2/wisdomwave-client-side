@@ -1,7 +1,5 @@
-import SectionTitle from "../../../SharedComponents/SectionTitle/SectionTitle";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Carousel from "react-multi-carousel";
+import SectionTitle from "../../../SharedComponents/SectionTitle/SectionTitle";
 import "react-multi-carousel/lib/styles.css";
 
 // All course categoories will appear
@@ -24,7 +22,7 @@ const CourseCategory = ({ handleCategorySearch }) => {
         { label: 'Teaching & Academics', value: '' }
     ];
 
-    console.log(categories.length)
+    console.log(categories)
 
     const handleLocalSearch = (category) => {
         handleCategorySearch(category)
@@ -34,7 +32,6 @@ const CourseCategory = ({ handleCategorySearch }) => {
     return (
         <div>
             <SectionTitle title="Categories" subtitle="Find course by clicking on the following category name" total={categories.length}></SectionTitle>
-            <div className=" h-24 flex justify-center items-center">
                 <Carousel
                     autoPlaySpeed={0}
                     className=" h-16  rounded-lg -z-0 "
@@ -84,7 +81,6 @@ const CourseCategory = ({ handleCategorySearch }) => {
                         </div>)
                     }
                 </Carousel>
-            </div>
         </div>
     );
 };

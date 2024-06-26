@@ -26,7 +26,7 @@ const ManageCourse = () => {
     })
 
     // handle course delete
-    const handleCourseDelete = (id) => {
+    const deleteCourse = (id) => {
         axiosPublic.delete(`/api/courses/id/${id}/email/${user?.email}`)
             .then(res => {
                 console.log(res.data)
@@ -50,7 +50,7 @@ const ManageCourse = () => {
                         <CourseCard key={course._id} course={course}></CourseCard>
                         <div className='h-full flex flex-col gap-2 relative right-4 top-16 bg-slate-300 p-2 rounded-xl'>
                             <div className="lg:tooltip" data-tip="Delete Course">
-                                <div className='w-6 bg-red-700 flex justify-center items-center rounded cursor-pointer' onClick={() => { handleCourseDelete(course._id) }}>
+                                <div className='w-6 bg-red-700 flex justify-center items-center rounded cursor-pointer' onClick={() => { deleteCourse(course._id) }}>
                                     <MdDeleteOutline className='text-xl text-white'></MdDeleteOutline>
                                 </div>
                             </div>

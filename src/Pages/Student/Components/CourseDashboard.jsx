@@ -90,7 +90,7 @@ const CourseDashboard = () => {
     }
     console.log("rating", rating)
 
-    const handleRating = (e) => {
+    const giveRating = (e) => {
         e.preventDefault()
         const form = e.target
         const ratingInfo = {
@@ -223,7 +223,7 @@ const CourseDashboard = () => {
                                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                 </form>
                                 <form
-                                    onSubmit={handleRating}
+                                    onSubmit={giveRating}
                                     className='flex flex-col justify-center items-center'>
                                     <Rating style={{ maxWidth: 150 }} value={rating} onChange={setRating}></Rating>
                                     <p className='py-2'>Your rating is : {rating}</p>

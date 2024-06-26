@@ -6,13 +6,13 @@ import useAxiosPublic from '../../hooks/useAxiosPublic';
 const AllCourseCard = ({course, btnText}) => {
 
     const axiosPublic = useAxiosPublic()
-    const [ratings, setRatings] = useState(0)
+    const [ratings, setRatings] = useState([])
     const id = course._id
     const { title, thumbnail, instructor, rating, totalStudents, enrollFee } = course.courseDetails
     // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
 
     useEffect(() => {
-        axiosPublic.get(`/api/ratings`)
+        axiosPublic.get(`/api/reviews/${id}`)
             .then(res => {
                 setRatings(res.data.data)
             })
@@ -21,9 +21,7 @@ const AllCourseCard = ({course, btnText}) => {
             });
     }, [id])
 
-
-    const filteredRatings = ratings.length > 0 && ratings.filter(rating => rating.courseId === id)
-    const avgRating = filteredRatings.length > 0 && filteredRatings.reduce((acc, curr) => acc + curr.rating, 0) / filteredRatings.length
+    const avgRating = ratings.length > 0 && ratings.reduce((acc, curr) => acc + curr.rating, 0) / ratings.length
 
     return (
         <Link to={`/courseDetails/${course._id}`}>
@@ -37,7 +35,7 @@ const AllCourseCard = ({course, btnText}) => {
                     </div>
                     <div className='text-start px-2 space-y-2 h-full'>
                         <div className='h-[5rem] md:h-[3rem] lg:h-[3rem]'>
-                            <h5 className="text-sm font-bold py-2">{title}</h5>
+                            <h5 className="text-sm font-bold py-2 capitalize">{title}</h5>
                             <p className="text-xs font-bold capitalize">Instructor: <span className='font-normal'>{instructor}</span></p>
                         </div>
 

@@ -25,7 +25,7 @@ const ManageClasses = () => {
         }
     });
 
-    const handleSubmit = (e, setClassId) => {
+    const createLiveClass = (e, setClassId) => {
         e.preventDefault();
         const form = e.target;
         const date = form.classDate.value;
@@ -70,7 +70,7 @@ const ManageClasses = () => {
                             {clicked ? <IoClose></IoClose> : ""}
                         </button>
                     </div>
-                    <form action="" className={`${clicked === true ? "lg:w-1/2 md:w-2/3 w-[80%] flex flex-col justify-center items-center gap-3 border p-4" : "hidden"}`} onSubmit={(e) => handleSubmit(e, classId)}>
+                    <form action="" className={`${clicked === true ? "lg:w-1/2 md:w-2/3 w-[80%] flex flex-col justify-center items-center gap-3 border p-4" : "hidden"}`} onSubmit={(e) => createLiveClass(e, classId)}>
                         <div className='w-full lg:w-[80%] h-full'>
                             <label htmlFor="duration" className='w-full'>
                                 <p className='text-base text-gray-500'>Class date<span className='text-red-500'>*</span> </p>

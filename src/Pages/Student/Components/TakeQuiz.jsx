@@ -42,7 +42,7 @@ const TakeQuiz = () => {
             )
     }, [id, patternTitle])
 
-    const handleFormSubmit = (e) => {
+    const quizSubmit = (e) => {
         e.preventDefault();
         console.log(selectedAnswers, task);
 
@@ -116,7 +116,7 @@ const TakeQuiz = () => {
             {!takenQuiz ?
                 <div className='w-2/3  flex flex-col justify-center items-center'>
                     <h2 className='text-lg font-bold py-2 capitalize'>Quiz title: {task?.title}</h2>
-                    <form action="" className='w-full lg:w-[500px] md:w-[400px] h-[480px] overflow-auto px-4 border mb-6' onSubmit={handleFormSubmit}>
+                    <form action="" className='w-full lg:w-[500px] md:w-[400px] h-[480px] overflow-auto px-4 border mb-6' onSubmit={quizSubmit}>
                         {
                             task?.questions?.map((question, index) =>
                                 <>

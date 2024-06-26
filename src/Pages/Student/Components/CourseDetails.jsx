@@ -71,7 +71,7 @@ const CourseDetails = () => {
     const classWillStart = classStart.toLocaleString(locales, options);
 
     // payment handling function
-    const handlePayment = (id) => {
+    const buyCourse = (id) => {
 
         const finalPurchase = {
             userEmail: user.email,
@@ -94,18 +94,20 @@ const CourseDetails = () => {
     };
 
     useEffect(() => {
-        axiosPublic.get(`/api/ratings`)
+        axiosPublic.get(`/api/reviews/${id}`)
             .then(res => {
                 setRatings(res.data.data)
             })
             .catch(e => {
-                console.log(e); // Ensure the rating is set to 0 on error
+                console.log(e); 
             });
     }, [id])
 
 
-    const filteredRatings = ratings.length > 0 && ratings.filter(rating => rating.courseId === id)
-    const avgRating = filteredRatings.length > 0 && filteredRatings.reduce((acc, curr) => acc + curr.rating, 0) / filteredRatings.length
+    
+    const avgRating = ratings.length > 0 && ratings.reduce((acc, curr) => acc + curr.rating, 0) / ratings.length
+
+    console.log("Avg", avgRating)
 
     return (
 
@@ -141,9 +143,9 @@ const CourseDetails = () => {
                                     <p><span className=' font-bold text-[#29ADB2]'>Enrollment Start:</span> &nbsp;{enrollWillStart}</p>
                                     <p><span className=' font-bold text-[#29ADB2]'>Enrollment End:</span> &nbsp;{enrollWillEnd}</p>
                                     <p><span className=' font-bold text-[#29ADB2]'>Class Start:</span> &nbsp;{classWillStart}</p>
-                                    <p><span className=' font-bold text-[#29ADB2]'>Created By: </span> &nbsp;{courseDetails.instructor}</p>
+                                    <p><span className=' font-bold text-[#29ADB2]'>Created By: </span> &nbsp;{courseDetails?.instructor}</p>
                                     <p><span className=' font-bold text-[#29ADB2]'>Language: </span>&nbsp; {courseDetails?.languages}</p>
-                                    <p className="text-sm flex gap-3"><Rating style={{ maxWidth: 90 }} readOnly value={avgRating}></Rating>({courseDetails?.rating})</p>
+                                    <Link to={`/reviews/${avgRating}/${id}`}><p className="text-sm flex gap-3"><Rating style={{ maxWidth: 90 }} readOnly value={avgRating}></Rating>({courseDetails?.rating})</p></Link>
                                     <p><span className=' font-bold text-[#29ADB2]'>Price:</span> &nbsp;{courseDetails?.enrollFee} Tk</p>
                                 </div>
                             </div>
@@ -156,7 +158,7 @@ const CourseDetails = () => {
                         // compared the id with local storage's id
                         storedCourses != null && storedCourses?.includes(id) ?
                             <div className='py-4 flex justify-start items-center gap-2 text-white'>
-                                <Link to={`/courseDashboard/${id}/${courseDetails.playlistId.split("=")[1]}/${courseDetails.title}`}>
+                                <Link to={`/courseDashboard/${id}/${courseDetails?.playlistId?.split("=")[1]}/${courseDetails?.title}`}>
                                     <button
                                         className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
                                     > Go to Course
@@ -168,13 +170,13 @@ const CourseDetails = () => {
                             :
                             <div className='py-4 flex justify-start items-center gap-2 text-white'>
 
-                                <button onClick={() => handlePayment(id)}
+                                <button onClick={() => buyCourse(id)}
                                     className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
                                 > Buy now
                                 </button>
                                 {
                                     userInfo?.userType == "instructor" && <div className='py-4 flex justify-start items-center gap-2 text-white'>
-                                        <Link to={`/courseDashboard/${id}/${courseDetails.playlistId.split("=")[1]}/${courseDetails.title}`}>
+                                        <Link to={`/courseDashboard/${id}/${courseDetails?.playlistId.split("=")[1]}/${courseDetails?.title}`}>
                                             <button
                                                 className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
                                             > Go to Course

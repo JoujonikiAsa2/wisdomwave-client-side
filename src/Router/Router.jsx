@@ -50,20 +50,20 @@ import ManageProfile from "../Pages/TutorDashboard/ManageProfile"
 import UpdateProfile from "../Pages/TutorDashboard/UpdateProfile"
 import SendingRequests from "../Pages/TutorDashboard/SendingRequests"
 import TutorLayout from "../Layout/TutorLayout"
-import HomeRoute from "./HomeRoute/HomeRoute"
 import PaymentDashboard from "../Pages/AdminDashboard/PaymentDashboard"
 import ManageCourses from "../Pages/AdminDashboard/ManageCourses"
 import ManageUsers from "../Pages/AdminDashboard/ManageUsers"
 import ManageTutorProfiles from "../Pages/AdminDashboard/ManageTutorProfiles"
 import ManageTuitions from "../Pages/AdminDashboard/ManageTuitions"
-import UpdateCourseAdmin from "../Pages/AdminDashboard/UpdateCourseAdmin"
 import ManageCertification from "../Pages/InstructorDashboard/ManageCertification"
 import GetCertificate from "../Pages/Student/Components/GetCertificate"
 import AdminRoute from "./AdminRoute/AdminRoute"
+import ManageDiscussions from "../Pages/AdminDashboard/ManageDiscussions"
+import Reviews from "../Pages/Student/Components/Reviews"
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <HomeRoute><Root /></HomeRoute>,
+        element: <Root />,
         errorElement: <PageNotFound/>,
         children: [
             {
@@ -134,6 +134,10 @@ export const router = createBrowserRouter([
                 path: '/getCertificate/:id/:title/:instructor/:duration', 
                 element: <PrivateRoute><GetCertificate></GetCertificate></PrivateRoute>
             },
+            {
+                path: '/reviews/:avgRating/:courseId',
+                element: <Reviews></Reviews>
+            }
             
         ]
     },
@@ -307,6 +311,10 @@ export const router = createBrowserRouter([
                 path: 'edit-profile/:email',
                 element: <UpdateProfile></UpdateProfile>
             },
+            {
+                path: "manageDiscussions",
+                element: <ManageDiscussions />
+            }
         ]
     }
 ])

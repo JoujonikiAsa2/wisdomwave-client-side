@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Loader from '../../SharedComponents/Loader/Loader';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
-import { Navigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import PageNotFound from '../../SharedComponents/404_page/PageNotFound';
 

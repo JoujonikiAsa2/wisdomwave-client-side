@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import useAuth from '../../hooks/useAuth';
-import { Navigate } from 'react-router-dom';
-import PageNotFound from '../../SharedComponents/404_page/PageNotFound';
 import Loader from '../../SharedComponents/Loader/Loader';
 
 const HomeRoute = ({children}) => {

@@ -20,7 +20,7 @@ const ManageCourses = () => {
     },[allCourses])
     const axiosPublic = useAxiosPublic()
 
-    const localHandleSearch = (e) => {
+    const searchCourse = (e) => {
         e.preventDefault()
         const form = e.target
         const searchString = e.target.search.value
@@ -41,7 +41,7 @@ const ManageCourses = () => {
         <Toaster position='top-center'></Toaster>
             <DashboardTitle title="Manage Courses" subTitle="Here is the manage courses dashboard" />
             <div className="w-full flex justify-center items-center pb-8">
-                <form action="" onSubmit={(e) => localHandleSearch(e)} className='lg:w-[40%] md:w-[50%] w-[60%] flex justify-center items-center mr-2'>
+                <form action="" onSubmit={(e) => searchCourse(e)} className='lg:w-[40%] md:w-[50%] w-[60%] flex justify-center items-center mr-2'>
                     <div className="join w-full ">
                         <input type="email" name="search" className="input input-bordered join-item w-full input-sm bg-[#F3F3F3] focus:outline-none placeholder:text-[#cac9c9] focus:placeholder:text-[#949292] text-black" placeholder="Search Course by email" />
                         <button type="submit" className=" py-[0.2rem] px-2 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] border-2 border-none text-white text-thin rounded-none rounded-r-lg text-sm">Search</button>

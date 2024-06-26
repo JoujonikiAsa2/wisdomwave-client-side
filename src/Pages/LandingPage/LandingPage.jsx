@@ -1,7 +1,7 @@
 import CourseCategory from "./Components/CourseCategory";
 import WhyChooseUs from "./Components/WhyChooseUs";
 import { axiosPublic } from "../../hooks/useAxiosPublic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useCourses from "../../hooks/useCourses";
 import Banner from "./Components/Banner";
 import slider from './Components/Education.json'
@@ -13,21 +13,28 @@ const LandingPage = () => {
 
     const bg = "bg-[#CEE7E1]"
     const { user } = useAuth()
-    const { allCourses } = useCourses()
+    const { allCourses, refetch } = useCourses()
     const [courses, setCourses] = useState(allCourses)
     const [clicked, setClicked] = useState(false)
+
+    useEffect(() => {
+        setCourses(allCourses)
+        refetch()
+    }, [refetch,allCourses])
 
     const handleCategorySearch = (category) => {
         setClicked(true)
         console.log(category)
         if(category === "all"){
             setCourses(allCourses)
+            refetch()
         }
         else{
             axiosPublic.get(`/api/searchedCategory/${category}`)
                 .then((res) => {
                     console.log("Result:", res.data.data)
                     setCourses(res.data.data)
+                    refetch()
                 })
                 .catch((e) => {
                     console.log(e)
@@ -40,7 +47,7 @@ const LandingPage = () => {
             <Banner slider={slider} sliderText="Welcome to WisdomWave" subText=" Take the touch of the wave of learning" bg={bg}></Banner>
             <div className=" pb-10 px-8">
                 <div className="mx-[5vw]">
-                    <Courses courses={courses} clickStatus={clicked}></Courses>
+                    <Courses courses={courses} clickStatus={clicked} ></Courses>
                 </div>
             </div>
             <div className="mx-[5vw] px-8">

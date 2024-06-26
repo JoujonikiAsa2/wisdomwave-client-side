@@ -415,7 +415,7 @@ const Header = ({ handleSearch }) => {
 
                                 <div tabIndex={3} className={`${clicked == false ? "hidden" : "menu menu-sm dropdown-content mt-7 z-[1] bg-gray-200 shadow rounded-box w-48 text-base text-black gap-2"}`}>
                                     <div className='p-2'>
-                                        <h4 className=" text-base text-[#0766AD] font- capitalize">{user?.displayName}</h4>
+                                        <h4 className=" text-base text-[#0766AD] font- capitalize">{user?.name}</h4>
                                         {
                                             user && <hr className='my-2 h-1 bg-[#0766AD]' />
                                         }

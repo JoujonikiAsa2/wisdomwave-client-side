@@ -35,7 +35,7 @@ const ManageCertification = () => {
 
     console.log(courses)
 
-    const handleCertification = (id) => {
+    const certificateOpen = (id) => {
 
         Swal.fire({
             title: 'Are you sure?',
@@ -70,7 +70,7 @@ const ManageCertification = () => {
 
     }
 
-    const handleCertificationClose = (id) => {
+    const certificationClose = (id) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -128,21 +128,20 @@ const ManageCertification = () => {
                                                 {
                                                     course.certificate === false ? <button
                                                         className="btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2"
-                                                        onClick={() => handleCertification(course.courseId)}>
+                                                        onClick={() => certificateOpen(course.courseId)}>
                                                         Open Certification
                                                     </button> : <button
-                                                            className="btn btn-sm text-black capitalize bg-[#E1F0DA]  hover:bg-[#0766AD] my-2"
-                                                        onClick={() => handleCertification(course.courseId)}>
+                                                            className="btn btn-sm text-black capitalize bg-[#E1F0DA]  hover:bg-[#0766AD] my-2">
                                                         Opened
                                                     </button>
                                                 }
                                                 { course.certificate === true ? <button
                                                  className="btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2"
-                                                    onClick={()=>handleCertificationClose(course.courseId)}>
+                                                    onClick={()=>certificationClose(course.courseId)}>
                                                     Close Certification
                                                 </button> : <button
                                                     className="btn btn-sm text-black capitalize bg-[#E1F0DA]  hover:bg-[#0766AD] my-2"
-                                                    onClick={()=>handleCertificationClose(course.courseId)}>
+                                                    >
                                                     Closed
                                                 </button> }
                                             </div>

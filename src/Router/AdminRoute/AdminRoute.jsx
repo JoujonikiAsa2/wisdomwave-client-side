@@ -14,9 +14,9 @@ const AdminRoute = ({ children }) => {
     useEffect(() => {
         axiosPublic.get(`/api/user/${user?.email}`)
             .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
                 setUserInfo(res.data.data)
-                console.log(res.data.data.email)
+                // console.log(res.data.data.email)
                 return res.data
             })
             .catch(err => {

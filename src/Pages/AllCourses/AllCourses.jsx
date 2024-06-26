@@ -8,7 +8,7 @@ import { useOutletContext } from "react-router-dom";
 const AllCourses = () => {
     const { searchValue } = useOutletContext()
     let searchKey = searchValue
-    const { allCourses } = useOutletContext()
+    const { allCourses, refrech } = useOutletContext()
     const [courses, setCourses] = useState([])
     const axiosPublic = useAxiosPublic()
     const [count, setCount] = useState(0)
@@ -24,22 +24,24 @@ const AllCourses = () => {
         axiosPublic.get('/api/totalCourse')
             .then(res => {
                 setCount(res.data.data)
+                refrech()
             })
             .catch(e => {
                 console.log(e)
             })
-        }, [])
+        }, [count])
 
     useEffect(() => {
         axiosPublic.get(`/api/courses?page=${currentPage}&size=${itemsPerPage}`)
             .then(res => {
                 // console.log(res.data.data)
                 setCourses(res.data.data)
+                refrech()
             })
             .catch(e => {
                 console.log(e)
             })
-    }, [currentPage, itemsPerPage])
+    }, [currentPage, itemsPerPage, courses])
 
     const handlePrev = () =>{
         if(currentPage > 0){

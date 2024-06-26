@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import DashboardTitle from '../../SharedComponents/DashboardTitle/DashboardTitle';
 import AdminCard from './AdminCard';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
 import useCourses from '../../hooks/useCourses';
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AdminDashboard = () => {
 
-    const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
     const [userInfo, setUserInfo] = useState(null)
     const { allCourses } = useCourses()
 
 
     useEffect(() => {
-        axiosPublic.get("/api/users")
+        axiosSecure.get("/api/users")
             .then(res => {
                 setUserInfo(res.data.data)
             })
@@ -21,6 +21,8 @@ const AdminDashboard = () => {
                 console.log(err);
             })
     }, [userInfo])
+
+    console.log(userInfo)
 
 
     // filterd by user type

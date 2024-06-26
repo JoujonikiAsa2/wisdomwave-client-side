@@ -43,6 +43,11 @@ const navLinks = [
         nav: "Manage Tutions",
         icon: CiCircleInfo,
         link: "/admin/manageTuitions",
+    },
+    {
+        nav: "Manage Discussions",
+        icon: CiCircleInfo,
+        link: "/admin/manageDiscussions",
     }
 ];
 
@@ -119,7 +124,7 @@ const AdminLayout = () => {
                                 userSignOut()
                                 navigate("/")
                             }}>
-                                <div className="nav-links w-full mx-[0.4rem]"
+                                <div className="nav-links w-full mx-[0.4rem] hover:cursor-pointer"
                                 >
                                     <div
                                         className={
@@ -142,15 +147,15 @@ const AdminLayout = () => {
                     <div className="w-full flex justify-end items-center h-16 fixed z-30  bg-white shadow">
                         <div className="dropdown dropdown-end pr-4">
                             <div className={`${user && "dropdown  w-10 h-10 rounded-full flex justify-center items-center bg-[#0766AD] text-white"}`} tabIndex={0} role="button">
-                                {user?.displayName && user.displayName.length > 0 ? (
+                                {user?.name.toUpperCase() && user.name.toUpperCase().length > 0 ? (
                                     <>
-                                        {user.displayName.charAt(0)}
-                                        {user.displayName.split(" ")[1] && user.displayName.split(" ")[1].charAt(0)}
+                                        {user.name.toUpperCase().charAt(0)}
+                                        {user.name.toUpperCase().split(" ")[1] && user.name.toUpperCase().split(" ")[1].charAt(0)}
                                     </>
                                 ) : null}
                             </div>
                             <ul tabIndex={0} className="mt-4 z-[1] p-2 mr-6 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-72">
-                                <li><p>{user?.displayName}</p></li>
+                                <li><p>{user?.name}</p></li>
                                 <li><p>{user?.email}</p></li>
                             </ul>
                         </div>

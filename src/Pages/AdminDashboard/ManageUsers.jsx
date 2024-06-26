@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import DashboardTitle from '../../SharedComponents/DashboardTitle/DashboardTitle';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const ManageUsers = () => {
 
     const [users, setUsers] = useState([]);
-    const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
 
     useEffect(() => {
-        axiosPublic.get('/api/users')
+        axiosSecure.get('/api/users')
             .then(res => {
                 setUsers(res.data.data)
                 console.log(res.data.data)
@@ -24,7 +25,7 @@ const ManageUsers = () => {
         const searchString = e.target.search.value
         console.log("String", searchString)
 
-        axiosPublic.get(`/api/user/${searchString}`)
+        axiosSecure.get(`/api/user/${searchString}`)
             .then(res => {
                 console.log(res.data.data)
                 if(res.data.data !== undefined || res.data.data !== null){
@@ -51,7 +52,7 @@ const ManageUsers = () => {
             width: 300
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosPublic.delete(`/api/user/${email}`)
+                axiosSecure.delete(`/api/user/${email}`)
                     .then(res => {
                         console.log(res.data.data)
                         const filteredUsers = users.filter(user => user.email !== email)
@@ -82,7 +83,7 @@ const ManageUsers = () => {
             width: 300
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosPublic.patch(`/api/user/${email}`)
+                axiosSecure.patch(`/api/user/${email}`)
                     .then(res => {
                         console.log(res.data.data)
                         const filteredUsers = users.filter(user => user.email !== email)

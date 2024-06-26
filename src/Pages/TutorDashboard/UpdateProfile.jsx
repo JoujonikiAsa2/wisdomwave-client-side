@@ -113,8 +113,8 @@ const UpdateProfile = () => {
     }, []);
 
 
-    const filteredSelectedValue = selected.map(res => { return res.value })
-    const filteredSubLocationValue = subSelected.map(res => { return res.value })
+    const filteredSelectedValue = selected.length > 0 && selected?.map(res => { return res.value })
+    const filteredSubLocationValue = subSelected.length > 0 && subSelected?.map(res => { return res.value })
 
     const {
         register,
@@ -510,7 +510,7 @@ const UpdateProfile = () => {
                                         className='btn text-white w-40 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]'><PiSpinnerGapBold className='animate-spin text-2xl' ></PiSpinnerGapBold  ></button>
                                 ) : (
                                     <div className='w-full'>
-                                        <input type="submit" value="Create" className='btn text-white w-40 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2' />
+                                        <input type="submit" value="Update" className='btn text-white w-40 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2' />
                                     </div>
                                 )}
                             </div>

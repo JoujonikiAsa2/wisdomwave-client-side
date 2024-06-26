@@ -1,8 +1,9 @@
-import { Rating } from '@smastrom/react-rating';
+
 import '@smastrom/react-rating/style.css';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import { Rating } from '@smastrom/react-rating';
 
 // Course card design
 const Course = ({ course, btnText }) => {
@@ -10,10 +11,11 @@ const Course = ({ course, btnText }) => {
 
     const [ratings, setRatings] = useState([]);
     const id = course._id
+    
     const { title, thumbnail, instructor, rating, totalStudents, enrollFee } = course.courseDetails;
 
     useEffect(() => {
-        axiosPublic.get(`/api/ratings`)
+        axiosPublic.get(`/api/reviews/${id}`)
             .then(res => {
                 setRatings(res.data.data)
             })
@@ -23,8 +25,7 @@ const Course = ({ course, btnText }) => {
     }, [id])
 
 
-    const filteredRatings = ratings.length > 0 && ratings.filter(rating => rating.courseId === id)
-    const avgRating = filteredRatings.length > 0 && filteredRatings.reduce((acc, curr) => acc + curr.rating, 0) / filteredRatings.length
+    const avgRating = ratings.length > 0 && ratings.reduce((acc, curr) => acc + curr.rating, 0) / ratings.length
 
 
     return (
@@ -38,7 +39,7 @@ const Course = ({ course, btnText }) => {
                 </div>
                 <div className='text-start px-2 space-y-6 h-full'>
                     <div className='h-[5rem] md:h-[3rem] lg:h-[3rem]'>
-                        <h5 className="text-sm font-bold py-2">{title}</h5>
+                        <h5 className="text-sm font-bold py-2 capitalize">{title}</h5>
                         <p className="text-xs font-bold capitalize">Instructor: <span className='font-normal'>{instructor}</span></p>
                     </div>
 
@@ -49,8 +50,8 @@ const Course = ({ course, btnText }) => {
 
                         <div>
                             <p className="text-sm flex gap-3">
-                                <Rating style={{ maxWidth: 70 }} readOnly value={avgRating}></Rating>
-                                ({rating})
+                                <Rating style={{ maxWidth: 90 }} readOnly value={avgRating}></Rating>                               
+                                 ({rating})
                             </p>
                             <p className="text-sm font-bold">Total Student: <span className='font-normal'>{totalStudents}</span></p>
                         </div>

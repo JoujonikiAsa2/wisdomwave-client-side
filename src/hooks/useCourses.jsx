@@ -8,6 +8,7 @@ const useCourses = () => {
         queryKey: ['allCourses'],
         queryFn: async () => {
             const res = await axiosPublic.get('/api/courses')
+            refetch()
             return res.data.data
         }
     })

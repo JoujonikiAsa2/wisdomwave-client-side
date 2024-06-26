@@ -32,7 +32,7 @@ const ManageProfile = () => {
         } catch (error) {
             console.error(error);
         }
-    }, [user?.email]);
+    }, [user?.email, userDetails]);
 
 
     useEffect(() => {
@@ -55,7 +55,7 @@ const ManageProfile = () => {
         console.log(event.target.files[0])
     };
 
-    const handlePhotoChange = async () => {
+    const tutorPictureUpdate = async () => {
         console.log("nothing")
         const imageFile = { image: file }
         const imageRes = await axiosPublic.post(image_hosting_api, imageFile, {
@@ -118,7 +118,7 @@ const ManageProfile = () => {
                                                             onChange={handleFileChange}
                                                         />
                                                     </div>
-                                                    <button className='btn btn-sm capitalize h-9 text-white bg-blue-400 hover:bg-blue-500 focus:outline-none' type='submit' onClick={handlePhotoChange}>Change</button>
+                                                    <button className='btn btn-sm capitalize h-9 text-white bg-blue-400 hover:bg-blue-500 focus:outline-none' type='submit' onClick={tutorPictureUpdate}>Change</button>
                                                 </label>
                                             </div>
                                         </div>

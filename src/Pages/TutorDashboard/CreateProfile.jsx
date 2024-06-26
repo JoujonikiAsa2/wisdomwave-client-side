@@ -99,8 +99,8 @@ const CreateProfile = () => {
 
 
 
-    const filteredSelectedValue = selected.map(res => { return res.value })
-    const filteredSubLocationValue = subSelected.map(res => { return res.value })
+    const filteredSelectedValue = selected.length > 0 && selected?.map(res => { return res.value })
+    const filteredSubLocationValue = subSelected.length > 0 && subSelected?.map(res => { return res.value })
 
     const {
         register,
@@ -127,7 +127,7 @@ const CreateProfile = () => {
                 currentStatus: data.status,
                 profile: image,
                 educationalQualication: {
-                    eudName: data.eduLevel,
+                    eduName: data.eduLevel,
                     subject: data.academicLevel,
                     institute: data.institute,
                     cgpa: data.cgpa

@@ -32,11 +32,8 @@ const Footer = () => {
                     <a className="link link-hover text-gray-500">Cookie policy</a>
                 </nav>
                 <nav className='flex flex-col lg:text-left text-center dark:text-black'>
-                    <header className="text-base text-black pb-3">Social</header>
-                    <a className="link link-hover text-gray-500">Twitter</a>
-                    <a className="link link-hover text-gray-500">Instagram</a>
-                    <a className="link link-hover text-gray-500">Facebook</a>
-                    <a className="link link-hover text-gray-500">Github</a>
+                    <header className="text-base text-black pb-3">Contact</header>
+                    <a className="link link-hover text-gray-500">wishdomwave.official@gmail.com</a>
                 </nav>
             </footer>
             <footer className='flex flex-col justify-center items-center'>

@@ -10,6 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { sendEmailVerification } from 'firebase/auth';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import useAuth from '../../hooks/useAuth';
+import { PiSpinnerGapBold } from 'react-icons/pi';
 const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_API}`
 
@@ -292,12 +293,18 @@ const TutorSignup = () => {
                                 </div>
                             </div>
                             {/* submit button */}
-                            <div className='flex  mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
-                                <div className='w-full'>
-                                    <input
-                                        type="submit"
-                                        className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize' />
-                                </div>
+                            <div className='flex w-full '>
+                                {click == true ? (
+                                    <button
+                                        className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize'><PiSpinnerGapBold className='animate-spin text-2xl' ></PiSpinnerGapBold  ></button>
+                                ) : (
+                                    <div className='w-full mr-[0.5vw] lg:mr-[1.8rem] md:mr-[1.1rem]'>
+                                        <input
+                                            type="submit"
+                                            value="Sign Up"
+                                            className='btn btn-sm bg-gradient-to-r from-[#0766AD] to-[#29ADB2]  hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2]  border-2 border-none text-white w-full focus:outline-none capitalize' />
+                                    </div>
+                                )}
                             </div>
                         </form>
                         <div className='flex flex-col justify-center items-center space-y-2'>

@@ -21,24 +21,37 @@ const DiscussionDetails = () => {
     const [text, setText] = useState("");
     const [divHidden, setDivHidden] = useState()
     const ref = useRef()
-    const [divRef, setDivRef] = useState()
-    const [clicked, setClicked] = useState(false)
     const [totalClicked, setTotalClicked] = useState(null)
-    const [likes, setLikes] = useState(0)
     const navigate = useNavigate()
 
-    useEffect(() => {
-        axiosPublic.get(`/api/likes/${id}/${user?.email}`)
-            .then(res => {
-                if (res.data.status === "success") {
-                    setTotalClicked(true)
-                }
-            })
-            .catch(error => {
-                console.error(error);
+    // useEffect(() => {
+    //     axiosPublic.get(`/api/likes/${id}/${user?.email}`)
+    //         .then(res => {
+    //             if (res.data.status === "success") {
+    //                 setTotalClicked(true)
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.error(error);
+    //             setTotalClicked(false)
+    //         })
+    // }, [id, user?.email])
+
+    const { data: likeCounts, refetch: likeRefetch } = useQuery({
+        queryKey: ["likeCounts", id, user?.email],
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/api/likes/${id}/${user?.email}`)
+            if(res.data.status === "success"){
+                setTotalClicked(true)
+                likeRefetch()
+            }
+            else{
                 setTotalClicked(false)
-            })
-    }, [id, user?.email])
+                likeRefetch()
+            }
+            return res.data.data
+        }
+    })
 
     // console.log(id)
     // handle content field text changes
@@ -80,10 +93,13 @@ const DiscussionDetails = () => {
                     setTotalClicked(false)
                 }
                 refetch()
+                likeRefetch()
             })
             .catch(e => {
                 console.log(e)
-
+                setTotalClicked(false)
+                refetch()
+                likeRefetch()
             })
     }
 
@@ -118,33 +134,6 @@ const DiscussionDetails = () => {
             })
     }
 
-    // Handle to send reply
-    // const handleReplies = (e) => {
-    //     e.preventDefault()
-    //     const replyData = {
-    //         replierName: user?.name,
-    //         replierEmail: user?.email,
-    //         replydate: new Date(),
-    //         isReply: true,
-    //         ref: ref.current.ref,
-    //         reply: e.target.replyToReplier.value,
-    //         profile: user?.photoURL
-    //     }
-
-    //     // send the post reply to the backend
-    //     axiosPublic.post(`/api/discussions/${id}`, replyData)
-    //         .then(res => {
-    //             // console.log(res.data)
-    //             refetch()
-    //             console.log(ref.current.ref)
-    //             e.target.reset()
-    //         })
-    //         .catch((e) => {
-    //             console.log(e.message)
-    //         })
-    //     console.log("Your successfully submited the reply", e.target.replyToReplier.value)
-    // }
-
     const handleDelete = (id) => {
         axiosPublic.delete(`/api/discussions/${id}/${user.email}`)
             .then(res => {
@@ -161,7 +150,7 @@ const DiscussionDetails = () => {
 
     // console.log("totalClicked",totalClicked)
 
-    
+    console.log(totalClicked)
 
     return (
         <div className="flex lg:flex-row md:flex-col-reverse flex-col-reverse justify-center lg:gap-8 px-[2vw] pt-24 min-h-screen max-w-[2300px]">
@@ -265,53 +254,6 @@ const DiscussionDetails = () => {
                                     </div>
                                 </div>
                             </div>
-{/* 
-                            <div className="w-full firstLetterUppercase p-2 text-base overflow-ellipsis max-h-72 overflow-y-auto   border-gray-400 text-gray-500 rounded" dangerouslySetInnerHTML={{ __html: comment?.comment }} />
-
-                            reply button
-                            <h2
-                                className="lg:ml-8 hover:cursor-pointer flex items-center gap-1"
-                                onClick={() => {
-                                    setDivRef(ref.current.ref = index)
-                                    setClicked(true)
-                                }} >
-
-                                <FaReply className="text-xs"></FaReply>Reply ({discussion?.replies
-                                    .filter((reply) => reply.ref === ref.current.ref).length})
-                            </h2>
-
-                            all replies to a individual user
-                            <div className={`lg:ml-10  border-gray-400 w-[90%] p-4 ${discussion?.replies.length !== 0 ? "flex flex-col gap-4" : "hidden"}`}>
-                                {
-                                    discussion?.replies
-                                        .filter((reply) => reply.ref === ref.current.ref)
-                                        .map((reply, replyIndex) => (
-                                            <div key={replyIndex} className="flex flex-col gap-2">
-                                                Render individual reply content here 
-                                                <div className="flex gap-2">
-                                                    <img src={comment?.profile} alt="" className="h-6 w-6 rounded-full" />
-                                                    <div className="">
-                                                        <h4>{reply?.replierName}</h4>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <p className="text-gray-500">{reply.reply}</p>
-                                                </div>
-                                            </div>
-                                        ))
-                                }
-                            </div>
-
-                            {onSubmit = {(e) => handleReplies(e)}}
-                            reply form for reply to the replier
-                            <form >
-                                <div className={`gap-2 ${index == divRef && clicked == true ? "flex" : "hidden"}`} ref={ref}>
-                                    <div id={index} className="lg:ml-10">
-                                        <textarea type="text" name="replyToReplier" className="input input-bordered  border-gray-400 lg:w-80 w-full focus:outline-none" placeholder="Reply here..." />
-                                    </div>
-                                    <input type="submit" value="Send" className="input input-bordered  hover:cursor-pointer border-gray-400 w-20 focus:outline-none bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] text-white" />
-                                </div>
-                            </form> */}
                         </div>)
                     }
 

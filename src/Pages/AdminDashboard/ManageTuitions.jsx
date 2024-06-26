@@ -59,7 +59,7 @@ const ManageTuitions = () => {
             })
     }
 
-    const handleUpdate = (e) => {
+    const handleUpdateTuition = (e) => {
         e.preventDefault()
         const form = e.target
         const userEmail = form.email.value
@@ -103,7 +103,7 @@ const ManageTuitions = () => {
             })
     }
 
-    const handeDelete = (code) => {
+    const handeDeleteTuition = (code) => {
 
 
         axiosPublic.delete(`/api/tuitions/${code}`)
@@ -159,7 +159,7 @@ const ManageTuitions = () => {
                             <p className='text-gray-500'><strong>Subjects:</strong> <span id="subjects" className='capitalize text-gray-500'>{tuition?.details?.subjects.join(', ')}</span></p>
                         </div>
                         <div className=' absolute -right-4 top-14 h-16 w-8 justify-center items-center flex flex-col gap-1 bg-slate-300 rounded-xl'>
-                            <div className="lg:tooltip" data-tip="Delete Tuition" onClick={() => handeDelete(tuition?.tuitionCode)}>
+                            <div className="lg:tooltip" data-tip="Delete Tuition" onClick={() => handeDeleteTuition(tuition?.tuitionCode)}>
                                 <div className='w-6 bg-red-700 flex justify-center items-center rounded cursor-pointer'>
                                     <MdDeleteOutline className='text-xl text-white'></MdDeleteOutline>
                                 </div>
@@ -182,7 +182,7 @@ const ManageTuitions = () => {
                                     <div className="">
                                         <form
                                             ref={form}
-                                            onSubmit={handleUpdate}
+                                            onSubmit={handleUpdateTuition}
                                             className=" w-full h-full flex flex-col items-center justify-center"
                                         >
                                             <div className="my-1 w-[80%]">

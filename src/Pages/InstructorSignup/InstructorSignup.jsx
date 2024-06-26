@@ -11,6 +11,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { sendEmailVerification } from 'firebase/auth';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
+import { PiSpinnerGapBold } from 'react-icons/pi';
 '../../hooks/useAxiosPublic';
 const IMAGE_HOSTING_API = import.meta.env.VITE_IMAGE_HOSTINF_API
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_API}`
