@@ -24,18 +24,17 @@ const CourseCardAdmin = ({ course }) => {
     }
 
     useEffect(() => {
-        axiosPublic.get(`/api/ratings`)
+        axiosPublic.get(`/api/reviews/${id}`)
             .then(res => {
                 setRatings(res.data.data)
             })
             .catch(e => {
-                console.log(e); // Ensure the rating is set to 0 on error
+                console.log(e); 
             });
     }, [id])
 
 
-    const filteredRatings = ratings.length > 0 && ratings.filter(rating => rating.courseId === id)
-    const avgRating = filteredRatings.length > 0 && filteredRatings.reduce((acc, curr) => acc + curr.rating, 0) / filteredRatings.length
+    const avgRating = ratings.length > 0 && ratings.reduce((acc, curr) => acc + curr.rating, 0) / ratings.length
 
     return (
 

@@ -23,12 +23,12 @@ const CourseDetails = () => {
     // get the id from params
     const { id } = useParams()
     const axiosPublic = useAxiosPublic()
-    const [ratings, setRatings] = useState(0) 
+    const [ratings, setRatings] = useState(0)
     const [userInfo, setUserInfo] = useState(null)
     console.log("Id", id)
 
     // get the stored data from the localstorage
-    const storedCourses = JSON.parse(localStorage.getItem('courses'))
+    // const storedCourses = JSON.parse(localStorage.getItem('courses'))
     useEffect(() => {
         try {
             axiosPublic.get(`/api/user/${user?.email}`)
@@ -99,12 +99,12 @@ const CourseDetails = () => {
                 setRatings(res.data.data)
             })
             .catch(e => {
-                console.log(e); 
+                console.log(e);
             });
     }, [id])
 
 
-    
+
     const avgRating = ratings.length > 0 && ratings.reduce((acc, curr) => acc + curr.rating, 0) / ratings.length
 
     console.log("Avg", avgRating)
@@ -153,11 +153,14 @@ const CourseDetails = () => {
                     </div>
 
                     {/* Buttons */}
-                    
-                    {
-                        // compared the id with local storage's id
-                        storedCourses != null && storedCourses?.includes(id) ?
-                            <div className='py-4 flex justify-start items-center gap-2 text-white'>
+                    <div className='py-4 flex justify-start items-center gap-2 text-white'>
+
+                        <button onClick={() => buyCourse(id)}
+                            className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
+                        > Buy now
+                        </button>
+                        {
+                            user?.userType == "instructor" && <div className='py-4 flex justify-start items-center gap-2 text-white'>
                                 <Link to={`/courseDashboard/${id}/${courseDetails?.playlistId?.split("=")[1]}/${courseDetails?.title}`}>
                                     <button
                                         className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
@@ -165,28 +168,18 @@ const CourseDetails = () => {
                                     </button>
                                 </Link>
                             </div>
-                            
-                            
-                            :
-                            <div className='py-4 flex justify-start items-center gap-2 text-white'>
-
-                                <button onClick={() => buyCourse(id)}
-                                    className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
-                                > Buy now
-                                </button>
-                                {
-                                    userInfo?.userType == "instructor" && <div className='py-4 flex justify-start items-center gap-2 text-white'>
-                                        <Link to={`/courseDashboard/${id}/${courseDetails?.playlistId.split("=")[1]}/${courseDetails?.title}`}>
-                                            <button
-                                                className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
-                                            > Go to Course
-                                            </button>
-                                        </Link>
-                                    </div>
-                                }
+                        }
+                        {
+                            user?.userType == "admin" && <div className='py-4 flex justify-start items-center gap-2 text-white'>
+                                <Link to={`/courseDashboard/${id}/${courseDetails?.playlistId?.split("=")[1]}/${courseDetails?.title}`}>
+                                    <button
+                                        className='btn btn-sm text-white capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] '
+                                    > Go to Course
+                                    </button>
+                                </Link>
                             </div>
-                    }
-                   
+                        }
+                    </div>
 
                     {/* Course contents accordion*/}
                     <div>

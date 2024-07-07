@@ -13,12 +13,11 @@ const Header = ({ handleSearch }) => {
 
     const axiosPublic = useAxiosPublic()
     const { user, userSignOut } = useAuth()
-    const [userInfo, setUserInfo] = useState(null)
     const [show, setShow] = useState(false)
     const [clicked, setClicked] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false);
     const navigate = useNavigate()
-    // console.log(userInfo)
+    // console.log(user)
 
     // Handle the navbar color
     useEffect(() => {
@@ -34,21 +33,6 @@ const Header = ({ handleSearch }) => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-
-    // Handle user roles and routing
-    useEffect(() => {
-        try {
-            axiosPublic.get(`/api/user/${user?.email}`)
-                .then(response => {
-                    setUserInfo(response.data.data)
-                })
-                .catch(error => {
-                    console.error(error);
-                })
-        } catch (error) {
-            console.error(error);
-        }
-    }, [user?.email, userInfo]);
 
     // Helps to show the search bar on click( Small device )
     const handleShow = () => {
@@ -102,7 +86,7 @@ const Header = ({ handleSearch }) => {
     const profileLinks = <>
         {
             user && <>
-                {userInfo?.userType === 'student' && <nav className="">
+                {user?.userType === 'student' && <nav className="">
                     <NavLink to="/allCourses" style={({ isActive }) => {
                         return {
                             color: isActive ? "#0766AD" : "",
@@ -110,7 +94,7 @@ const Header = ({ handleSearch }) => {
                         };
                     }} className="dark:text-black">All Courses</NavLink>
                 </nav>}
-                {userInfo?.userType === 'instructor' && <nav className="">
+                {user?.userType === 'instructor' && <nav className="">
                     <NavLink to="/allCourses" style={({ isActive }) => {
                         return {
                             color: isActive ? "#0766AD" : "",
@@ -126,7 +110,7 @@ const Header = ({ handleSearch }) => {
                         };
                     }} className="dark:text-black">All Courses</NavLink>
                 </nav>}
-                {userInfo?.userType === 'admin' && <nav className="">
+                {user?.userType === 'admin' && <nav className="">
                     <NavLink to="/allCourses" style={({ isActive }) => {
                         return {
                             color: isActive ? "#0766AD" : "",
@@ -134,7 +118,7 @@ const Header = ({ handleSearch }) => {
                         };
                     }} className="dark:text-black">All Courses</NavLink>
                 </nav>}
-                {userInfo?.userType === 'student' && <nav>
+                {user?.userType === 'student' && <nav>
                     <NavLink to="/createDiscussion" style={({ isActive }) => {
                         return {
 
@@ -144,7 +128,16 @@ const Header = ({ handleSearch }) => {
                     }} className="dark:text-black">Create Discussion</NavLink>
                 </nav>}
 
-                {userInfo?.userType === 'student' && <nav>
+                {user?.userType === 'student' && <nav>
+                    <NavLink to="/myTuitions" style={({ isActive }) => {
+                        return {
+
+                            color: isActive ? "#0766AD" : "",
+                            borderBottom: isActive ? "1px solid #0766AD" : ""
+                        };
+                    }} className="dark:text-black">My Tuitions</NavLink>
+                </nav>}
+                {user?.userType === 'student' && <nav>
                     <NavLink to="/createTuition" style={({ isActive }) => {
                         return {
 
@@ -153,7 +146,7 @@ const Header = ({ handleSearch }) => {
                         };
                     }} className="dark:text-black">Create Tuition</NavLink>
                 </nav>}
-                {userInfo?.userType === 'student' && <nav>
+                {user?.userType === 'student' && <nav>
                     <NavLink to="/requestedTuitions" style={({ isActive }) => {
                         return {
 
@@ -164,14 +157,14 @@ const Header = ({ handleSearch }) => {
                 </nav>}
 
                 {
-                    userInfo?.userType === "admin" && <nav>
+                    user?.userType === "admin" && <nav>
                         <NavLink to="/tuitions" style={({ isActive }) => {
                             return {
 
                                 color: isActive ? "#0766AD" : "",
                                 borderBottom: isActive ? "1px solid #0766AD" : ""
                             };
-                        }} className="dark:text-black">Find Tuition</NavLink>
+                        }} className="dark:text-black">Tuitions</NavLink>
                     </nav>
                 }
                 {/* 
@@ -214,7 +207,7 @@ const Header = ({ handleSearch }) => {
             }} className="dark:text-black">Home</NavLink>
         </nav>
         {
-            userInfo?.userType === "student" && <nav>
+            user?.userType === "student" && <nav>
                 <NavLink to="/findTutors" style={({ isActive }) => {
                     return {
 
@@ -225,14 +218,14 @@ const Header = ({ handleSearch }) => {
             </nav>
         }
         {
-            userInfo?.userType === "admin" && <nav>
+            user?.userType === "admin" && <nav>
                 <NavLink to="/findTutors" style={({ isActive }) => {
                     return {
 
                         color: isActive ? "#0766AD" : "",
                         borderBottom: isActive ? "1px solid #0766AD" : ""
                     };
-                }} className="dark:text-black">Find Tutors</NavLink>
+                }} className="dark:text-black">Tutors</NavLink>
             </nav>
         }
         {user === null && <nav>
@@ -244,18 +237,7 @@ const Header = ({ handleSearch }) => {
                 };
             }} className="dark:text-black">Find Tutors</NavLink>
         </nav>}
-        {
-            userInfo?.userType === "tutor" && <nav>
-                <NavLink to="/tuitions" style={({ isActive }) => {
-                    return {
-
-                        color: isActive ? "#0766AD" : "",
-                        borderBottom: isActive ? "1px solid #0766AD" : ""
-                    };
-                }} className="dark:text-black">Find Tuition</NavLink>
-            </nav>
-        }
-        {userInfo?.userType === "student" && <nav className="">
+        {user?.userType === "student" && <nav className="">
             <NavLink to="/discussions" style={({ isActive }) => {
                 return {
                     color: isActive ? "#0766AD" : "",
@@ -271,16 +253,16 @@ const Header = ({ handleSearch }) => {
                 };
             }} className="dark:text-black">Discussions Forum</NavLink>
         </nav>}
-        {userInfo?.userType === "admin" && <nav className="">
+        {user?.userType === "admin" && <nav className="">
             <NavLink to="/discussions" style={({ isActive }) => {
                 return {
                     color: isActive ? "#0766AD" : "",
                     borderBottom: isActive ? "1px solid #0766AD" : ""
                 };
-            }} className="dark:text-black">Discussions Forum</NavLink>
+            }} className="dark:text-black">Discussions</NavLink>
         </nav>}
         {
-            userInfo?.userType === "student" && <nav className="">
+            user?.userType === "student" && <nav className="">
                 <NavLink to="/myCourses" style={({ isActive }) => {
                     return {
                         color: isActive ? "#0766AD" : "",
@@ -290,7 +272,7 @@ const Header = ({ handleSearch }) => {
             </nav>
         }
         {
-            userInfo?.userType === "instructor" && <nav className="">
+            user?.userType === "instructor" && <nav className="">
                 <NavLink to="/instructor/instructorDashboard" style={({ isActive }) => {
                     return {
                         color: isActive ? "#0766AD" : "",
@@ -300,7 +282,7 @@ const Header = ({ handleSearch }) => {
             </nav>
         }
         {
-            userInfo?.userType === "tutor" && <nav className="">
+            user?.userType === "tutor" && <nav className="">
                 <NavLink to="/tutor/tutorDashboard" style={({ isActive }) => {
                     return {
                         color: isActive ? "#0766AD" : "",
@@ -310,7 +292,7 @@ const Header = ({ handleSearch }) => {
             </nav>
         }
         {
-            userInfo?.userType === "admin" && <nav className="">
+            user?.userType === "admin" && <nav className="">
                 <NavLink to="/admin/adminDashboard" style={({ isActive }) => {
                     return {
                         color: isActive ? "#0766AD" : "",
@@ -319,6 +301,14 @@ const Header = ({ handleSearch }) => {
                 }} className="dark:text-black">Dashboard</NavLink>
             </nav>
         }
+        <nav className="">
+            <NavLink to="/faq" style={({ isActive }) => {
+                return {
+                    color: isActive ? "#0766AD" : "",
+                    borderBottom: isActive ? "1px solid #0766AD" : ""
+                };
+            }} className="dark:text-black">FAQ</NavLink>
+        </nav>
 
     </>
 

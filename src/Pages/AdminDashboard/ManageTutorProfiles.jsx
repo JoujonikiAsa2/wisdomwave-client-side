@@ -5,16 +5,17 @@ import { Link } from 'react-router-dom';
 import { BiEdit } from 'react-icons/bi';
 import { MdDeleteOutline, MdEdit } from 'react-icons/md';
 import toast, { Toaster } from 'react-hot-toast';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const ManageTutorProfiles = () => {
 
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const [tutorProfiles, setTutorProfiles] = useState([]);
     const [dates, setDates] = useState({});
 
 
     useEffect(() => {
-        axiosPublic.get('/api/tutors')
+        axiosSecure.get('/api/tutors')
             .then(res => {
                 setTutorProfiles(res.data.data)
             })
@@ -63,7 +64,7 @@ const ManageTutorProfiles = () => {
 
     const handleDeleteTutor =  (email) => {
         try {
-            axiosPublic.delete(`/api/tutors/${email}`)
+            axiosSecure.delete(`/api/tutors/${email}`)
             .then(res => {
                 console.log(res.data.data)
                 if(res.data.status === "success"){
@@ -136,7 +137,7 @@ const ManageTutorProfiles = () => {
                         </div>
                     </div>
                 )) : <div className='w-full col-span-3 h-[50vh] flex justify-center items-center'>
-                        <p className='text-center text-xl'>No Tutor Profiles Found</p>
+                        <p className='text-center text-red-500'>No Tutor Profiles Found</p>
                     </div>}
             </div>
         </div>

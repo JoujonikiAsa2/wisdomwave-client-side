@@ -8,6 +8,8 @@ const TutorDashboard = () => {
     const { user } = useAuth()
     const axiosPublic = useAxiosPublic()
     const [requestedTuition, setRequestedTuition] = useState(null)
+    const [tuitionFromStudentCount, setTuitionFromStudentCount] = useState(null)
+    const [tuitionRequestsCount, setTuitionRequestsCount] = useState(null)
     const [tuitionRequests, setTuitionRequests] = useState([])
     console.log(user?.email)
 
@@ -16,6 +18,7 @@ const TutorDashboard = () => {
             .then(res => {
                 console.log(res.data)
                 setRequestedTuition(res.data.data)
+                setTuitionFromStudentCount(res.data.data?.length)
             })
             .catch(error => {
                 console.log(error)
@@ -24,10 +27,11 @@ const TutorDashboard = () => {
 
 
     useEffect(() => {
-        axiosPublic.get(`/api/requestedTuition/tutor/${user?.email}`)
+        axiosPublic.get(`/api/student/messages/${user?.email}`)
             .then(res => {
                 console.log(res.data)
                 setTuitionRequests(res.data.data)
+                setTuitionRequestsCount(res.data.data?.length)
             })
             .catch(error => {
                 console.log(error)

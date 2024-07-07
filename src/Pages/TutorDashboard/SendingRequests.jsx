@@ -9,7 +9,7 @@ const SendingRequests = () => {
     const [tuitionRequests, setTuitionRequests] = useState([])
     console.log(user?.email)
     useEffect(() => {
-        axiosPublic.get(`/api/requestedTuition/tutor/${user?.email}`)
+        axiosPublic.get(`/api/student/messages/${user?.email}`)
             .then(res => {
                 console.log(res.data)
                 setTuitionRequests(res.data.data)
@@ -22,7 +22,7 @@ const SendingRequests = () => {
     console.log(tuitionRequests)
     return (
         <div>
-            <DashboardTitle title="Sennding Requests" subTitle="View all requests to other tuitions" />
+            <DashboardTitle title="Sending Requests" subTitle="View all requests to other tuitions" />
             <div className=' grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-center items-center justify-items-center gap-6 mb-10'>
                 {
                     tuitionRequests.length !== 0 ? tuitionRequests.map(request => <div className='card border p-4 lg:w-80 md:w-80 w-[90%] h-full m-4 space-y-1'>

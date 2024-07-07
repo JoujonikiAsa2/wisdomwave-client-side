@@ -3,11 +3,11 @@ import useAuth from "../hooks/useAuth";
 import Logo from "../assets/Photos/LandingPage/logo_wave.png";
 import './styles.css'
 import { useState } from "react";
-import { MdAnnouncement, MdDashboard, MdLogout, MdManageAccounts, MdOutlineManageAccounts } from "react-icons/md";
+import { MdAnnouncement, MdDashboard, MdLogout, MdManageAccounts, MdOutlineManageAccounts, MdOutlineTextFields, MdTextFields } from "react-icons/md";
 import { IoHome } from "react-icons/io5";
 import { IoMdFolder } from "react-icons/io";
 import { TbCoinTaka, TbFolderOpen } from "react-icons/tb";
-import { FaUsers } from "react-icons/fa";
+import { FaQuestionCircle, FaUsers } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 
@@ -46,9 +46,14 @@ const navLinks = [
     },
     {
         nav: "Manage Discussions",
-        icon: CiCircleInfo,
+        icon: MdOutlineTextFields,
         link: "/admin/manageDiscussions",
-    }
+    },
+    {
+        nav: "Manage FAQ",
+        icon: FaQuestionCircle,
+        link: "/admin/manageFaqs",
+    },
 ];
 
 

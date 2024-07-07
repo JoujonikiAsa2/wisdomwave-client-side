@@ -29,7 +29,7 @@ const ManageUsers = () => {
             .then(res => {
                 console.log(res.data.data)
                 if(res.data.data !== undefined || res.data.data !== null){
-                    setUsers(res.data.data)
+                    setUsers([res.data.data])
                 }
                 else{
                     setUsers([])
@@ -86,8 +86,6 @@ const ManageUsers = () => {
                 axiosSecure.patch(`/api/user/${email}`)
                     .then(res => {
                         console.log(res.data.data)
-                        const filteredUsers = users.filter(user => user.email !== email)
-                        setUsers(filteredUsers)
                         Swal.fire({
                             title: "Added!",
                             text: "This user is an admin now.",
@@ -113,7 +111,6 @@ const ManageUsers = () => {
                         <button type="submit" className=" py-[0.2rem] px-2 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] border-2 border-none text-white text-thin rounded-none rounded-r-lg text-sm">Search</button>
                     </div>
                 </form>
-                <button onClick={() => setUsers(users)} className='btn btn-sm bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] capitalize text-white'>All</button>
             </div>
             <div className="overflow-x-auto">
                 <table className='table '>
@@ -140,7 +137,7 @@ const ManageUsers = () => {
                                     </div>
                                 </td>
                             </tr>) : <tr>
-                                <td colSpan={4} className='text-center text-lg'>No users found</td>
+                                    <td colSpan={4} className='text-center text-red-500'>No users found</td>
                             </tr>
                         }
                     </tbody>

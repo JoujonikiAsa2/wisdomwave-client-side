@@ -4,10 +4,12 @@ import useAxiosPublic from '../../hooks/useAxiosPublic';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdDeleteOutline, MdEdit } from 'react-icons/md';
 import { PiSpinnerGapBold } from 'react-icons/pi';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const ManageTuitions = () => {
 
     const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
     const [tuitions, setTuitions] = useState([])
     const [tuition, setTuition] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -22,7 +24,7 @@ const ManageTuitions = () => {
             .catch(error => {
                 console.log(error)
             })
-    }, [])
+    }, [tuitions])
 
     const localHandleSearch = (event) => {
         event.preventDefault()
@@ -93,7 +95,7 @@ const ManageTuitions = () => {
         }
         console.log(data)
 
-        axiosPublic.patch(`/api/tuitions/${userEmail}`, data)
+        axiosSecure.patch(`/api/tuitions/${userEmail}`, data)
             .then(res => {
                 // console.log(res.data.data)
                 toast.success('Tuition updated successfully')
@@ -139,7 +141,6 @@ const ManageTuitions = () => {
                         <button type="submit" className=" py-[0.2rem] px-2 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] border-2 border-none text-white text-thin rounded-none rounded-r-lg text-sm">Search</button>
                     </div>
                 </form>
-                <button onClick={() => setTuitions(tuitions)} className='btn btn-sm bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] capitalize text-white'>All</button>
             </div>
 
             {

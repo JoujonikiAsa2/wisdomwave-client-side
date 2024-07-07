@@ -1,19 +1,25 @@
+import { useEffect, useState } from 'react';
 import useAxiosPublic from './useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 
 const useCourses = () => {
-    const axiosPublic = useAxiosPublic()
+    const axiosPublic = useAxiosPublic() 
+    const [allCourses, setAllCourses] = useState([])
+    // console.log(user.email)
 
-    const { data: allCourses = [], isLoading, isError, refetch} = useQuery({
-        queryKey: ['allCourses'],
-        queryFn: async () => {
-            const res = await axiosPublic.get('/api/courses')
-            refetch()
-            return res.data.data
-        }
-    })
+    useEffect(() => {
 
-    return { allCourses, isLoading, isError, refetch}
+        axiosPublic.get('/api/courses')
+            .then(res => {
+                console.log(res.data.data)
+                setAllCourses(res.data.data)
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }, [allCourses])
+
+    return { allCourses}
 };
 
 export default useCourses;

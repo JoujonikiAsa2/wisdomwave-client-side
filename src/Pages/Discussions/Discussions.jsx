@@ -1,4 +1,3 @@
-import Loader from "../../SharedComponents/Loader/Loader";
 import slider from '../LandingPage/Components/discussion.json'
 import useDiscussions from "../../hooks/useDiscussions";
 import DiscussionCard from "./DiscussionCard";
@@ -6,11 +5,7 @@ import Banner from "../LandingPage/Components/Banner";
 
 const Discussions = () => {
     const { discussions, isLoading, isError } = useDiscussions()
-
-    if (isLoading) {
-        return <Loader></Loader>;
-    }
-
+   
     if (isError) {
         return <div className="text-center min-h-[80vh] flex justify-center items-center">Error loading discussions</div>;
     }
@@ -32,7 +27,7 @@ const Discussions = () => {
                         ))}
 
                     </div>
-                    : <div className="text-center min-h-[80vh] flex justify-center items-center">No discussions found</div>
+                    : <div className="text-center min-h-[80vh] flex justify-center items-center text-red-500">No discussions found</div>
             }
         </div>
     );

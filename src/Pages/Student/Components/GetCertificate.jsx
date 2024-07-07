@@ -16,15 +16,9 @@ import { useParams } from 'react-router-dom';
 
 const GetCertificate = () => {
     const { user } = useAuth()
-    const [name, setName] = useState(user?.displayName);
     const {title, instructor, duration} = useParams()
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const name = e.target.name.value;
-        setName(name);
-        console.log(name);
-    }
+    
     return (
         <div className='pt-20 w-full'>
             <div className='text-xl w-full flex flex-col gap-2 justify-center items-center py-10'>
@@ -49,10 +43,10 @@ const GetCertificate = () => {
                                 <Text style={{ fontSize: 16 }}>Certificate of completion</Text>
                                 <Text style={{ fontSize: 30, fontWeight:700, marginTop: "10px", marginBottom: "10px" }}>{title}</Text>
                                 <Text style={{ fontSize: 16 }}>Instructor: {instructor}</Text>
-                                <Text style={{ fontSize: 16, padding: "10px", fontWeight: 300, color: "gray" }}>This certificate is awarded to {name} for completion of {title} course in WisdomWave.</Text>
+                                <Text style={{ fontSize: 16, padding: "10px", fontWeight: 300, color: "gray" }}>This certificate is awarded to {user?.name} for completion of {title} course in WisdomWave.</Text>
                             </View>
                             <View style={{ textAlign: "center", marginTop: "40px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                                <Text style={{ marginTop: "10px", marginBottom: "10px", fontSize: 24, fontWeight: 700 }}>Name: {name}</Text>
+                                <Text style={{ marginTop: "10px", marginBottom: "10px", fontSize: 24, fontWeight: 700 }}>Name: {user?.name}</Text>
                                 <Text style={{ color: "gray", fontSize:"12"}}>Issue Date: {new Date().toLocaleDateString()}</Text>
                                 <Text style={{  color: "gray", fontSize:"12"}}>Length: {duration} Month</Text>
                             </View>

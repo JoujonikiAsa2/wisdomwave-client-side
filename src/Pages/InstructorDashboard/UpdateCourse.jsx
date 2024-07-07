@@ -222,7 +222,7 @@ const UpdateCourse = () => {
             }
         } catch (err) {
             console.log(err);
-            toast.success("Course updated failed. Please try again")
+            toast.error("Course updated failed. Please try again")
 
         }
 

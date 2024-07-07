@@ -24,7 +24,6 @@ const AllCourses = () => {
         axiosPublic.get('/api/totalCourse')
             .then(res => {
                 setCount(res.data.data)
-                refrech()
             })
             .catch(e => {
                 console.log(e)
@@ -36,7 +35,6 @@ const AllCourses = () => {
             .then(res => {
                 // console.log(res.data.data)
                 setCourses(res.data.data)
-                refrech()
             })
             .catch(e => {
                 console.log(e)
@@ -59,15 +57,17 @@ const AllCourses = () => {
 
     return (
         <div className='py-28 gap-4 mx-[5vw]'>
-            <div className='grid grid-cols-1 lg:grid-cols-2 justify-center justify-items-center items-center gap-8 w-full'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 justify-center justify-items-center items-center gap-8 w-full '>
                 {
-                    allCourses.length == 0 ? courses.map(course => <div className='rounded-lg w-full' key={course._id}>
+                    searchKey === '' && allCourses.length == 0 ? courses.map(course => <div className='rounded-lg w-full' key={course._id}>
                     <AllCourseCard key={course._id} course={course} btnText="Enroll Now">
                         </AllCourseCard>
-                    </div >) : allCourses.map(course => <div className='rounded-lg w-full' key={course._id}>
+                    </div >) : allCourses.length != 0 ? allCourses.map(course => <div className='rounded-lg w-full' key={course._id}>
                         <AllCourseCard key={course._id} course={course} btnText="Enroll Now">
                         </AllCourseCard>
-                    </div >)
+                    </div >) : searchKey !== '' && allCourses.length == 0 && <div className='col-span-2 h-[90vh] w-full flex justify-center items-center'>
+                                <p>No Course Found</p> 
+                    </div>
                 }
             </div>
             <div className="flex gap-2 justify-center items-center pt-6">

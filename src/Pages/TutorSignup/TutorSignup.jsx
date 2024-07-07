@@ -19,6 +19,7 @@ const TutorSignup = () => {
 
     const axiosPublic = useAxiosPublic()
     const [passwordType, setPasswordType] = useState('password')
+    const [click, setClick] = useState(false)
 
     //  navigate helps to navigate the login page after succefully sign up
 
@@ -40,6 +41,7 @@ const TutorSignup = () => {
 
     // Help to execute all function after submit the form
     const onSubmit = async (data) => {
+        setClick(true)
         // console.log(data)
         const name = data.fullName
         const phoneNumber = parseInt(data.phone)
@@ -71,7 +73,6 @@ const TutorSignup = () => {
 
                 // console.log(result.user)
 
-                // updating user information
                 updateUserInfo(name, phoneNumber, image)
                     .then((response) => {
                         console.log("updated")
@@ -89,7 +90,8 @@ const TutorSignup = () => {
                             .catch(error => {
                                 console.log(error)
                             })
-                        // This is alert message email verification
+                        setClick(false)
+
                         toast.success('Please check your email to verify', {
                             duration: 4000
                         })
@@ -109,10 +111,8 @@ const TutorSignup = () => {
                     });
             })
             .catch(error => {
-                // Convert the error object to a string
                 const errorMessage = error.message || 'An error occurred';
-
-                // Display the error message using toast.error
+                setClick(true)
                 toast.error(errorMessage);
             })
 
@@ -127,8 +127,8 @@ const TutorSignup = () => {
                 position="top-center"
                 reverseOrder={false}
             />
-            <div className='flex flex-col justify-center items-center h-screen max-w-[96rem] mx-auto mt-4'>
-                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl'>
+            <div className='flex flex-col justify-center items-center h-[80vh] max-w-[96rem] mx-auto mt-4'>
+                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[450px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl'>
                     <div className='flex-1 flex justify-center items-center h-full'>
                         <Lottie animationData={signUpAnimation} className="w-[300px] h-[300px]"></Lottie>
                     </div>

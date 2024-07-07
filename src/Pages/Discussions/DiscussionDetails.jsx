@@ -153,9 +153,9 @@ const DiscussionDetails = () => {
     console.log(totalClicked)
 
     return (
-        <div className="flex lg:flex-row md:flex-col-reverse flex-col-reverse justify-center lg:gap-8 px-[2vw] pt-24 min-h-screen max-w-[2300px]">
+        <div className={`flex lg:flex-row md:flex-col-reverse flex-col-reverse justify-center lg:gap-8 px-[2vw] min-h-screen max-w-[2300px] ${user.userType === "admin" ? "pt-24" : " pt-24"}`}>
             <div className="flex flex-col gap-2 p-4 rounded bg-[#F3F3F3] mb-10">
-                <h2 className="text-lg pb-2 border-b-2 font-bold">All Blogs</h2>
+                <h2 className="text-lg pb-2 border-b-2 font-bold">Discussions</h2>
                 {
                     discussions.map((item, index) =>
                         <Link to={`/discussions/${item._id}`} key={index}>

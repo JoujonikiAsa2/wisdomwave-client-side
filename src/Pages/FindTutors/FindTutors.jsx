@@ -123,7 +123,7 @@ const FindTutors = () => {
                         </div>
                     </div>
                 </div> : <div className='w-full h-[50vh] flex justify-center items-center'>
-                        <h2 className="text-lg text-center ">No Tutors Found</h2>
+                        <h2 className="text-lg text-center text-red-500">No Tutors Found</h2>
                 </div>}
         </div>
     );

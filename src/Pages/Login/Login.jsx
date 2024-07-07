@@ -69,6 +69,7 @@ const Login = () => {
                     userSignOut()
                         .then(() => {
                             toast.error('Verify before login!', { duration: 4000 });
+                            setClick(false)
                         })
                         .catch(error => {
                             const errorMessage = error.message || 'An error occurred';
@@ -91,11 +92,11 @@ const Login = () => {
                 reverseOrder={false}
 
             />
-            <div className='flex justify-center items-center  lg:max-w-[96rem] mx-auto h-screen'>
+            <div className='flex justify-center items-center  lg:max-w-[96rem] mx-auto h-[80vh]'>
                 <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl mt-10'>
 
                     {/* Loign animation */}
-                    <div className='flex-1 flex justify-center items-center h-full '>
+                    <div className='flex-1 flex justify-center items-center h-[300px] mt-12'>
                         <Lottie animationData={loginAnimation} className="w-[300px] h-[300px]"></Lottie>
                     </div>
                     <div className='flex justify-center items-center'>

@@ -4,7 +4,7 @@ import useAxiosPublic from './useAxiosPublic';
 const useDiscussions = () => {
     const axiosPublic = useAxiosPublic();
 
-    const { data: discussions = [], isLoading, isError } = useQuery({
+    const { data: discussions = [], isLoading, isError,refetch } = useQuery({
         queryKey: ['discussions'],
         queryFn: async () => {
             try {
@@ -16,7 +16,7 @@ const useDiscussions = () => {
             }
         },
     });
-    return {discussions, isLoading, isError}
+    return { discussions, isLoading, isError, refetch }
 };
 
 export default useDiscussions;

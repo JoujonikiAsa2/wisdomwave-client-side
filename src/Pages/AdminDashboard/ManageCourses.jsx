@@ -12,7 +12,7 @@ import { BiSearch } from 'react-icons/bi';
 import CourseCardAdmin from './CourseCardAdmin';
 
 const ManageCourses = () => {
-    const { allCourses, isLoading, refetch } = useCourses()
+    const { allCourses } = useCourses()
     const [courses, setCourses] = useState([])
 
     useEffect(()=>{
@@ -47,7 +47,6 @@ const ManageCourses = () => {
                         <button type="submit" className=" py-[0.2rem] px-2 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] border-2 border-none text-white text-thin rounded-none rounded-r-lg text-sm">Search</button>
                     </div>
                 </form>
-                <button onClick={() => setCourses(allCourses)} className='btn btn-sm bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] capitalize text-white'>All</button>
             </div>
             {courses.length > 0 ? <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-8 justify-center items-center justify-items-center'>
                 {
@@ -56,7 +55,7 @@ const ManageCourses = () => {
                    </div>)
                 }
             </div> : <div className='flex justify-center items-center h-full'>
-                <p className='text-xl'>No courses found for the given email</p>
+                <p className='text-red-500'>No courses found for the given email</p>
             </div>}
         </>
     );

@@ -31,7 +31,7 @@ const CreateDiscussion = () => {
 
         // discussion data object to pass database
         const discussionData = {
-            userProfile: user?.photoURL,
+            userProfile: user?.profilePicture,
             userName: userName,
             email: user.email,
             date: new Date(),
@@ -126,6 +126,7 @@ const CreateDiscussion = () => {
                             <ReactQuill
                                 theme='snow'
                                 value={text}
+                                placeholder="Write about your discussion"
                                 modules={modules}
                                 onChange={handleChange}
                                 className='lg:w-[60vw] bg-white rounded'

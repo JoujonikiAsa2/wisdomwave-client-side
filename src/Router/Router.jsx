@@ -60,6 +60,9 @@ import GetCertificate from "../Pages/Student/Components/GetCertificate"
 import AdminRoute from "./AdminRoute/AdminRoute"
 import ManageDiscussions from "../Pages/AdminDashboard/ManageDiscussions"
 import Reviews from "../Pages/Student/Components/Reviews"
+import FAQ from "../Pages/FAQ/FAQ"
+import ManageFAQ from "../Pages/AdminDashboard/ManageFAQ"
+import MyTuitions from "../Pages/Student/Components/MyTuitions"
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -70,6 +73,10 @@ export const router = createBrowserRouter([
                 path: "/",
                 // student home route
             element: <LandingPage />
+            },
+            {
+                path: "/faq",
+                element: <FAQ />
             },
             {
                 path: "/courseDetails/:id",
@@ -97,7 +104,10 @@ export const router = createBrowserRouter([
                 path: '/myCourses',
                 element: <PrivateRoute><AvailableCourses></AvailableCourses></PrivateRoute>
             },
-            ,
+            {
+                path: '/myTuitions',
+                element: <PrivateRoute><MyTuitions /></PrivateRoute>
+            },
             {
                 path: '/allCourses',
                 element: <AllCourses></AllCourses>
@@ -314,7 +324,15 @@ export const router = createBrowserRouter([
             {
                 path: "manageDiscussions",
                 element: <ManageDiscussions />
-            }
+            },
+            {
+                path: "manageFaqs",
+                element: <ManageFAQ />
+            },
+            {
+                path: 'viewDiscussion/:id',
+                element: <DiscussionDetails />
+            },
         ]
     }
 ])

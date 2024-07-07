@@ -176,18 +176,6 @@ const UpdateCourseAdmin = () => {
         ]
     };
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const month = date.getMonth() + 1; // Adding 1 since getMonth() returns zero-based month (0-11)
-        const day = date.getDate();
-        const year = date.getFullYear();
-        return `${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${year}`;
-    };
-
-    console.log(new Date("2023-10-01T00:00:00.000Z").toLocaleDateString())
-    console.log("2023-10-01T00:00:00.000Z".slice(0, 10))
-
-
 
     // Help to execute all function after submit the form
     const onSubmit = async (data) => {

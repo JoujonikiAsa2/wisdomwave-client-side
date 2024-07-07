@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Loader from '../../SharedComponents/Loader/Loader';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
-import { Navigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import PageNotFound from '../../SharedComponents/404_page/PageNotFound';
 
 const AdminRoute = ({ children }) => {
     const { user } = useAuth();
@@ -28,7 +26,7 @@ const AdminRoute = ({ children }) => {
         return children
     }
     else if (isLoading) {
-        return <PageNotFound></PageNotFound>
+        return <Loader></Loader>
     }
 };
 

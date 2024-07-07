@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import useAuth from '../../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { IoClose } from 'react-icons/io5';
+import ReactQuill from 'react-quill';
 
 
 const Announcement = () => {
@@ -12,6 +13,7 @@ const Announcement = () => {
     const axiosPublic = useAxiosPublic()
     const [clicked, setClicked] = useState(false)
     const [students, setStudents] = useState([]);
+    const [text,setText] = useState("")
 
     console.log(students)
 
@@ -45,13 +47,13 @@ const Announcement = () => {
         e.preventDefault()
         const form = e.target
         const title = form.title.value
-        const details = form.details.value
+        const details = text
         console.log(title, details)
 
         console.log(students)
 
 
-        axiosPublic.post('/api/announcements', { title, details, email: user?.email, studentEmails: students })
+        axiosPublic.post('/api/announcements', { title, details, email: user?.email, instructorName: user?.name, studentEmails: students })
             .then(res => {
                 console.log(res.data)
                 if (res.data.status === "success") {
@@ -63,7 +65,29 @@ const Announcement = () => {
                 console.log(err)
             })
         form.reset()
+        setText("")
     }
+
+
+    const modules = {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'], //text style tool
+
+            // [{ 'header': 1 }, { 'header': 2 }],               
+            [{ 'list': 'ordered' }, { 'list': 'bullet' },  //listing tools
+            { 'script': 'sub' }, { 'script': 'super' },   // subscript and superscript
+            { 'indent': '-1' }, { 'indent': '+1' },      //indent tools      
+            { 'direction': 'rtl' },                    //text direction tools
+            { 'header': [1, 2, 3, 4, 5, 6, false] },   //heading tags
+
+            { 'color': [] }, { 'background': [] },     //text color changer tools
+            { 'align': [] }],                           //aligment tool
+            ['link', 'clean']                    //cleaner
+        ]
+    };
+    const handleChange = (value) => {
+        setText(value);
+    };
     return (
         <>
             <Toaster
@@ -88,8 +112,14 @@ const Announcement = () => {
                         <div className='w-full lg:w-[80%] h-full'>
                             <label htmlFor="duration" className='w-full'>
                                 <p className='text-base text-gray-500'>Announcement Details<span className='text-red-500'>*</span> </p>
-                                <textarea type="text" name='details' required className='input input-bordered border-gray-300 w-full  h-32 focus:outline-none  text-gray-500' />
-                            </label>
+                                <ReactQuill
+                                    theme='snow'
+                                    value={text}
+                                    modules={modules}
+                                    onChange={handleChange}
+                                    className=' bg-white rounded'
+                                    required
+                                />                            </label>
                         </div>
                         <div className='w-full lg:w-[80%] h-full'>
                             <input type="submit" value="Create" className='btn text-white w-full capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2' />
@@ -111,7 +141,7 @@ const Announcement = () => {
                                 announcements.map(announcement => (
                                     <tr key={announcement._id}>
                                         <td>{announcement.title}</td>
-                                        <td>{announcement.details}</td>
+                                        <td dangerouslySetInnerHTML={{ __html: announcement.details }}></td>
                                     </tr>
                                 ))
                             }

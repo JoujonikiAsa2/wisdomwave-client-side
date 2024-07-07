@@ -72,7 +72,7 @@ const TakeQuiz = () => {
                 console.log(res.data.data);
                 setTotalScore(score);
                 Swal.fire({
-                    title: `Your score id ${score}/${task.marks}`,
+                    title: `Your score is ${score}/${task.marks}`,
                     showClass: {
                         popup: `
                         animate__animated
@@ -115,30 +115,35 @@ const TakeQuiz = () => {
         <div className='w-full h-screen flex justify-center items-center pt-20'>
             {!takenQuiz ?
                 <div className='w-2/3  flex flex-col justify-center items-center'>
-                    <h2 className='text-lg font-bold py-2 capitalize'>Quiz title: {task?.title}</h2>
-                    <form action="" className='w-full lg:w-[500px] md:w-[400px] h-[480px] overflow-auto px-4 border mb-6' onSubmit={quizSubmit}>
-                        {
-                            task?.questions?.map((question, index) =>
-                                <>
-                                    <div key={question._id} className='py-2'>
-                                        <h2>{index + 1}. {question.question}</h2>
-                                        <div>
-                                            <div className='flex flex-col gap-2 py-2 ml-8'>
-                                                <label className='flex gap-2'> <input type="radio" name={`option${index}`} onClick={() => handleOptionSelect(question.question, question.option1)} required />{question.option1}</label>
-                                                <label className='flex gap-2'> <input type="radio" name={`option${index}`} onClick={() => handleOptionSelect(question.question, question.option2)} required />{question.option2}</label>
-                                                <label className='flex gap-2'> <input type="radio" name={`option${index}`} onClick={() => handleOptionSelect(question.question, question.option3)} required />{question.option3}</label>
-                                                <label className='flex gap-2'> <input type="radio" name={`option${index}`} onClick={() => handleOptionSelect(question.question, question.option4)} required />{question.option4}</label>
+                    {
+                        task != null ? <>
+                            <h2 className='text-lg font-bold py-2 capitalize'>Quiz title: {task?.title}</h2>
+                            <form action="" className='w-full lg:w-[500px] md:w-[400px] h-[480px] overflow-auto px-4 border mb-6' onSubmit={quizSubmit}>
+                                {
+                                    task?.questions?.map((question, index) =>
+                                        <>
+                                            <div key={question._id} className='py-2'>
+                                                <h2>{index + 1}. {question.question}</h2>
+                                                <div>
+                                                    <div className='flex flex-col gap-2 py-2 ml-8'>
+                                                        <label className='flex gap-2'> <input type="radio" name={`option${index}`} onClick={() => handleOptionSelect(question.question, question.option1)} required />{question.option1}</label>
+                                                        <label className='flex gap-2'> <input type="radio" name={`option${index}`} onClick={() => handleOptionSelect(question.question, question.option2)} required />{question.option2}</label>
+                                                        <label className='flex gap-2'> <input type="radio" name={`option${index}`} onClick={() => handleOptionSelect(question.question, question.option3)} required />{question.option3}</label>
+                                                        <label className='flex gap-2'> <input type="radio" name={`option${index}`} onClick={() => handleOptionSelect(question.question, question.option4)} required />{question.option4}</label>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className='divider'></div>
-                                </>
-                            )
-                        }
-                        <div className='w-full flex justify-center pb-2'>
-                            <input type="submit" value="Submit" className='btn btn-sm text-white w-40 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2' />
-                        </div>
-                    </form>
+                                            <div className='divider'></div>
+                                        </>
+                                    )
+                                }
+
+                                <div className='w-full flex justify-center pb-2'>
+                                    <input type="submit" value="Submit" className='btn btn-sm text-white w-40 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2' />
+                                </div>
+                            </form>
+                        </> : <p className='text-red-500'>No quiz found. Wait untill the quiz is created</p>
+                    }
                 </div>
                 :
                 takenQuiz.score === task.marks ?

@@ -4,6 +4,7 @@ import useAuth from '../../../hooks/useAuth';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import toast, { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
+import DashboardTitle from '../../../SharedComponents/DashboardTitle/DashboardTitle';
 
 const CreateQuiz = () => {
     const {id} = useParams()
@@ -49,6 +50,7 @@ const CreateQuiz = () => {
     return (
         <>
             <Toaster position='top-center' reverseOrder={false}></Toaster>
+            <DashboardTitle title="Create Quiz" subTitle="Create quiz for your course"></DashboardTitle>
             <div className='w-full  flex justify-center items-center pb-10'>
                 <form action="" className='w-[80%] lg:w-1/2  flex flex-col justify-center items-center' onSubmit={handleSubmit}>
                     <div className='w-full pb-12'>

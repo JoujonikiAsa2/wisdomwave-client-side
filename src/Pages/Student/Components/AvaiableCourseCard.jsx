@@ -18,7 +18,7 @@ const AvaiableCourseCard = ({ course,id }) => {
    const playListId = playlistId.split('=')[1]
 
     useEffect(() => {
-        axiosPublic.get(`/api/ratings`)
+        axiosPublic.get(`/api/reviews/${id}`)
             .then(res => {
                 setRatings(res.data.data)
             })
@@ -28,8 +28,7 @@ const AvaiableCourseCard = ({ course,id }) => {
     }, [id])
 
 
-    const filteredRatings = ratings.length > 0 && ratings.filter(rating => rating.courseId === id)
-    const avgRating = filteredRatings.length > 0 && filteredRatings.reduce((acc, curr) => acc + curr.rating, 0) / filteredRatings.length
+    const avgRating = ratings.length > 0 && ratings.reduce((acc, curr) => acc + curr.rating, 0) / ratings.length 
 
     // console.log("Print", title, instructor, rating, limitOfStudents, enrollFee)
     return (

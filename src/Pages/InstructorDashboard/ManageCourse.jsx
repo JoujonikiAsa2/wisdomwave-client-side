@@ -54,14 +54,14 @@ const ManageCourse = () => {
                                     <MdDeleteOutline className='text-xl text-white'></MdDeleteOutline>
                                 </div>
                             </div>
-                            <Link to={`/instructor/updateCourse/${course._id}`}>
+                            <Link to={`/admin/updateCourse/${course._id}`}>
                                 <div className="lg:tooltip" data-tip="Edit Course">
                                     <div className='w-6 bg-slate-700 flex justify-center items-center rounded cursor-pointer'>
                                         <MdEdit className=' text-xl text-white' tooltip='Edit'></MdEdit>
                                     </div>
                                 </div>
                             </Link>
-                            <Link to={`/instructor/createAssignments/${course._id}`}>
+                            <Link to={`/admin/createAssignments/${course._id}`}>
                                 <div className="lg:tooltip" data-tip="Create Quiz">
                                     <div className='w-6 bg-slate-700 flex justify-center items-center rounded cursor-pointer'>
                                         <MdAddTask className=' text-xl text-white'></MdAddTask>

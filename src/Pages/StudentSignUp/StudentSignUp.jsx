@@ -133,8 +133,8 @@ const StudentSignUp = () => {
                 position="top-center"
                 reverseOrder={false}
             />
-            <div className='flex flex-col justify-center items-center max-w-[96rem] mx-auto  h-screen'>
-                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[500px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl mt-10 '>
+            <div className='flex flex-col justify-center items-center max-w-[96rem] mx-auto  h-[80vh]'>
+                <div className='flex lg:flex-row md:flex-row flex-col justify-center items-center w-[90vw] md:w-[50rem] lg:w-[60rem] h-[450px] md:shadow-xl lg:shadow-xl lg:hover:shadow-2xl md:hover:shadow-2xl'>
                     <div className='flex-1 flex justify-center items-center h-full'>
                         <Lottie animationData={signUpAnimation} className="w-[300px] h-[300px]"></Lottie>
                     </div>

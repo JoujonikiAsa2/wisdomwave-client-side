@@ -28,6 +28,10 @@ const HomeRoute = ({children}) => {
     if (user === null) {
         return children
     }
+
+    if (userInfo?.userType === "tutor") {
+        return children
+    }
     else if (userInfo?.userType === "student") {
         return children
     }

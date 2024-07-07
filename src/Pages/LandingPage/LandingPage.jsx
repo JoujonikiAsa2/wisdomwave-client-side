@@ -13,28 +13,25 @@ const LandingPage = () => {
 
     const bg = "bg-[#CEE7E1]"
     const { user } = useAuth()
-    const { allCourses, refetch } = useCourses()
+    const { allCourses } = useCourses()
     const [courses, setCourses] = useState(allCourses)
     const [clicked, setClicked] = useState(false)
 
     useEffect(() => {
         setCourses(allCourses)
-        refetch()
-    }, [refetch,allCourses])
+    }, [,allCourses])
 
     const handleCategorySearch = (category) => {
         setClicked(true)
         console.log(category)
         if(category === "all"){
             setCourses(allCourses)
-            refetch()
         }
         else{
             axiosPublic.get(`/api/searchedCategory/${category}`)
                 .then((res) => {
                     console.log("Result:", res.data.data)
                     setCourses(res.data.data)
-                    refetch()
                 })
                 .catch((e) => {
                     console.log(e)

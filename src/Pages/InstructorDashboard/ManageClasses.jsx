@@ -107,8 +107,8 @@ const ManageClasses = () => {
                             {courses.map(course => {
                                 const todaysClasses = course.liveClasses.filter(liveClass => isToday(liveClass.date));
                                 return (
-                                    <tr key={course.courseId}>
-                                        <td>{course.courseDetails.title}</td>
+                                    <tr key={course?.courseId}>
+                                        <td>{course?.courseDetails.title}</td>
                                         <td>
                                             <div className='w-full justify-center items-center'>
                                                 <button className={`${clicked === false ? "btn btn-sm text-white w-32 capitalize bg-gradient-to-r from-[#29ADB2] to-[#0766AD] hover:bg-gradient-to-t hover:from-[#0766AD] hover:to-[#29ADB2] my-2" : 'hidden'}`} onClick={() => {
@@ -130,7 +130,7 @@ const ManageClasses = () => {
                                                     </div>
                                                 ))
                                             ) : (
-                                                <p>No classes scheduled for today</p>
+                                                <p>No class scheduled for today</p>
                                             )}
                                         </td>
                                     </tr>

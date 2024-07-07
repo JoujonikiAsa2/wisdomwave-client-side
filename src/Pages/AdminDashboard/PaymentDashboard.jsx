@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import DashboardTitle from '../../SharedComponents/DashboardTitle/DashboardTitle';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const PaymentDashboard = () => {
 
     const [earning, setEarning] = useState([])
     const [transactions, setTransactions] = useState([])
-    const axiosPublic= useAxiosPublic()
+    const axiosSecure= useAxiosSecure()
 
     useEffect(() => {
-        axiosPublic.get(`/api/platformEarning`)
+        axiosSecure.get(`/api/platformEarning`)
             .then(res => {
                 console.log(res.data[0])
                 setEarning(res.data[0])
@@ -21,7 +22,7 @@ const PaymentDashboard = () => {
     }, [earning])
 
     useEffect(() => {
-        axiosPublic.get(`/api/earningByMonth`)
+        axiosSecure.get(`/api/earningByMonth`)
             .then(res => {
                 console.log(res.data)
                 setTransactions(res.data)

@@ -5,27 +5,32 @@ import SectionTitle from '../../../SharedComponents/SectionTitle/SectionTitle';
 import { useEffect, useState } from 'react';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import useAuth from "../../../hooks/useAuth";
-import toast from "react-hot-toast";
-import useCourses from "../../../hooks/useCourses";
 
-const Courses = ({ courses, setCourses, clickStatus }) => {
+const Courses = ({ courses, clickStatus }) => {
 
-    const { allCourses, refetch } = useCourses()
     const [ratings, setRatings] = useState([])
     const { user } = useAuth()
     const axiosPublic = useAxiosPublic()
+    const [avaiableCourses, setAvaiableCourses] = useState([...courses])
     // console.log(user.email)
 
     useEffect(() => {
-        refetch()
-    }, [refetch, allCourses])
+
+        axiosPublic.get('/api/courses')
+            .then(res => {
+                console.log(res.data.data)
+                setAvaiableCourses(res.data.data)
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }, [avaiableCourses])
 
     useEffect(() => {
         axiosPublic.get('/api/ratings')
             .then(res => {
                 console.log(res.data.data)
                 setRatings(res.data.data)
-            refetch()
             })
             .catch(e => {
                 console.log(e);
@@ -33,9 +38,10 @@ const Courses = ({ courses, setCourses, clickStatus }) => {
     }, [ratings])
 
 
+
     if (clickStatus === true && courses?.length === 0) {
         return <div className='' >
-            <SectionTitle title="Courses" total={allCourses.length} subtitle="Find your favorite courses here"></SectionTitle>
+            <SectionTitle title="Courses" total={courses.length} subtitle="Find your favorite courses here"></SectionTitle>
             <Carousel
                 // arrows
                 autoPlaySpeed={3000}
@@ -89,7 +95,7 @@ const Courses = ({ courses, setCourses, clickStatus }) => {
 
     return (
         <div className='' >
-            <SectionTitle title="Courses" total={allCourses.length} subtitle="Find your favorite courses here"></SectionTitle>
+            <SectionTitle title="Courses" total={courses.length} subtitle="Find your favorite courses here"></SectionTitle>
 
             <Carousel
                 // arrows
@@ -134,7 +140,7 @@ const Courses = ({ courses, setCourses, clickStatus }) => {
 
                 {/* show all courses in card format with slider */}
                 {
-                    clickStatus === false && courses.length === 0 ? allCourses.map(course => <div className='rounded-lg' key={course._id}>
+                    clickStatus === false && courses.length === 0 ? courses.map(course => <div className='rounded-lg' key={course._id}>
                         <Course course={course} btnText="Enroll Now">
                         </Course>
                     </div >) : courses.map(course => <div className='rounded-lg' key={course._id}>
