@@ -16,7 +16,7 @@ const Notifications = ({ handleClicked, clicked }) => {
     useEffect(() => {
         axiosPublic.get(`/api/announcements/${user?.email}`)
             .then((res) => {
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 setAnnouncements(res.data.data)
             })
             .catch((e) => {
@@ -28,7 +28,7 @@ const Notifications = ({ handleClicked, clicked }) => {
         axiosPublic.get(`/api/announcements/isRead/email/${user?.email}`)
             .then((res) => {
                 setCount(res.data.total)
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 setUnreadAnnouncement(res.data.data)
             })
     }, [user?.email, unreadAnnouncement])
@@ -63,7 +63,7 @@ const Notifications = ({ handleClicked, clicked }) => {
             buttonsStyling: false
         });
 }
-    console.log(announcements, unreadAnnouncement)
+    // console.log(announcements, unreadAnnouncement)
     return (
         <div>
             <nav className="dropdown dropdown-end mr-2 flex justify-center items-center">

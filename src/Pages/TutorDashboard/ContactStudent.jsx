@@ -2,7 +2,6 @@ import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useRef, useState } from "react";
-import { IoClose } from "react-icons/io5";
 import { PiSpinnerGapBold } from "react-icons/pi";
 
 const ContactStudent = ({ email }) => {
@@ -11,11 +10,13 @@ const ContactStudent = ({ email }) => {
     const axiosPublic = useAxiosPublic();
     const [isLoading, setIsLoading] = useState(false);
 
+    console.log(user?.name)
+
     const sendEmail = async (e) => {
         e.preventDefault();
         const formField = e.target;
         setIsLoading(true)
-        const name = user?.displayName
+        const name = user?.name
         const phone = formField.user_phone.value;
         const studentEmail = email
         const message = formField.message.value;
@@ -23,6 +24,7 @@ const ContactStudent = ({ email }) => {
         const responseStatus = 'pending'
 
         const newMessage = { name, phone, studentEmail, message, userEmail, responseStatus };
+        console.log("Message is", newMessage, user?.name)
 
         await axiosPublic.post("/api/student/messages", newMessage)
             .then(res => {
@@ -39,7 +41,7 @@ const ContactStudent = ({ email }) => {
                 console.log(err)
             })
 
-        console.log(newMessage)
+        console.log(newMessage, user?.name)
     };
 
     return (
