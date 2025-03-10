@@ -1,11 +1,11 @@
-### 1. WisdomWave ( An e-learning and tutor finding website)<br/>
+# 1. WisdomWave ( An e-learning and tutor finding website)<br/>
 
 **Live link:** <a href="https://wisdomwave-project.netlify.app/">WisdomWave</a> :link:
 
 **Repository Link:** <br/>
 Server Side: <a href="https://github.com/JoujonikiAsa2/wisdomwave-server-side">Click Here</a> :link:
 
-#### Top Features of This Project:
+## Top Features of This Project:
 
 :heavy_check_mark: Buy Course: It helps student to buy course and learn. </br>
 :heavy_check_mark: Find Tutor: It helps student to find tutor based on their profile. </br>
@@ -13,7 +13,7 @@ Server Side: <a href="https://github.com/JoujonikiAsa2/wisdomwave-server-side">C
 :heavy_check_mark: Create profile: It helps tutor to create profile. </br>
 :heavy_check_mark: Management: It helps admin to manage all users and activities. </br>
 
-#### Technologies Used:
+## Technologies Used:
 
 - **Frontend:** HTML5, CSS3, JavaScript, React.js, Tailwind CSS frameworks
 - **Backend:** Node.js, Express.js, Mongoose
