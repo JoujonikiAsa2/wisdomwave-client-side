@@ -30,11 +30,11 @@ Server Side: <a href="https://github.com/JoujonikiAsa2/wisdomwave-server-side">C
 📧 **Email:** joujonikiasaroy@gmail.com  
 🔑 **Password:** `111111`  
 
-### **Student**  
+### **Admin**  
 📧 **Email:** nibeditaroy582@gmail.com  
 🔑 **Password:** `111111`  
 
-### **Admin**  
+### **Student**  
 📧 **Email:** replyn110@gmail.com  
 🔑 **Password:** `111111`  
 
